@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using Models.Arena;
 using Models.ScriptableObjects;
-using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace Models
@@ -125,7 +123,7 @@ namespace Models
         /// <summary>
         /// Fill Battle hand
         /// </summary>
-        public void AddToBattleHand()
+        public void AddToBattleHand(HistoryTurn historyTurn)
         {
             if (_battlePull.Count <= 0) return;
 
@@ -134,13 +132,13 @@ namespace Models
             var card = _battlePull[0] as BattleCard;
             if (card != null)
             {
-                Debug.Log("Player " + Name + " Add " + card.SourceCard.name + " Card");
+                historyTurn.AddHandLog("Player \"" + Name + "\" Add \"" + card.SourceCard.name + "\" Card");
             }
 
             var trate = _battlePull[0] as BattleTrate;
             if (trate != null)
             {
-                Debug.Log("Player " + Name + " Add " + trate.SourceTrate.name + " Trate");
+                historyTurn.AddHandLog("Player \"" + Name + "\" Add \"" + trate.SourceTrate.name + "\" Trate");
             }
 
             _battlePull.RemoveAt(0);

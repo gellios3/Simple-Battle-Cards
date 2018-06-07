@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿using Models.ScriptableObjects;
 
 namespace Models.Arena
 {
@@ -42,22 +42,20 @@ namespace Models.Arena
 
                 count++;
 
-                Debug.Log("MAKE " + player.Name + " " + count + " TURN");
-
                 if (!BattleArena.IsGameOver(player))
                 {
                     MakePlayerTurn(player);
                     continue;
                 }
+
                 var winPlayer = BattleArena.ActiveState == BattleState.YourTurn
                     ? Arena.EnemyPlayer
                     : Arena.YourPlayer;
                 if (winPlayer.Status != PlayerStatus.Dead)
                 {
-                    Debug.Log(winPlayer.Name + " WINS!");
+                    BattleArena.TurnHistoty.AddBattleLog("\"" + winPlayer.Name + "\" WINS!");
                 }
 
-                Debug.Log("GAME OVER!!!");
                 break;
             }
         }

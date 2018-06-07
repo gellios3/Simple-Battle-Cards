@@ -13,7 +13,12 @@ namespace Models.Arena
         /// <summary>
         /// Battle history
         /// </summary>
-        public List<HistoryItem> History { get; private set; }
+        public readonly List<HistoryTurn> History = new List<HistoryTurn>();
+
+        /// <summary>
+        /// Turn history
+        /// </summary>
+        public HistoryTurn TurnHistoty { get; private set; }
 
         /// <summary>
         /// Batle turn
@@ -21,11 +26,20 @@ namespace Models.Arena
         public BattleTurn ActiveBattleTurn { get; private set; }
 
         /// <summary>
+        /// Init history
+        /// </summary>
+        public void InitHistory()
+        {
+            TurnHistoty = new HistoryTurn();
+            History.Add(TurnHistoty);
+        }
+
+        /// <summary>
         /// Init battle turn
         /// </summary>
         public void InitActiveTurn(Player player)
         {
-            player.AddToBattleHand();
+            player.AddToBattleHand(TurnHistoty);
             player.Status = PlayerStatus.Active;
         }
 
@@ -35,7 +49,7 @@ namespace Models.Arena
         /// <param name="player"></param>
         public void InitActiveBattleTurn(Player player)
         {
-            ActiveBattleTurn = new BattleTurn(player);
+            ActiveBattleTurn = new BattleTurn(player, TurnHistoty);
         }
 
         /// <summary>
@@ -49,15 +63,14 @@ namespace Models.Arena
             // Set active all not dead areana cards 
             foreach (var card in player.ArenaCards)
             {
-                if (card.Status == CardStatus.Dead) continue;
-                if (card.Status != CardStatus.Wait) continue;
-                card.Status = CardStatus.Active;
-                Debug.Log("PLAYER " + player.Name + " Activate " + card.SourceCard.name + " battle card");
+                if (card.Status == BattleStatus.Dead) continue;
+                if (card.Status != BattleStatus.Wait) continue;
+                card.Status = BattleStatus.Active;
+                TurnHistoty.AddBattleLog("PLAYER \"" + player.Name + "\" Activate sleep \"" + card.SourceCard.name + "\" battle card");
             }
 
             // Set wait status
             player.Status = PlayerStatus.Wait;
-            Debug.Log("END " + player.Name + " turn");
         }
 
         /// <summary>
@@ -68,7 +81,7 @@ namespace Models.Arena
         public bool IsGameOver(Player player)
         {
             return player.BattlePull.Count == 0 &&
-                   player.ArenaCards.FindAll(card => card.Status != CardStatus.Dead).Count == 0;
+                   player.ArenaCards.FindAll(card => card.Status != BattleStatus.Dead).Count == 0;
         }
     }
 

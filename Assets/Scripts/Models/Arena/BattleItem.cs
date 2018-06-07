@@ -3,13 +3,15 @@
     public abstract class BattleItem
     {
         /// <summary>
-        /// Defence
+        /// Is card dead
         /// </summary>
-        public int Defence;
-
-        /// <summary>
-        /// Health
-        /// </summary>
-        public int Health;
+        public BattleStatus Status { get; set; }
+    }
+    
+    public enum BattleStatus
+    {
+        Wait,
+        Active,
+        Dead
     }
 }

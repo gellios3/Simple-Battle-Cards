@@ -26,13 +26,6 @@ namespace Models.Arena
         public Card SourceCard { get; private set; }
 
         /// <summary>
-        /// Is card dead
-        /// </summary>
-        public CardStatus Status { get; set; }
-        
-        
-
-        /// <summary>
         /// Card take damage
         /// </summary>
         /// <param name="damage"></param>
@@ -62,8 +55,7 @@ namespace Models.Arena
 
             if (Health <= 0)
             {
-                Debug.Log(SourceCard.name + " is dead");
-                Status = CardStatus.Dead;
+                Status = BattleStatus.Dead;
             }
         }
 
@@ -106,14 +98,7 @@ namespace Models.Arena
                 Health = Random.Range(1, 6);
             }
 
-            Status = CardStatus.Wait;
+            Status = BattleStatus.Wait;
         }
-    }
-
-    public enum CardStatus
-    {
-        Wait,
-        Active,
-        Dead
     }
 }

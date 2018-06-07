@@ -36,7 +36,8 @@ namespace Models
         /// Init turn
         /// </summary>
         public void InitTurn()
-        {
+        {           
+            BattleArena.InitHistory();
             // init active turn
             BattleArena.InitActiveTurn(ActivePlayer);
             // init battle turn 
@@ -55,7 +56,7 @@ namespace Models
                 var card = item as BattleCard;
                 if (card == null) continue;
                 BattleArena.ActiveBattleTurn.AddActiveCardFromHand(card);
-                card.Status = CardStatus.Active;
+                card.Status = BattleStatus.Active;
             }          
 
             // add all trares to card
@@ -66,26 +67,21 @@ namespace Models
                     var trate = item as BattleTrate;
                     if (trate == null) continue;
                     BattleArena.ActiveBattleTurn.AddTrateToActiveCard(ActivePlayer.ArenaCards[0], trate);
-                    trate.isUsed = true;
+                    trate.Status = BattleStatus.Active;
                 }
             }
             
             // remove activate trate and cards
-            ActivePlayer.BattleHand = ActivePlayer.BattleHand.FindAll(item =>
-            {
-                var card = item as BattleCard;
-                var trate = item as BattleTrate;
-                return card != null && card.Status != CardStatus.Active || trate != null && !trate.isUsed;
-            });
+            ActivePlayer.BattleHand = ActivePlayer.BattleHand.FindAll(item => item.Status != BattleStatus.Active);
 
             // Atack all emeny cards 
             var enemyCards = GetEnemyActiveCards();
-            var activeCards = ActivePlayer.ArenaCards.FindAll(card => card.Status == CardStatus.Active);
+            var activeCards = ActivePlayer.ArenaCards.FindAll(card => card.Status == BattleStatus.Active);
             if (enemyCards.Count > 0 && activeCards.Count > 0)
             {
                 foreach (var yourCard in activeCards)
                 {
-                    foreach (var enemyCard in enemyCards.FindAll(card => card.Status != CardStatus.Dead))
+                    foreach (var enemyCard in enemyCards.FindAll(card => card.Status != BattleStatus.Dead))
                     {
                         BattleArena.ActiveBattleTurn.HitEnemyCard(yourCard, enemyCard);
                     }

@@ -10,11 +10,18 @@ namespace Models.Arena
         public Player ActivePlayer { get; private set; }
 
         /// <summary>
+        /// History turn
+        /// </summary>
+        public HistoryTurn HistoryTurn { get; private set; }
+
+        /// <summary>
         /// Battle turn
         /// </summary>
         /// <param name="player"></param>
-        public BattleTurn(Player player)
+        /// <param name="historyTurn"></param>
+        public BattleTurn(Player player, HistoryTurn historyTurn)
         {
+            HistoryTurn = historyTurn;
             ActivePlayer = player;
         }
 
@@ -24,9 +31,11 @@ namespace Models.Arena
         /// <param name="card"></param>
         public void AddActiveCardFromHand(BattleCard card)
         {
-            if (card.Status != CardStatus.Wait) return;
+            if (card.Status != BattleStatus.Wait) return;
             ActivePlayer.ArenaCards.Add(new BattleCard(card.SourceCard));
-            Debug.Log("Player " + ActivePlayer.Name + " Add card " + card.SourceCard.name + " to battle!");
+            // add history battle log
+            HistoryTurn.AddBattleLog(
+                "Player \"" + ActivePlayer.Name + "\" Add card \"" + card.SourceCard.name + "\" to battle!");
         }
 
         /// <summary>
@@ -36,10 +45,10 @@ namespace Models.Arena
         /// <param name="trate"></param>
         public void AddTrateToActiveCard(BattleCard card, BattleTrate trate)
         {
-            if (trate.isUsed) return;
             card.AddTrate(new BattleTrate(trate.SourceTrate));
-            Debug.Log("Player " + ActivePlayer.Name + " Add trate " + trate.SourceTrate.name + " to battle card " +
-                      card.SourceCard.name);
+            // add history battle log
+            HistoryTurn.AddBattleLog("Player \"" + ActivePlayer.Name + "\" Add trate \"" + trate.SourceTrate.name +
+                                     "\" to battle card \"" + card.SourceCard.name + "\"");
         }
 
         /// <summary>
@@ -49,12 +58,19 @@ namespace Models.Arena
         /// <param name="enemyCard"></param>
         public void HitEnemyCard(BattleCard yourCard, BattleCard enemyCard)
         {
-            Debug.Log("Player " + ActivePlayer.Name + " Use Card " + yourCard.SourceCard.name + " hit ememy Card " +
-                      enemyCard.SourceCard.name +
-                      " take damage " + yourCard.Attack);
+            HistoryTurn.AddBattleLog("Player \"" + ActivePlayer.Name + "\" Use Card \"" + yourCard.SourceCard.name +
+                                     "\" hit ememy Card \"" + enemyCard.SourceCard.name + "\" take damage \"" +
+                                     yourCard.Attack + "\"");
             enemyCard.TakeDamage(yourCard.Attack);
-            Debug.Log("Enemy card " + enemyCard.SourceCard.name + " has " + enemyCard.Health + " Health and " +
-                      enemyCard.Defence + " Defence");
+            if (enemyCard.Status == BattleStatus.Dead)
+            {
+                HistoryTurn.AddBattleLog("Enemy Card \"" + enemyCard.SourceCard.name + "\" has dead!");
+            }
+            else
+            {
+                HistoryTurn.AddBattleLog("Enemy card \"" + enemyCard.SourceCard.name + "\" has \"" + enemyCard.Health +
+                                         "\" Health and \"" + enemyCard.Defence + "\" Defence");
+            }
         }
     }
 }

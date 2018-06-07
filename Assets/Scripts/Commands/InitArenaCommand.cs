@@ -1,6 +1,8 @@
-﻿using Models;
+﻿using System;
+using System.IO;
 using Models.Arena;
 using Models.ScriptableObjects;
+using Newtonsoft.Json;
 using strange.extensions.command.impl;
 using Signals.Arena;
 using UniRx;
@@ -41,16 +43,26 @@ namespace Commands
         {
             // Load regular deck
             var deck = Resources.Load<Deck>("Objects/Decks/Regular");
+            // Init batle in your turn
+            BattleArena.ActiveState = BattleState.YourTurn;
             // init arena
             Arena.Init(deck, deck);
             Arena.YourPlayer.Name = "HUMAN";
             Arena.EnemyPlayer.Name = "CPU 1";
-            // Init batle in your turn
-            BattleArena.ActiveState = BattleState.YourTurn;
+
             ArenaGameManager.EmulateGame();
 
-            Observable.Start(() => { Debug.Log("Logic"); }).ObserveOnMainThread()
-                .Subscribe(res => { ArenaInitializedSignal.Dispatch(); });
+            Observable.Start(() =>
+            {
+                var dateTime = DateTime.Now.Millisecond.ToString();
+                //open file stream
+                using (var file = File.AppendText("Assets/Resources/Log/"+dateTime+"-log.json"))
+                {
+                    var serializer = new JsonSerializer();
+                    //serialize object directly into file stream
+                    serializer.Serialize(file, BattleArena.History);
+                }
+            }).ObserveOnMainThread().Subscribe(res => { ArenaInitializedSignal.Dispatch(); });
         }
     }
 }
