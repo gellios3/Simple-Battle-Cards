@@ -1,5 +1,5 @@
-﻿using Models.ScriptableObjects;
-using UnityEngine;
+﻿using System;
+using Models.ScriptableObjects;
 
 namespace Models.Arena
 {
@@ -25,25 +25,36 @@ namespace Models.Arena
         /// </summary>
         public Card SourceCard { get; private set; }
 
+ 
         /// <summary>
-        /// Card take damage
+        /// Card take damage and return is critial or not
         /// </summary>
         /// <param name="damage"></param>
-        public void TakeDamage(int damage)
+        /// <returns></returns>
+        public bool TakeDamage(int damage)
         {
+            var isCriticalDamage = IsCritDamage();
             if (Defence > 0)
             {
-                // Hit defence
-                Defence -= damage;
-                // Is defence less 0 hit health
-                if (Defence < 0)
+                if (!isCriticalDamage)
                 {
-                    damage += Defence;
-                    Health -= Defence;
+                    // Hit defence
+                    Defence -= damage;
+                    // Is defence less 0 hit health
+                    if (Defence < 0)
+                    {
+                        damage += Defence;
+                        Health -= Defence;
+                    }
+                    else
+                    {
+                        damage = 0;
+                    }
                 }
                 else
                 {
-                    damage = 0;
+                    Defence = 0;
+                    return true;
                 }
             }
 
@@ -51,12 +62,29 @@ namespace Models.Arena
             if (Health > 0)
             {
                 Health -= damage;
+                if (isCriticalDamage)
+                {
+                    Health = 0;
+                }
             }
 
             if (Health <= 0)
             {
                 Status = BattleStatus.Dead;
             }
+
+            return isCriticalDamage;
+        }
+
+        /// <summary>
+        /// Is crit damage
+        /// </summary>
+        /// <returns></returns>
+        private bool IsCritDamage()
+        {
+            var r = new Random();
+            var crit = r.Next(0, 100);
+            return crit <= 10;
         }
 
         /// <summary>
@@ -93,9 +121,10 @@ namespace Models.Arena
             }
             else // Create random card
             {
-                Defence = Random.Range(1, 6);
-                Attack = Random.Range(1, 6);
-                Health = Random.Range(1, 6);
+                var r = new Random();
+                Defence = r.Next(1, 6);
+                Attack = r.Next(1, 6);
+                Health = r.Next(1, 6);
             }
 
             Status = BattleStatus.Wait;

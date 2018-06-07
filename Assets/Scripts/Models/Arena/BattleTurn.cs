@@ -58,10 +58,18 @@ namespace Models.Arena
         /// <param name="enemyCard"></param>
         public void HitEnemyCard(BattleCard yourCard, BattleCard enemyCard)
         {
-            HistoryTurn.AddBattleLog("Player \"" + ActivePlayer.Name + "\" Use Card \"" + yourCard.SourceCard.name +
-                                     "\" hit ememy Card \"" + enemyCard.SourceCard.name + "\" take damage \"" +
-                                     yourCard.Attack + "\"");
-            enemyCard.TakeDamage(yourCard.Attack);
+            if (enemyCard.TakeDamage(yourCard.Attack))
+            {
+                HistoryTurn.AddBattleLog("Player \"" + ActivePlayer.Name + "\" Use Card \"" + yourCard.SourceCard.name +
+                                         "\" hit CRITICAL ememy Card \"" + enemyCard.SourceCard.name + "\"");
+            }
+            else
+            {
+                HistoryTurn.AddBattleLog("Player \"" + ActivePlayer.Name + "\" Use Card \"" + yourCard.SourceCard.name +
+                                         "\" hit ememy Card \"" + enemyCard.SourceCard.name + "\" take damage \"" +
+                                         yourCard.Attack + "\"");
+            }
+
             if (enemyCard.Status == BattleStatus.Dead)
             {
                 HistoryTurn.AddBattleLog("Enemy Card \"" + enemyCard.SourceCard.name + "\" has dead!");
