@@ -1,5 +1,5 @@
-﻿using System;
-using Models.ScriptableObjects;
+﻿using Models.ScriptableObjects;
+using UnityEngine;
 
 namespace Models.Arena
 {
@@ -25,7 +25,6 @@ namespace Models.Arena
         /// </summary>
         public Card SourceCard { get; private set; }
 
- 
         /// <summary>
         /// Card take damage and return is critial or not
         /// </summary>
@@ -82,8 +81,7 @@ namespace Models.Arena
         /// <returns></returns>
         private bool IsCritDamage()
         {
-            var r = new Random();
-            var crit = r.Next(0, 100);
+            var crit = Random.Range(0, 100);
             return crit <= 10;
         }
 
@@ -121,10 +119,9 @@ namespace Models.Arena
             }
             else // Create random card
             {
-                var r = new Random();
-                Defence = r.Next(1, 6);
-                Attack = r.Next(1, 6);
-                Health = r.Next(1, 6);
+                Defence = Random.Range(1, 6);
+                Attack = Random.Range(1, 6);
+                Health = Random.Range(1, 6);
             }
 
             Status = BattleStatus.Wait;
