@@ -46,7 +46,7 @@ namespace Services
             {
                 var card = item as BattleCard;
                 if (card == null) continue;
-                BattleArena.ActiveBattleTurn.AddActiveCardFromHand(card);
+                BattleArena.ActiveBattleTurnService.AddActiveCardFromHand(card);
                 card.Status = BattleStatus.Active;
             }
 
@@ -57,10 +57,11 @@ namespace Services
                 {
                     var trate = item as BattleTrate;
                     if (trate == null) continue;
-                    foreach (var card in StateService.ActivePlayer.ArenaCards)
+                    foreach (var stateCard in StateService.ActivePlayer.ArenaCards)
                     {
+                        var card = (BattleCard) stateCard;
                         if (card.SourceCard.Type == CartType.regular || trate.Status == BattleStatus.Active) continue;
-                        BattleArena.ActiveBattleTurn.AddTrateToActiveCard(StateService.ActivePlayer.ArenaCards[0],
+                        BattleArena.ActiveBattleTurnService.AddTrateToActiveCard(StateService.ActivePlayer.ArenaCards[0],
                             trate);
                         trate.Status = BattleStatus.Active;
                     }
@@ -80,7 +81,7 @@ namespace Services
                 {
                     foreach (var enemyCard in enemyCards.FindAll(card => card.Status != BattleStatus.Dead))
                     {
-                        BattleArena.ActiveBattleTurn.HitEnemyCard(yourCard, enemyCard);
+                        BattleArena.ActiveBattleTurnService.HitEnemyCard(yourCard, enemyCard);
                     }
                 }
             }

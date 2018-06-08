@@ -29,6 +29,11 @@ namespace Services
         /// End game signal
         /// </summary>
         [Inject] public EndGameSignal EndGameSignal { get; set; }
+        
+        /// <summary>
+        /// Save game signal
+        /// </summary>
+        [Inject] public SaveGameSignal SaveGameSignal { get; set; }
 
         /// <summary>
         /// Emulate Game
@@ -45,7 +50,7 @@ namespace Services
 
                 if (count > 10)
                 {
-                    SaveGame();
+                    SaveGameSignal.Dispatch();
                     break;
                 }
 
@@ -60,14 +65,6 @@ namespace Services
                 EndGameSignal.Dispatch();
                 break;
             }
-        }
-
-        /// <summary>
-        /// Save game
-        /// </summary>
-        public void SaveGame()
-        {
-            
         }
     }
 }

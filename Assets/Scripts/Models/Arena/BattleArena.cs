@@ -23,7 +23,7 @@ namespace Models.Arena
         /// Batle turn
         /// </summary>
         [Inject]
-        public BattleTurn ActiveBattleTurn { get; private set; }
+        public BattleTurnService ActiveBattleTurnService { get; private set; }
 
         /// <summary>
         /// Active state

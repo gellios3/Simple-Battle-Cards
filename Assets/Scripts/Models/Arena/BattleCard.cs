@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Models.ScriptableObjects;
+using Models.State;
 using UnityEngine;
 
 namespace Models.Arena
@@ -104,6 +105,7 @@ namespace Models.Arena
         {
             Defence += trate.Defence;
             Health += trate.Health;
+            BattleTrates.Add(trate);
         }
 
         /// <summary>

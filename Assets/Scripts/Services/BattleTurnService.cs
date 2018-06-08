@@ -1,9 +1,10 @@
-﻿using Services;
+﻿using Models;
+using Models.Arena;
 using Signals;
 
-namespace Models.Arena
+namespace Services
 {
-    public class BattleTurn
+    public class BattleTurnService
     {
         /// <summary>
         /// State service

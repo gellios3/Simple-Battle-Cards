@@ -65,9 +65,10 @@ namespace Contexts
         {
             // init models
             injectionBinder.Bind<Player>();
-            injectionBinder.Bind<BattleTurn>().ToSingleton();
+            injectionBinder.Bind<BattleTurnService>().ToSingleton();
             injectionBinder.Bind<Arena>().ToSingleton();
             injectionBinder.Bind<BattleArena>().ToSingleton();
+            injectionBinder.Bind<SaveService>().ToSingleton();
 
             // Init sevises
             injectionBinder.Bind<PlayerCpuBehaviorService>().ToSingleton();
@@ -81,6 +82,7 @@ namespace Contexts
             injectionBinder.Bind<EndGameSignal>().ToSingleton();
             injectionBinder.Bind<SaveLogSignal>().ToSingleton();
             injectionBinder.Bind<AddHistoryLogSignal>().ToSingleton();
+            injectionBinder.Bind<SaveGameSignal>().ToSingleton();
 
             // Init comands
             commandBinder.Bind<EndGameSignal>().To<GameFinishedCommand>();
@@ -88,6 +90,7 @@ namespace Contexts
             commandBinder.Bind<MakeTurnSignal>().To<MakeTurnCommand>();
             commandBinder.Bind<SaveLogSignal>().To<SaveLogCommand>();
             commandBinder.Bind<AddHistoryLogSignal>().To<AddLogCommand>();
+            commandBinder.Bind<SaveGameSignal>().To<SaveGameCommand>();
 
             // Init mediators
             mediationBinder.Bind<GameArenaView>().To<GameArenaMediator>();
