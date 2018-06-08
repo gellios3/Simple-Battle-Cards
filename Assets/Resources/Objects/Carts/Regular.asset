@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Name: Regular
   m_EditorClassIdentifier: 
   name: Regular
+  Id: regular
   Description: Regular cart
   Artwork: {fileID: 0}
   Defence: 2
   Attack: 2
   Health: 5
-  Treits: []
+  CriticalChance: 5
+  Trates: []
   Type: 0

@@ -1,14 +1,12 @@
-﻿using Models.ScriptableObjects;
+﻿using Models;
+using Models.Arena;
+using Signals;
+using Signals.Arena;
 
-namespace Models.Arena
+namespace Services
 {
-    public class ArenaGameManager
+    public class GenarateGameSessionService
     {
-        /// <summary>
-        /// Your CPU Behavior
-        /// </summary>
-        [Inject]
-        public PlayerCpuBehavior PlayerCpu { get; set; }
 
         /// <summary>
         /// Arena
@@ -21,11 +19,21 @@ namespace Models.Arena
         /// </summary>
         [Inject]
         public BattleArena BattleArena { get; set; }
+        
+        /// <summary>
+        /// Make turn Signal
+        /// </summary>
+        [Inject] public MakeTurnSignal MakeTurnSignal { get; set; }
+        
+        /// <summary>
+        /// End game signal
+        /// </summary>
+        [Inject] public EndGameSignal EndGameSignal { get; set; }
 
         /// <summary>
         /// Emulate Game
         /// </summary>
-        public void EmulateGame()
+        public void EmulateGameSession()
         {
             var count = 0;
             while (true)
@@ -35,8 +43,9 @@ namespace Models.Arena
                     ? Arena.YourPlayer
                     : Arena.EnemyPlayer;
 
-                if (count > 100)
+                if (count > 10)
                 {
+                    SaveGame();
                     break;
                 }
 
@@ -44,31 +53,21 @@ namespace Models.Arena
 
                 if (!BattleArena.IsGameOver(player))
                 {
-                    MakePlayerTurn(player);
+                    MakeTurnSignal.Dispatch(player);
                     continue;
                 }
-
-                var winPlayer = BattleArena.ActiveState == BattleState.YourTurn
-                    ? Arena.EnemyPlayer
-                    : Arena.YourPlayer;
-                if (winPlayer.Status != PlayerStatus.Dead)
-                {
-                    BattleArena.TurnHistoty.AddBattleLog("\"" + winPlayer.Name + "\" WINS!");
-                }
-
+                
+                EndGameSignal.Dispatch();
                 break;
             }
         }
 
         /// <summary>
-        /// Make player turn
+        /// Save game
         /// </summary>
-        private void MakePlayerTurn(Player player)
+        public void SaveGame()
         {
-            // Init player Cpu Behavior
-            PlayerCpu.Init(player);
-            PlayerCpu.InitTurn();
-            PlayerCpu.MakeBattleTurn();
+            
         }
     }
 }

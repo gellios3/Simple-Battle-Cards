@@ -1,4 +1,5 @@
-﻿using Models.ScriptableObjects;
+﻿using System.Collections.Generic;
+using Models.ScriptableObjects;
 using UnityEngine;
 
 namespace Models.Arena
@@ -13,7 +14,7 @@ namespace Models.Arena
         /// <summary>
         /// Attack
         /// </summary>
-        public int Attack { get; private set; }
+        public int Attack { get; }
 
         /// <summary>
         /// Health
@@ -23,7 +24,12 @@ namespace Models.Arena
         /// <summary>
         /// Source card
         /// </summary>
-        public Card SourceCard { get; private set; }
+        public Card SourceCard { get; }
+
+        /// <summary>
+        /// Battle tarates
+        /// </summary>
+        public List<BattleTrate> BattleTrates { get; } = new List<BattleTrate>();
 
         /// <summary>
         /// Card take damage and return is critial or not
@@ -81,7 +87,12 @@ namespace Models.Arena
         /// <returns></returns>
         private bool IsCritDamage()
         {
-            var crit = Random.Range(0, 100);
+            var crit = 100;
+            if (SourceCard.Type != CartType.regular)
+            {
+                crit = Random.Range(0, 100);
+            }
+
             return crit <= 10;
         }
 

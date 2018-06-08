@@ -5,11 +5,11 @@ using strange.extensions.command.api;
 using strange.extensions.command.impl;
 using strange.extensions.context.api;
 using strange.extensions.context.impl;
+using Services;
 using Signals;
 using Signals.Arena;
 using UnityEngine;
 using View;
-using View.Arena;
 
 namespace Contexts
 {
@@ -51,7 +51,7 @@ namespace Contexts
         {
             base.Start();
 
-            var startSignal = injectionBinder.GetInstance<InitArenaSignal>();
+            var startSignal = injectionBinder.GetInstance<CreateNewGameSignal>();
             startSignal.Dispatch();
 
             return this;
@@ -63,16 +63,33 @@ namespace Contexts
         /// </summary>
         protected override void mapBindings()
         {
-            injectionBinder.Bind<InitArenaSignal>().ToSingleton();
-            injectionBinder.Bind<ArenaInitializedSignal>().ToSingleton();
-
+            // init models
+            injectionBinder.Bind<Player>();
+            injectionBinder.Bind<BattleTurn>().ToSingleton();
             injectionBinder.Bind<Arena>().ToSingleton();
-            injectionBinder.Bind<PlayerCpuBehavior>().ToSingleton();
             injectionBinder.Bind<BattleArena>().ToSingleton();
-            injectionBinder.Bind<ArenaGameManager>().ToSingleton();
 
-            commandBinder.Bind<InitArenaSignal>().To<InitArenaCommand>();
+            // Init sevises
+            injectionBinder.Bind<PlayerCpuBehaviorService>().ToSingleton();
+            injectionBinder.Bind<GenarateGameSessionService>().ToSingleton();
+            injectionBinder.Bind<StateService>().ToSingleton();
 
+            // init Signals
+            injectionBinder.Bind<CreateNewGameSignal>().ToSingleton();
+            injectionBinder.Bind<MakeTurnSignal>().ToSingleton();
+            injectionBinder.Bind<ArenaInitializedSignal>().ToSingleton();
+            injectionBinder.Bind<EndGameSignal>().ToSingleton();
+            injectionBinder.Bind<SaveLogSignal>().ToSingleton();
+            injectionBinder.Bind<AddHistoryLogSignal>().ToSingleton();
+
+            // Init comands
+            commandBinder.Bind<EndGameSignal>().To<GameFinishedCommand>();
+            commandBinder.Bind<CreateNewGameSignal>().To<GenerateNewGameCommand>();
+            commandBinder.Bind<MakeTurnSignal>().To<MakeTurnCommand>();
+            commandBinder.Bind<SaveLogSignal>().To<SaveLogCommand>();
+            commandBinder.Bind<AddHistoryLogSignal>().To<AddLogCommand>();
+
+            // Init mediators
             mediationBinder.Bind<GameArenaView>().To<GameArenaMediator>();
         }
     }

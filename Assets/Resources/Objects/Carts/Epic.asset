@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Name: Epic
   m_EditorClassIdentifier: 
   name: Epic
+  Id: epic
   Description: Epic cart
   Artwork: {fileID: 0}
   Defence: 5
   Attack: 5
   Health: 10
-  Treits: []
+  CriticalChance: 15
+  Trates: []
   Type: 1

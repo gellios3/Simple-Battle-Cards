@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using Models.Arena;
 using Models.ScriptableObjects;
+using Services;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace Models
 {
     public class Player
-    {
+    {      
         /// <summary>
         /// Player name 
         /// </summary>
@@ -16,33 +18,17 @@ namespace Models
         /// <summary>
         /// Battle player hand
         /// </summary>
-        private List<BattleItem> _battleHand = new List<BattleItem>();
-
-        public List<BattleItem> BattleHand
-        {
-            get { return _battleHand; }
-            set { _battleHand = value; }
-        }
+        public List<BattleItem> BattleHand { get; set; } = new List<BattleItem>();
 
         /// <summary>
         /// Active atack cards
         /// </summary>
-        private readonly List<BattleCard> _arenaCards = new List<BattleCard>();
-
-        public List<BattleCard> ArenaCards
-        {
-            get { return _arenaCards; }
-        }
+        public List<BattleCard> ArenaCards { get; } = new List<BattleCard>();
 
         /// <summary>
         /// Random battle pul with cartd and trates
         /// </summary>
-        private readonly List<BattleItem> _battlePull = new List<BattleItem>();
-
-        public List<BattleItem> BattlePull
-        {
-            get { return _battlePull; }
-        }
+        public List<BattleItem> BattlePull { get; } = new List<BattleItem>();
 
         /// <summary>
         /// Random card positions
@@ -57,8 +43,7 @@ namespace Models
         /// <summary>
         /// Player Status
         /// </summary>
-        public PlayerStatus Status { get; set; }
-
+        public PlayerStatus Status { get; private set; }
 
         /// <summary>
         /// Pull type
@@ -67,6 +52,22 @@ namespace Models
         {
             Card,
             Trate
+        }
+
+        /// <summary>
+        /// Wait player
+        /// </summary>
+        public void SetWaitStatus()
+        {
+            Status = PlayerStatus.Wait;
+        }
+
+        /// <summary>
+        /// Activate Player
+        /// </summary>
+        public void SetActiveStatus()
+        {
+            Status = PlayerStatus.Active;
         }
 
         /// <summary>
@@ -91,12 +92,12 @@ namespace Models
                     case PullType.Card:
                         if (cardCount < deck.Cards.Count)
                         {
-                            _battlePull.Add(new BattleCard(deck.Cards[_cardPositions[cardCount]]));
+                            BattlePull.Add(new BattleCard(deck.Cards[_cardPositions[cardCount]]));
                             cardCount++;
                         }
                         else if (trateCount < deck.Trates.Count)
                         {
-                            _battlePull.Add(new BattleTrate(deck.Trates[_tratePositions[trateCount]]));
+                            BattlePull.Add(new BattleTrate(deck.Trates[_tratePositions[trateCount]]));
                             trateCount++;
                         }
 
@@ -104,12 +105,12 @@ namespace Models
                     case PullType.Trate:
                         if (trateCount < deck.Trates.Count)
                         {
-                            _battlePull.Add(new BattleTrate(deck.Trates[_tratePositions[trateCount]]));
+                            BattlePull.Add(new BattleTrate(deck.Trates[_tratePositions[trateCount]]));
                             trateCount++;
                         }
                         else if (cardCount < deck.Cards.Count)
                         {
-                            _battlePull.Add(new BattleCard(deck.Cards[_cardPositions[cardCount]]));
+                            BattlePull.Add(new BattleCard(deck.Cards[_cardPositions[cardCount]]));
                             cardCount++;
                         }
 
@@ -118,30 +119,6 @@ namespace Models
                         throw new ArgumentOutOfRangeException();
                 }
             }
-        }
-
-        /// <summary>
-        /// Fill Battle hand
-        /// </summary>
-        public void AddToBattleHand(HistoryTurn historyTurn)
-        {
-            if (_battlePull.Count <= 0) return;
-
-            BattleHand.Add(_battlePull[0]);
-
-            var card = _battlePull[0] as BattleCard;
-            if (card != null)
-            {
-                historyTurn.AddHandLog("Player \"" + Name + "\" Add \"" + card.SourceCard.name + "\" Card");
-            }
-
-            var trate = _battlePull[0] as BattleTrate;
-            if (trate != null)
-            {
-                historyTurn.AddHandLog("Player \"" + Name + "\" Add \"" + trate.SourceTrate.name + "\" Trate");
-            }
-
-            _battlePull.RemoveAt(0);
         }
 
         /// <summary>

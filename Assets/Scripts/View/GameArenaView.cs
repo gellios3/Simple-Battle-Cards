@@ -1,14 +1,22 @@
 ﻿using strange.extensions.mediation.impl;
+using Signals;
 using Signals.Arena;
 using UnityEngine;
 
-namespace View.Arena
+namespace View
 {
     public class GameArenaView : EventView
     {
+        /// <summary>
+        /// Save log signal
+        /// </summary>
+        [Inject]
+        public SaveLogSignal SaveLogSignal { get; set; }
+
         public void OnArenaInitialized()
         {
             Debug.Log("OnInitArena");
+            SaveLogSignal.Dispatch();
         }
     }
 
@@ -20,7 +28,8 @@ namespace View.Arena
         /// <summary>
         /// Arena initialized signal
         /// </summary>
-        [Inject] public ArenaInitializedSignal ArenaInitializedSignal { get; set; }
+        [Inject]
+        public ArenaInitializedSignal ArenaInitializedSignal { get; set; }
 
         /// <summary>
         /// On register mediator

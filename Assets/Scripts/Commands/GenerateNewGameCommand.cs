@@ -1,16 +1,13 @@
-﻿using System;
-using System.IO;
-using Models.Arena;
+﻿using Models.Arena;
 using Models.ScriptableObjects;
-using Newtonsoft.Json;
 using strange.extensions.command.impl;
+using Services;
 using Signals.Arena;
-using UniRx;
 using UnityEngine;
 
 namespace Commands
 {
-    public class InitArenaCommand : Command
+    public class GenerateNewGameCommand : Command
     {
         /// <summary>
         /// Arena
@@ -28,7 +25,7 @@ namespace Commands
         ///  Arena game manager
         /// </summary>
         [Inject]
-        public ArenaGameManager ArenaGameManager { get; set; }
+        public GenarateGameSessionService GenarateGameSessionService { get; set; }
 
         /// <summary>
         /// Areana initialed signal
@@ -37,7 +34,7 @@ namespace Commands
         public ArenaInitializedSignal ArenaInitializedSignal { get; set; }
 
         /// <summary>
-        /// Execute event load rooms list 
+        /// Execute event init areana
         /// </summary>
         public override void Execute()
         {
@@ -49,20 +46,9 @@ namespace Commands
             Arena.Init(deck, deck);
             Arena.YourPlayer.Name = "HUMAN";
             Arena.EnemyPlayer.Name = "CPU 1";
-
-            ArenaGameManager.EmulateGame();
-
-            Observable.Start(() =>
-            {
-                var dateTime = DateTime.Now.Millisecond.ToString();
-                //open file stream
-                using (var file = File.AppendText("Assets/Resources/Log/"+dateTime+"-log.json"))
-                {
-                    var serializer = new JsonSerializer();
-                    //serialize object directly into file stream
-                    serializer.Serialize(file, BattleArena.History);
-                }
-            }).ObserveOnMainThread().Subscribe(res => { ArenaInitializedSignal.Dispatch(); });
+            // Emulate game session
+            GenarateGameSessionService.EmulateGameSession();
+            ArenaInitializedSignal.Dispatch();
         }
     }
 }

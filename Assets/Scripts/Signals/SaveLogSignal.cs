@@ -1,8 +1,8 @@
 ﻿using strange.extensions.signal.impl;
 
-namespace Signals.Arena
+namespace Signals
 {
-    public class InitArenaSignal : Signal
+    public class SaveLogSignal : Signal
     {
         
     }

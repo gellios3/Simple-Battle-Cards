@@ -1,29 +1,21 @@
-﻿using UnityEngine;
+﻿using Services;
+using Signals;
 
 namespace Models.Arena
 {
     public class BattleTurn
     {
         /// <summary>
-        /// Active player
+        /// State service
         /// </summary>
-        public Player ActivePlayer { get; private set; }
+        [Inject]
+        public StateService StateService { get; set; }
 
         /// <summary>
-        /// History turn
+        /// Add history log signal
         /// </summary>
-        public HistoryTurn HistoryTurn { get; private set; }
-
-        /// <summary>
-        /// Battle turn
-        /// </summary>
-        /// <param name="player"></param>
-        /// <param name="historyTurn"></param>
-        public BattleTurn(Player player, HistoryTurn historyTurn)
-        {
-            HistoryTurn = historyTurn;
-            ActivePlayer = player;
-        }
+        [Inject]
+        public AddHistoryLogSignal AddHistoryLogSignal { get; set; }
 
         /// <summary>
         /// Add active card from hand
@@ -32,10 +24,11 @@ namespace Models.Arena
         public void AddActiveCardFromHand(BattleCard card)
         {
             if (card.Status != BattleStatus.Wait) return;
-            ActivePlayer.ArenaCards.Add(new BattleCard(card.SourceCard));
+            StateService.ActivePlayer.ArenaCards.Add(new BattleCard(card.SourceCard));
             // add history battle log
-            HistoryTurn.AddBattleLog(
-                "Player \"" + ActivePlayer.Name + "\" Add card \"" + card.SourceCard.name + "\" to battle!");
+            AddHistoryLogSignal.Dispatch(
+                "Player \"" + StateService.ActivePlayer.Name + "\" Add card \"" + card.SourceCard.name +
+                "\" to battle!", LogType.Hand);
         }
 
         /// <summary>
@@ -47,8 +40,9 @@ namespace Models.Arena
         {
             card.AddTrate(new BattleTrate(trate.SourceTrate));
             // add history battle log
-            HistoryTurn.AddBattleLog("Player \"" + ActivePlayer.Name + "\" Add trate \"" + trate.SourceTrate.name +
-                                     "\" to battle card \"" + card.SourceCard.name + "\"");
+            AddHistoryLogSignal.Dispatch("Player \"" + StateService.ActivePlayer.Name + "\" Add trate \"" +
+                                         trate.SourceTrate.name + "\" to battle card \"" +
+                                         card.SourceCard.name + "\"", LogType.Hand);
         }
 
         /// <summary>
@@ -60,24 +54,28 @@ namespace Models.Arena
         {
             if (enemyCard.TakeDamage(yourCard.Attack))
             {
-                HistoryTurn.AddBattleLog("Player \"" + ActivePlayer.Name + "\" Use Card \"" + yourCard.SourceCard.name +
-                                         "\" hit CRITICAL ememy Card \"" + enemyCard.SourceCard.name + "\"");
+                AddHistoryLogSignal.Dispatch("Player \"" + StateService.ActivePlayer.Name + "\" Use Card \"" +
+                                             yourCard.SourceCard.name + "\" hit CRITICAL ememy Card \"" +
+                                             enemyCard.SourceCard.name + "\"", LogType.Battle);
             }
             else
             {
-                HistoryTurn.AddBattleLog("Player \"" + ActivePlayer.Name + "\" Use Card \"" + yourCard.SourceCard.name +
-                                         "\" hit ememy Card \"" + enemyCard.SourceCard.name + "\" take damage \"" +
-                                         yourCard.Attack + "\"");
+                AddHistoryLogSignal.Dispatch("Player \"" + StateService.ActivePlayer.Name + "\" Use Card \"" +
+                                             yourCard.SourceCard.name + "\" hit ememy Card \"" +
+                                             enemyCard.SourceCard.name + "\" take damage \"" + yourCard.Attack + "\"",
+                    LogType.Battle);
             }
 
             if (enemyCard.Status == BattleStatus.Dead)
             {
-                HistoryTurn.AddBattleLog("Enemy Card \"" + enemyCard.SourceCard.name + "\" has dead!");
+                AddHistoryLogSignal.Dispatch("Enemy Card \"" + enemyCard.SourceCard.name + "\" has dead!",
+                    LogType.Battle);
             }
             else
             {
-                HistoryTurn.AddBattleLog("Enemy card \"" + enemyCard.SourceCard.name + "\" has \"" + enemyCard.Health +
-                                         "\" Health and \"" + enemyCard.Defence + "\" Defence");
+                AddHistoryLogSignal.Dispatch("Enemy card \"" + enemyCard.SourceCard.name + "\" has \"" +
+                                             enemyCard.Health + "\" Health and \"" + enemyCard.Defence + "\" Defence",
+                    LogType.Battle);
             }
         }
     }

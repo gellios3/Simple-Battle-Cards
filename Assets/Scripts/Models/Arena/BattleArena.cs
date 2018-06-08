@@ -1,10 +1,30 @@
 ﻿using System.Collections.Generic;
+using Services;
+using Signals;
 using UnityEngine;
 
 namespace Models.Arena
 {
     public class BattleArena
     {
+        /// <summary>
+        /// State service
+        /// </summary>
+        [Inject]
+        public StateService StateService { get; set; }
+
+        /// <summary>
+        /// Add history log signal
+        /// </summary>
+        [Inject]
+        public AddHistoryLogSignal AddHistoryLogSignal { get; set; }
+        
+        /// <summary>
+        /// Batle turn
+        /// </summary>
+        [Inject]
+        public BattleTurn ActiveBattleTurn { get; private set; }
+
         /// <summary>
         /// Active state
         /// </summary>
@@ -16,61 +36,72 @@ namespace Models.Arena
         public readonly List<HistoryTurn> History = new List<HistoryTurn>();
 
         /// <summary>
-        /// Turn history
-        /// </summary>
-        public HistoryTurn TurnHistoty { get; private set; }
-
-        /// <summary>
-        /// Batle turn
-        /// </summary>
-        public BattleTurn ActiveBattleTurn { get; private set; }
-
-        /// <summary>
         /// Init history
         /// </summary>
         public void InitHistory()
         {
-            TurnHistoty = new HistoryTurn();
-            History.Add(TurnHistoty);
+            StateService.InitActiveHistoryTurn();
+            History.Add(StateService.ActiveHistotyTurn);
         }
 
         /// <summary>
         /// Init battle turn
         /// </summary>
-        public void InitActiveTurn(Player player)
+        public void InitActiveTurn()
         {
-            player.AddToBattleHand(TurnHistoty);
-            player.Status = PlayerStatus.Active;
+            AddToBattleHand();
+            StateService.ActivePlayer.SetActiveStatus();
         }
 
         /// <summary>
-        /// Init activa battle turn
+        /// Fill Battle hand
         /// </summary>
-        /// <param name="player"></param>
-        public void InitActiveBattleTurn(Player player)
+        private void AddToBattleHand()
         {
-            ActiveBattleTurn = new BattleTurn(player, TurnHistoty);
+            if (StateService.ActivePlayer.BattlePull.Count <= 0) return;
+
+            StateService.ActivePlayer.BattleHand.Add(StateService.ActivePlayer.BattlePull[0]);
+
+            var card = StateService.ActivePlayer.BattlePull[0] as BattleCard;
+            if (card != null)
+            {
+                AddHistoryLogSignal.Dispatch(
+                    "Player \"" + StateService.ActivePlayer.Name + "\" Add \"" + card.SourceCard.name + "\" Card",
+                    LogType.Hand);
+            }
+
+            var trate = StateService.ActivePlayer.BattlePull[0] as BattleTrate;
+            if (trate != null)
+            {
+                AddHistoryLogSignal.Dispatch(
+                    "Player \"" + StateService.ActivePlayer.Name + "\" Add \"" + trate.SourceTrate.name + "\" Trate",
+                    LogType.Hand);
+            }
+
+            StateService.ActivePlayer.BattlePull.RemoveAt(0);
         }
 
         /// <summary>
         /// End turn
         /// </summary>
-        public void EndTurn(Player player)
+        public void EndTurn()
         {
             // Switch active state
             ActiveState = ActiveState == BattleState.YourTurn ? BattleState.EnemyTurn : BattleState.YourTurn;
 
             // Set active all not dead areana cards 
-            foreach (var card in player.ArenaCards)
+            foreach (var card in StateService.ActivePlayer.ArenaCards)
             {
                 if (card.Status == BattleStatus.Dead) continue;
                 if (card.Status != BattleStatus.Wait) continue;
                 card.Status = BattleStatus.Active;
-                TurnHistoty.AddBattleLog("PLAYER \"" + player.Name + "\" Activate sleep \"" + card.SourceCard.name + "\" battle card");
+                AddHistoryLogSignal.Dispatch(
+                    "PLAYER \"" + StateService.ActivePlayer.Name + "\" Activate sleep \"" + card.SourceCard.name +
+                    "\" battle card", LogType.Battle);
             }
 
             // Set wait status
-            player.Status = PlayerStatus.Wait;
+            StateService.ActivePlayer.SetWaitStatus();
         }
 
         /// <summary>

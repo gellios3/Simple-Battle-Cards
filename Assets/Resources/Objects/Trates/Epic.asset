@@ -11,5 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e5d024e4897d634f80e63216dc4f4a9, type: 3}
   m_Name: Epic
   m_EditorClassIdentifier: 
+  Id: epic
   Defence: 10
   Health: 10

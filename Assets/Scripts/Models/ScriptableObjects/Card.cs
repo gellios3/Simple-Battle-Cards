@@ -7,6 +7,8 @@ namespace Models.ScriptableObjects
     public class Card : ScriptableObject
     {
         public new string name;
+
+        public string Id;
         public string Description;
 
         public Sprite Artwork;
@@ -14,6 +16,8 @@ namespace Models.ScriptableObjects
         public int Defence;
         public int Attack;
         public int Health;
+
+        public int CriticalChance;
 
         public List<Trate> Trates;
         public CartType Type;

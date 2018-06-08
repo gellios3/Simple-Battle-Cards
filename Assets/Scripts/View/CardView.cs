@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace View.Arena
+namespace View
 {
     public class CardView : MonoBehaviour
     {

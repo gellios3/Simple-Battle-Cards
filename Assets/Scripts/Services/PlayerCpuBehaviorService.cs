@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using Models;
 using Models.Arena;
+using Models.ScriptableObjects;
 
-namespace Models
+namespace Services
 {
-    public class PlayerCpuBehavior
+    public class PlayerCpuBehaviorService
     {
         /// <summary>
         /// Battle
@@ -15,34 +17,23 @@ namespace Models
         /// Arena
         /// </summary>
         [Inject]
-        public Arena.Arena Arena { get; set; }
+        public Arena Arena { get; set; }
 
         /// <summary>
-        /// Active player
+        /// State service
         /// </summary>
-        public Player ActivePlayer { get; private set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="player"></param>
-        public void Init(Player player)
-        {
-            ActivePlayer = player;
-//            Debug.Log("Init Behavior for " + player.Name);
-        }
+        [Inject]
+        public StateService StateService { get; set; }
 
         /// <summary>
         /// Init turn
         /// </summary>
         public void InitTurn()
-        {           
+        {
+            // init turn history
             BattleArena.InitHistory();
             // init active turn
-            BattleArena.InitActiveTurn(ActivePlayer);
-            // init battle turn 
-            BattleArena.InitActiveBattleTurn(ActivePlayer);
-//            Debug.Log("InitTurn for " + ActivePlayer.Name);
+            BattleArena.InitActiveTurn();
         }
 
         /// <summary>
@@ -51,32 +42,38 @@ namespace Models
         public void MakeBattleTurn()
         {
             // add all cards to battle arena
-            foreach (var item in ActivePlayer.BattleHand)
+            foreach (var item in StateService.ActivePlayer.BattleHand)
             {
                 var card = item as BattleCard;
                 if (card == null) continue;
                 BattleArena.ActiveBattleTurn.AddActiveCardFromHand(card);
                 card.Status = BattleStatus.Active;
-            }          
+            }
 
             // add all trares to card
-            if (ActivePlayer.ArenaCards.Count > 0)
+            if (StateService.ActivePlayer.ArenaCards.Count > 0)
             {
-                foreach (var item in ActivePlayer.BattleHand)
+                foreach (var item in StateService.ActivePlayer.BattleHand)
                 {
                     var trate = item as BattleTrate;
                     if (trate == null) continue;
-                    BattleArena.ActiveBattleTurn.AddTrateToActiveCard(ActivePlayer.ArenaCards[0], trate);
-                    trate.Status = BattleStatus.Active;
+                    foreach (var card in StateService.ActivePlayer.ArenaCards)
+                    {
+                        if (card.SourceCard.Type == CartType.regular || trate.Status == BattleStatus.Active) continue;
+                        BattleArena.ActiveBattleTurn.AddTrateToActiveCard(StateService.ActivePlayer.ArenaCards[0],
+                            trate);
+                        trate.Status = BattleStatus.Active;
+                    }
                 }
             }
-            
-            // remove activate trate and cards
-            ActivePlayer.BattleHand = ActivePlayer.BattleHand.FindAll(item => item.Status != BattleStatus.Active);
+
+            // Remove activate trate and cards
+            StateService.ActivePlayer.BattleHand =
+                StateService.ActivePlayer.BattleHand.FindAll(item => item.Status != BattleStatus.Active);
 
             // Atack all emeny cards 
             var enemyCards = GetEnemyActiveCards();
-            var activeCards = ActivePlayer.ArenaCards.FindAll(card => card.Status == BattleStatus.Active);
+            var activeCards = StateService.ActivePlayer.ArenaCards.FindAll(card => card.Status == BattleStatus.Active);
             if (enemyCards.Count > 0 && activeCards.Count > 0)
             {
                 foreach (var yourCard in activeCards)
@@ -89,7 +86,7 @@ namespace Models
             }
 
             // End turn
-            BattleArena.EndTurn(ActivePlayer);
+            BattleArena.EndTurn();
         }
 
         /// <summary>

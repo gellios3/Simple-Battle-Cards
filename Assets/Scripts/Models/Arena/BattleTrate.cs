@@ -8,17 +8,17 @@ namespace Models.Arena
         /// <summary>
         /// Defence
         /// </summary>
-        public int Defence { get; private set; }
+        public int Defence { get; }
 
         /// <summary>
         /// Attack
         /// </summary>
-        public int Health { get; private set; }
+        public int Health { get; }
 
         /// <summary>
         /// Source trate
         /// </summary>
-        public Trate SourceTrate { get; private set; }
+        public Trate SourceTrate { get; }
 
         /// <summary>
         /// Constructor

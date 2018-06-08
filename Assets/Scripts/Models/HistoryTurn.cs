@@ -1,4 +1,5 @@
-﻿using Boo.Lang;
+﻿using System;
+using Boo.Lang;
 
 namespace Models
 {
@@ -8,28 +9,36 @@ namespace Models
         /// Hand log
         /// </summary>
         public readonly List<string> HandLog = new List<string>();
-        
+
         /// <summary>
         /// Battle log
         /// </summary>
         public readonly List<string> BattleLog = new List<string>();
 
         /// <summary>
-        /// Add battle log
+        /// Add History log
         /// </summary>
         /// <param name="str"></param>
-        public void AddBattleLog(string str)
+        /// <param name="type"></param>
+        public void AddLog(string str, LogType type)
         {
-            BattleLog.Add(str);
+            switch (type)
+            {
+                case LogType.Battle:
+                    BattleLog.Add(str);
+                    break;
+                case LogType.Hand:
+                    HandLog.Add(str);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
         }
+    }
 
-        /// <summary>
-        /// Add hand log
-        /// </summary>
-        /// <param name="str"></param>
-        public void AddHandLog(string str)
-        {
-            HandLog.Add(str);
-        }
+    public enum LogType
+    {
+        Battle,
+        Hand
     }
 }
