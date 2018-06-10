@@ -59,7 +59,7 @@ namespace Services
                     if (trate == null) continue;
                     foreach (var stateCard in StateService.ActivePlayer.ArenaCards)
                     {
-                        var card = (BattleCard) stateCard;
+                        var card = stateCard;
                         if (card.SourceCard.Type == CartType.regular || trate.Status == BattleStatus.Active) continue;
                         BattleArena.ActiveBattleTurnService.AddTrateToActiveCard(StateService.ActivePlayer.ArenaCards[0],
                             trate);

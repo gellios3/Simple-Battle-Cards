@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Commands
 {
-    public class SaveGameCommand : Command
+    public class LoadGameCommand : Command
     {
         /// <summary>
         /// Load save sessipon data service
@@ -14,13 +14,17 @@ namespace Commands
         public LoadSaveGameService LoadSaveGameService { get; set; }
 
         /// <summary>
-        /// Execute event init areana
+        /// Execute event load game
         /// </summary>
         public override void Execute()
         {
-            Observable.Start(() => { LoadSaveGameService.SaveGameSession("Assets/Resources/SaveState/save-log.json"); })
+            Observable.Start(() => LoadSaveGameService.LoadGameSession("Assets/Resources/SaveState/save-log.json"))
                 .ObserveOnMainThread()
-                .Subscribe(res => { Debug.Log("Game Saved!"); });
+                .Subscribe(res =>
+                {
+                    Debug.Log(res);
+                    Debug.Log("Game Loaded!");
+                });
         }
     }
 }

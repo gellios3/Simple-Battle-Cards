@@ -25,7 +25,7 @@ namespace Commands
         public string CurrentLog { get; set; }
 
         /// <summary>
-        /// Execute event game finished
+        /// Execute event add log
         /// </summary>
         public override void Execute()
         {

@@ -1,5 +1,4 @@
-﻿using Models;
-using Models.Arena;
+﻿using Models.Arena;
 using Signals;
 using Signals.Arena;
 
@@ -36,7 +35,7 @@ namespace Services
         [Inject] public SaveGameSignal SaveGameSignal { get; set; }
 
         /// <summary>
-        /// Emulate Game
+        /// Emulate Game Session
         /// </summary>
         public void EmulateGameSession()
         {

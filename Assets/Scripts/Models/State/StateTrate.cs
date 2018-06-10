@@ -1,6 +1,4 @@
-﻿using Models.Arena;
-
-namespace Models.State
+﻿namespace Models.State
 {
     public class StateTrate : StateItem
     {

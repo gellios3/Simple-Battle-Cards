@@ -51,7 +51,8 @@ namespace Contexts
         {
             base.Start();
 
-            var startSignal = injectionBinder.GetInstance<CreateNewGameSignal>();
+//            var startSignal = injectionBinder.GetInstance<CreateNewGameSignal>();
+            var startSignal = injectionBinder.GetInstance<LoadGameSignal>();
             startSignal.Dispatch();
 
             return this;
@@ -68,7 +69,7 @@ namespace Contexts
             injectionBinder.Bind<BattleTurnService>().ToSingleton();
             injectionBinder.Bind<Arena>().ToSingleton();
             injectionBinder.Bind<BattleArena>().ToSingleton();
-            injectionBinder.Bind<SaveService>().ToSingleton();
+            injectionBinder.Bind<LoadSaveGameService>().ToSingleton();
 
             // Init sevises
             injectionBinder.Bind<PlayerCpuBehaviorService>().ToSingleton();
@@ -83,6 +84,7 @@ namespace Contexts
             injectionBinder.Bind<SaveLogSignal>().ToSingleton();
             injectionBinder.Bind<AddHistoryLogSignal>().ToSingleton();
             injectionBinder.Bind<SaveGameSignal>().ToSingleton();
+            injectionBinder.Bind<LoadGameSignal>().ToSingleton();
 
             // Init comands
             commandBinder.Bind<EndGameSignal>().To<GameFinishedCommand>();
@@ -91,6 +93,7 @@ namespace Contexts
             commandBinder.Bind<SaveLogSignal>().To<SaveLogCommand>();
             commandBinder.Bind<AddHistoryLogSignal>().To<AddLogCommand>();
             commandBinder.Bind<SaveGameSignal>().To<SaveGameCommand>();
+            commandBinder.Bind<LoadGameSignal>().To<LoadGameCommand>();
 
             // Init mediators
             mediationBinder.Bind<GameArenaView>().To<GameArenaMediator>();

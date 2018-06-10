@@ -2,10 +2,11 @@
 using Models.Arena;
 using Models.State;
 using Newtonsoft.Json;
+using UnityEngine;
 
 namespace Services
 {
-    public class SaveService
+    public class LoadSaveGameService
     {
         /// <summary>
         /// State service
@@ -22,10 +23,10 @@ namespace Services
         /// <summary>
         /// Save data
         /// </summary>
-        public void SaveData()
+        public void SaveGameSession(string path)
         {
             //open file stream
-            using (var file = File.CreateText("Assets/Resources/SaveState/save-log.json"))
+            using (var file = File.CreateText(path))
             {
                 var serializer = new JsonSerializer();
                 //serialize object directly into file stream
@@ -35,6 +36,17 @@ namespace Services
                     EnemyPlayer = StateService.GetStatePlayer(Arena.EnemyPlayer)
                 });
             }
+        }
+
+        /// <summary>
+        /// Load game session
+        /// </summary>
+        public StateData LoadGameSession(string path)
+        {
+            if (!File.Exists(path)) return null;
+            // Read the json from the file into a string
+            var dataAsJson = File.ReadAllText(path);
+            return JsonConvert.DeserializeObject<StateData>(dataAsJson);
         }
     }
 }
