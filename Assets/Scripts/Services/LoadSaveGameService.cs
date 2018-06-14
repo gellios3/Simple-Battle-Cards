@@ -1,7 +1,7 @@
 ﻿using System.IO;
+using Models;
 using Models.Arena;
 using Models.State;
-using Newtonsoft.Json;
 using UnityEngine;
 
 namespace Services
@@ -21,20 +21,30 @@ namespace Services
         public Arena Arena { get; set; }
 
         /// <summary>
+        /// Json Work Service
+        /// </summary>
+        [Inject]
+        public JsonWorkService JsonWorkService { get; set; }
+
+        /// <summary>
         /// Save data
         /// </summary>
         public void SaveGameSession(string path)
         {
-            //open file stream
-            using (var file = File.CreateText(path))
+            // create state history log
+            var stateData = new StateData
             {
-                var serializer = new JsonSerializer();
-                //serialize object directly into file stream
-                serializer.Serialize(file, new StateData
+                YourPlayer = StateService.GetStatePlayer(Arena.YourPlayer),
+                EnemyPlayer = StateService.GetStatePlayer(Arena.EnemyPlayer)
+            };
+
+            var json = JsonWorkService.SerializeToJson(stateData);
+            using (var fs = new FileStream(path, FileMode.Create))
+            {
+                using (var writer = new StreamWriter(fs))
                 {
-                    YourPlayer = StateService.GetStatePlayer(Arena.YourPlayer),
-                    EnemyPlayer = StateService.GetStatePlayer(Arena.EnemyPlayer)
-                });
+                    writer.Write(json);
+                }
             }
         }
 
@@ -46,7 +56,7 @@ namespace Services
             if (!File.Exists(path)) return null;
             // Read the json from the file into a string
             var dataAsJson = File.ReadAllText(path);
-            return JsonConvert.DeserializeObject<StateData>(dataAsJson);
+            return JsonUtility.FromJson<StateData>(dataAsJson);
         }
     }
 }

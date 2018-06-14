@@ -65,7 +65,7 @@ namespace Contexts
         protected override void mapBindings()
         {
             // init models
-            injectionBinder.Bind<Player>();
+            injectionBinder.Bind<JsonWorkService>().ToSingleton();
             injectionBinder.Bind<BattleTurnService>().ToSingleton();
             injectionBinder.Bind<Arena>().ToSingleton();
             injectionBinder.Bind<BattleArena>().ToSingleton();

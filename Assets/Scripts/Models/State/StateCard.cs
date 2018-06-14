@@ -1,28 +1,29 @@
-﻿using System.Collections.Generic;
-using Models.Arena;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Models.State
 {
+    [Serializable]
     public class StateCard : StateItem
     {
         /// <summary>
         /// Defence
         /// </summary>
-        public int Defence { get; set; }
+        public int Defence;
 
         /// <summary>
         /// Attack
         /// </summary>
-        public int Attack { get; set; }
+        public int Attack;
 
         /// <summary>
         /// Health
         /// </summary>
-        public int Health { get; set; }
+        public int Health;
 
         /// <summary>
         /// Battle tarates
         /// </summary>
-        public List<StateTrate> BattleTrates { get; set; }
+        public List<StateTrate> BattleTrates;
     }
 }

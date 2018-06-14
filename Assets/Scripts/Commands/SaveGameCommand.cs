@@ -18,7 +18,7 @@ namespace Commands
         /// </summary>
         public override void Execute()
         {
-            Observable.Start(() => { LoadSaveGameService.SaveGameSession("Assets/Resources/SaveState/save-log.json"); })
+            Observable.Start(() => { LoadSaveGameService.SaveGameSession("Assets/Resources/SaveState/save-log1.json"); })
                 .ObserveOnMainThread()
                 .Subscribe(res => { Debug.Log("Game Saved!"); });
         }

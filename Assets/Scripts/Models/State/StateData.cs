@@ -1,15 +1,18 @@
-﻿namespace Models.State
+﻿using System;
+
+namespace Models.State
 {
+    [Serializable]
     public class StateData
     {
         /// <summary>
         /// Yor player
         /// </summary>
-        public StatePlayer YourPlayer { get; set; }
-        
+        public StatePlayer YourPlayer;
+
         /// <summary>
         /// State player
         /// </summary>
-        public StatePlayer EnemyPlayer { get; set; }
+        public StatePlayer EnemyPlayer;
     }
 }

@@ -1,4 +1,5 @@
-﻿using Models;
+﻿using System.Text;
+using Models;
 using strange.extensions.command.impl;
 using Services;
 
@@ -22,14 +23,20 @@ namespace Commands
         /// Log type
         /// </summary>
         [Inject]
-        public string CurrentLog { get; set; }
+        public string[] CurrentLog { get; set; }
 
         /// <summary>
         /// Execute event add log
         /// </summary>
         public override void Execute()
         {
-            StateService.ActiveHistotyTurn.AddLog(CurrentLog, LogType);
+            var stringBuilder = new StringBuilder();
+            foreach (var str in CurrentLog)
+            {
+                stringBuilder.Append(str);
+            }
+
+            StateService.ActiveHistotyTurn.AddLog(stringBuilder.ToString(), LogType);
         }
     }
 }

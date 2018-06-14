@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Services;
 using Signals;
-using UnityEngine;
 
 namespace Models.Arena
 {
+    [Serializable]
     public class BattleArena
     {
         /// <summary>
@@ -18,7 +19,7 @@ namespace Models.Arena
         /// </summary>
         [Inject]
         public AddHistoryLogSignal AddHistoryLogSignal { get; set; }
-        
+
         /// <summary>
         /// Batle turn
         /// </summary>
@@ -66,7 +67,7 @@ namespace Models.Arena
             if (card != null)
             {
                 AddHistoryLogSignal.Dispatch(
-                    "Player \"" + StateService.ActivePlayer.Name + "\" Add \"" + card.SourceCard.name + "\" Card",
+                    new[] {"PLAYER \"", StateService.ActivePlayer.Name, "\" Add \"", card.SourceCard.name, "\" Card"},
                     LogType.Hand);
             }
 
@@ -74,8 +75,10 @@ namespace Models.Arena
             if (trate != null)
             {
                 AddHistoryLogSignal.Dispatch(
-                    "Player \"" + StateService.ActivePlayer.Name + "\" Add \"" + trate.SourceTrate.name + "\" Trate",
-                    LogType.Hand);
+                    new[]
+                    {
+                        "PLAYER \"", StateService.ActivePlayer.Name, "\" Add \"", trate.SourceTrate.name, "\" Trate"
+                    }, LogType.Hand);
             }
 
             StateService.ActivePlayer.BattlePull.RemoveAt(0);
@@ -95,9 +98,13 @@ namespace Models.Arena
                 if (card.Status == BattleStatus.Dead) continue;
                 if (card.Status != BattleStatus.Wait) continue;
                 card.Status = BattleStatus.Active;
+                // 
                 AddHistoryLogSignal.Dispatch(
-                    "PLAYER \"" + StateService.ActivePlayer.Name + "\" Activate sleep \"" + card.SourceCard.name +
-                    "\" battle card", LogType.Battle);
+                    new[]
+                    {
+                        "PLAYER \"", StateService.ActivePlayer.Name, "\" Activate sleep \"", card.SourceCard.name,
+                        "\" battle card!"
+                    }, LogType.Battle);
             }
 
             // Set wait status

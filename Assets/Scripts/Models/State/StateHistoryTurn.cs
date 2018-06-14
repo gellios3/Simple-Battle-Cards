@@ -3,16 +3,16 @@
 namespace Models.State
 {
     [Serializable]
-    public class StateTrate : StateItem
+    public class StateHistoryTurn
     {
         /// <summary>
-        /// Defence
+        /// Hand log
         /// </summary>
-        public int Defence;
+        public string[] HandLog;
 
         /// <summary>
-        /// Attack
+        /// Battle log
         /// </summary>
-        public int Health;
+        public string[] BattleLog;
     }
 }

@@ -36,7 +36,7 @@ namespace Commands
                 : Arena.YourPlayer;
             if (winPlayer.Status != PlayerStatus.Dead)
             {
-                AddHistoryLogSignal.Dispatch("\"" + winPlayer.Name + "\" WINS!", LogType.Battle);
+                AddHistoryLogSignal.Dispatch(new[] {"\"", winPlayer.Name, "\" WINS!"}, LogType.Battle);
             }
         }
     }
