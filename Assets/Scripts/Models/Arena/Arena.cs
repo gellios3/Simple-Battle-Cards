@@ -17,12 +17,12 @@ namespace Models.Arena
         /// <summary>
         ///  Init Battle Arena 
         /// </summary>
-        /// <param name="playerDeck"></param>
-        /// <param name="enemyDeck"></param>
-        public void Init(Deck playerDeck, Deck enemyDeck)
+        /// <param name="playerCartDeck"></param>
+        /// <param name="playerTrateDeck"></param>
+        public void Init(CartDeck playerCartDeck, TrateDeck playerTrateDeck)
         {
-            YourPlayer = new Player(playerDeck);
-            EnemyPlayer = new Player(enemyDeck);
+            YourPlayer = new Player(playerCartDeck, playerTrateDeck);
+            EnemyPlayer = new Player(playerCartDeck, playerTrateDeck);
         }
     }
 }

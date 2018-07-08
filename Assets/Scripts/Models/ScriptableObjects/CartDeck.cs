@@ -3,10 +3,9 @@ using UnityEngine;
 
 namespace Models.ScriptableObjects
 {
-    [CreateAssetMenu(fileName = "New deck", menuName = "Deck")]
-    public class Deck : ScriptableObject
+    [CreateAssetMenu(fileName = "New cart deck", menuName = "Cart Deck")]
+    public class CartDeck : ScriptableObject
     {
         public List<Card> Cards;
-        public List<Trate> Trates;
     }
 }
