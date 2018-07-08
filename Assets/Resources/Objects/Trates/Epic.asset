@@ -14,3 +14,7 @@ MonoBehaviour:
   Id: epic
   Defence: 10
   Health: 10
+  Attack: 0
+  Mana: 3
+  CriticalChance: 20
+  CriticalHit: 0.2

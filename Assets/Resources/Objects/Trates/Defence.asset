@@ -14,3 +14,7 @@ MonoBehaviour:
   Id: defence
   Defence: 10
   Health: 0
+  Attack: 0
+  Mana: 2
+  CriticalChance: 0
+  CriticalHit: 0

@@ -20,7 +20,7 @@ namespace Models
         /// <summary>
         /// Active atack cards
         /// </summary>
-        public List<BattleCard> ArenaCards { get; } = new List<BattleCard>();
+        public List<BattleCard> ArenaCards { get; set; } = new List<BattleCard>();
 
         /// <summary>
         /// Random battle pul with cartd 
@@ -56,6 +56,11 @@ namespace Models
         /// Hand limit count
         /// </summary>
         public const int CartToAddCount = 3;
+
+        /// <summary>
+        /// Arena rart count
+        /// </summary>
+        public const int ArenaCartCount = 6;
 
         /// <summary>
         /// Wait player

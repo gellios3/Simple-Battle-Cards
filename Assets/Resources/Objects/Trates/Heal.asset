@@ -14,3 +14,7 @@ MonoBehaviour:
   Id: heal
   Defence: 0
   Health: 10
+  Attack: 0
+  Mana: 2
+  CriticalChance: 0
+  CriticalHit: 0

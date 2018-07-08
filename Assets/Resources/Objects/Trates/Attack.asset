@@ -9,12 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e5d024e4897d634f80e63216dc4f4a9, type: 3}
-  m_Name: Atak
+  m_Name: Attack
   m_EditorClassIdentifier: 
-  Id: 
+  Id: attack
   Defence: 0
   Health: 0
-  Attack: 0
-  Mana: 0
-  CriticalChance: 0
-  CriticalHit: 0
+  Attack: 10
+  Mana: 2
+  CriticalChance: 20
+  CriticalHit: 0.5
