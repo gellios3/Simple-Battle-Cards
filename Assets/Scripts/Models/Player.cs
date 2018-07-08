@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Models.Arena;
 using Models.ScriptableObjects;
-using Models.State;
-using Services;
-using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace Models
 {
     public class Player
-    {      
+    {
         /// <summary>
         /// Player name 
         /// </summary>
@@ -27,9 +23,14 @@ namespace Models
         public List<BattleCard> ArenaCards { get; } = new List<BattleCard>();
 
         /// <summary>
-        /// Random battle pul with cartd and trates
+        /// Random battle pul with cartd 
         /// </summary>
-        public List<BattleItem> BattlePull { get; } = new List<BattleItem>();
+        public List<BattleCard> CardBattlePull { get; } = new List<BattleCard>();
+
+        /// <summary>
+        /// Random battle pul with  trates
+        /// </summary>
+        public List<BattleTrate> TrateBattlePull { get; } = new List<BattleTrate>();
 
         /// <summary>
         /// Random card positions
@@ -47,13 +48,14 @@ namespace Models
         public PlayerStatus Status { get; private set; }
 
         /// <summary>
-        /// Pull type
+        /// Hand limit count
         /// </summary>
-        private enum PullType
-        {
-            Card,
-            Trate
-        }
+        public const int HandLimitCount = 6;
+        
+        /// <summary>
+        /// Hand limit count
+        /// </summary>
+        public const int CartToAddCount = 3;
 
         /// <summary>
         /// Wait player
@@ -74,51 +76,29 @@ namespace Models
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="deck"></param>
-        public Player(Deck deck)
+        /// <param name="cartDeck"></param>
+        /// <param name="trateDeck"></param>
+        public Player(CartDeck cartDeck, TrateDeck trateDeck)
         {
             Status = PlayerStatus.FistTurn;
             // generate random positions
-            InitRandomPositions(_cardPositions, deck.Cards.Count);
-            InitRandomPositions(_tratePositions, deck.Trates.Count);
+            InitRandomPositions(_cardPositions, cartDeck.Cards.Count);
+            InitRandomPositions(_tratePositions, trateDeck.Trates.Count);
             var cardCount = 0;
             var trateCount = 0;
-            // fill battle pull
-            for (var i = 0; i < deck.Cards.Count + deck.Trates.Count; i++)
+            // fill card battle pull
+            foreach (var card in cartDeck.Cards)
             {
-                // get random type
-                var randomType = Random.Range(0, 2) == 0 ? PullType.Card : PullType.Trate;
-                switch (randomType)
-                {
-                    case PullType.Card:
-                        if (cardCount < deck.Cards.Count)
-                        {
-                            BattlePull.Add(new BattleCard(deck.Cards[_cardPositions[cardCount]]));
-                            cardCount++;
-                        }
-                        else if (trateCount < deck.Trates.Count)
-                        {
-                            BattlePull.Add(new BattleTrate(deck.Trates[_tratePositions[trateCount]]));
-                            trateCount++;
-                        }
-
-                        break;
-                    case PullType.Trate:
-                        if (trateCount < deck.Trates.Count)
-                        {
-                            BattlePull.Add(new BattleTrate(deck.Trates[_tratePositions[trateCount]]));
-                            trateCount++;
-                        }
-                        else if (cardCount < deck.Cards.Count)
-                        {
-                            BattlePull.Add(new BattleCard(deck.Cards[_cardPositions[cardCount]]));
-                            cardCount++;
-                        }
-
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
+                if (cardCount >= cartDeck.Cards.Count) continue;
+                CardBattlePull.Add(new BattleCard(cartDeck.Cards[_cardPositions[cardCount]]));
+                cardCount++;
+            }
+            // fill trate battle pull
+            foreach (var card in trateDeck.Trates)
+            {
+                if (trateCount >= trateDeck.Trates.Count) continue;
+                TrateBattlePull.Add(new BattleTrate(trateDeck.Trates[_tratePositions[trateCount]]));
+                trateCount++;
             }
         }
 

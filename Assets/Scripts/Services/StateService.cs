@@ -47,7 +47,7 @@ namespace Services
                 Name = player.Name,
                 BattleHand = GetStateItems(player.BattleHand),
                 ArenaCards = GetStateCards(player.ArenaCards),
-                BattlePull = GetStateItems(player.BattlePull),
+                BattlePull = GetStateItems(player.CardBattlePull),
                 isActive = ActivePlayer.Name == player.Name
             };
 

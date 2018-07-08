@@ -2,6 +2,8 @@
 using Models;
 using Models.Arena;
 using Models.ScriptableObjects;
+using Signals;
+using Signals.Arena;
 
 namespace Services
 {
@@ -24,6 +26,12 @@ namespace Services
         /// </summary>
         [Inject]
         public StateService StateService { get; set; }
+
+        /// <summary>
+        /// Add history log signal
+        /// </summary>
+        [Inject]
+        public AddHistoryLogSignal AddHistoryLogSignal { get; set; }
 
         /// <summary>
         /// Init turn
@@ -57,13 +65,14 @@ namespace Services
                 {
                     var trate = item as BattleTrate;
                     if (trate == null) continue;
-                    foreach (var stateCard in StateService.ActivePlayer.ArenaCards)
+                    if (!AddTrateToCard(trate))
                     {
-                        var card = stateCard;
-                        if (card.SourceCard.Type == CartType.regular || trate.Status == BattleStatus.Active) continue;
-                        BattleArena.ActiveBattleTurnService.AddTrateToActiveCard(StateService.ActivePlayer.ArenaCards[0],
-                            trate);
-                        trate.Status = BattleStatus.Active;
+                        // @todo call not enough space
+                        AddHistoryLogSignal.Dispatch(new[]
+                        {
+                            "PLAYER '", StateService.ActivePlayer.Name, "' has ERROR! Add Trate '",
+                            trate.SourceTrate.name, "'"
+                        }, LogType.Hand);
                     }
                 }
             }
@@ -88,6 +97,21 @@ namespace Services
 
             // End turn
             BattleArena.EndTurn();
+        }
+
+        private bool AddTrateToCard(BattleTrate trate)
+        {
+            
+            foreach (var arenaCard in StateService.ActivePlayer.ArenaCards)
+            {
+                if (trate.Status == BattleStatus.Active && arenaCard.Status != BattleStatus.Dead) continue;
+                // add trate to active cart and return true if them added
+                if (!BattleArena.ActiveBattleTurnService.AddTrateToActiveCard(arenaCard, trate)) continue;
+                trate.Status = BattleStatus.Active;
+                break;
+            }
+
+            return trate.Status == BattleStatus.Active;
         }
 
         /// <summary>

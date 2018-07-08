@@ -29,7 +29,7 @@ namespace Services
             // add history battle log
             AddHistoryLogSignal.Dispatch(new[]
             {
-                "Player \"", StateService.ActivePlayer.Name, "\" Add card \"", card.SourceCard.name, "\" to battle!"
+                "Player '", StateService.ActivePlayer.Name, "' Add card '", card.SourceCard.name, "' to battle!"
             }, LogType.Hand);
         }
 
@@ -38,15 +38,21 @@ namespace Services
         /// </summary>
         /// <param name="card"></param>
         /// <param name="trate"></param>
-        public void AddTrateToActiveCard(BattleCard card, BattleTrate trate)
+        public bool AddTrateToActiveCard(BattleCard card, BattleTrate trate)
         {
-            card.AddTrate(new BattleTrate(trate.SourceTrate));
-            // add history battle log
-            AddHistoryLogSignal.Dispatch(new[]
+            var status = card.AddTrate(new BattleTrate(trate.SourceTrate));
+
+            if (status)
             {
-                "Player \"", StateService.ActivePlayer.Name, "\" Add trate \"", trate.SourceTrate.name,
-                "\" to battle card \"", card.SourceCard.name, "\""
-            }, LogType.Hand);
+                // add history battle log
+                AddHistoryLogSignal.Dispatch(new[]
+                {
+                    "Player '", StateService.ActivePlayer.Name, "' Add trate '", trate.SourceTrate.name,
+                    "' to battle card '", card.SourceCard.name, "'"
+                }, LogType.Hand);
+            }
+
+            return status;
         }
 
         /// <summary>
@@ -56,34 +62,57 @@ namespace Services
         /// <param name="enemyCard"></param>
         public void HitEnemyCard(BattleCard yourCard, BattleCard enemyCard)
         {
-            if (enemyCard.TakeDamage(yourCard.Attack))
+            if (enemyCard.TakeDamage(yourCard))
             {
                 AddHistoryLogSignal.Dispatch(new[]
                 {
-                    "Player \"", StateService.ActivePlayer.Name, "\" Use Card \"", yourCard.SourceCard.name,
-                    "\" hit CRITICAL ememy Card \"", enemyCard.SourceCard.name, "\""
+                    "Player '", StateService.ActivePlayer.Name, "' Use Card '", yourCard.SourceCard.name,
+                    "' hit CRITICAL ememy Card '", enemyCard.SourceCard.name, "'"
                 }, LogType.Battle);
             }
             else
             {
                 AddHistoryLogSignal.Dispatch(new[]
                 {
-                    "Player \"", StateService.ActivePlayer.Name, "\" Use Card \"", yourCard.SourceCard.name,
-                    "\" hit ememy Card \"", enemyCard.SourceCard.name, "\" take damage \"", yourCard.Attack + "\""
+                    "Player '", StateService.ActivePlayer.Name, "' Use Card '", yourCard.SourceCard.name,
+                    "' hit ememy Card '", enemyCard.SourceCard.name, "' take damage '", yourCard.Attack.ToString(), "'"
                 }, LogType.Battle);
             }
 
-            if (enemyCard.Status == BattleStatus.Dead)
+            // Emeny cart return attack
+            yourCard.TakeDamage(enemyCard, false);
+            AddHistoryLogSignal.Dispatch(new[]
             {
-                AddHistoryLogSignal.Dispatch(new[] {"Enemy Card \"", enemyCard.SourceCard.name, "\" has dead!"},
+                "Enemy Card '", enemyCard.SourceCard.name,
+                "' return  damage '", enemyCard.Attack.ToString(), "' to '", yourCard.SourceCard.name, "'"
+            }, LogType.Battle);
+
+
+            if (yourCard.Status == BattleStatus.Dead)
+            {
+                AddHistoryLogSignal.Dispatch(new[] {"Player Card '", yourCard.SourceCard.name, "' has dead!"},
                     LogType.Battle);
             }
             else
             {
                 AddHistoryLogSignal.Dispatch(new[]
                 {
-                    "Enemy card \"", enemyCard.SourceCard.name, "\" has \"", enemyCard.Health.ToString(),
-                    "\" Health and \"", enemyCard.Defence.ToString(), "\" Defence"
+                    "Player card '", yourCard.SourceCard.name, "' has '", yourCard.Health.ToString(),
+                    "' Health and '", yourCard.Defence.ToString(), "' Defence"
+                }, LogType.Battle);
+            }
+
+            if (enemyCard.Status == BattleStatus.Dead)
+            {
+                AddHistoryLogSignal.Dispatch(new[] {"Enemy Card '", enemyCard.SourceCard.name, "' has dead!"},
+                    LogType.Battle);
+            }
+            else
+            {
+                AddHistoryLogSignal.Dispatch(new[]
+                {
+                    "Enemy card '", enemyCard.SourceCard.name, "' has '", enemyCard.Health.ToString(),
+                    "' Health and '", enemyCard.Defence.ToString(), "' Defence"
                 }, LogType.Battle);
             }
         }

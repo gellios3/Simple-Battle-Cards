@@ -6,7 +6,6 @@ namespace Services
 {
     public class GenarateGameSessionService
     {
-
         /// <summary>
         /// Arena
         /// </summary>
@@ -18,21 +17,24 @@ namespace Services
         /// </summary>
         [Inject]
         public BattleArena BattleArena { get; set; }
-        
+
         /// <summary>
         /// Make turn Signal
         /// </summary>
-        [Inject] public MakeTurnSignal MakeTurnSignal { get; set; }
-        
+        [Inject]
+        public MakeTurnSignal MakeTurnSignal { get; set; }
+
         /// <summary>
         /// End game signal
         /// </summary>
-        [Inject] public EndGameSignal EndGameSignal { get; set; }
-        
+        [Inject]
+        public EndGameSignal EndGameSignal { get; set; }
+
         /// <summary>
         /// Save game signal
         /// </summary>
-        [Inject] public SaveGameSignal SaveGameSignal { get; set; }
+        [Inject]
+        public SaveGameSignal SaveGameSignal { get; set; }
 
         /// <summary>
         /// Emulate Game Session
@@ -47,9 +49,9 @@ namespace Services
                     ? Arena.YourPlayer
                     : Arena.EnemyPlayer;
 
-                if (count > 10)
+                if (count > 100)
                 {
-                    SaveGameSignal.Dispatch();
+//                    SaveGameSignal.Dispatch();
                     break;
                 }
 
@@ -60,7 +62,7 @@ namespace Services
                     MakeTurnSignal.Dispatch(player);
                     continue;
                 }
-                
+
                 EndGameSignal.Dispatch();
                 break;
             }
