@@ -54,8 +54,19 @@ namespace Services
             {
                 var card = item as BattleCard;
                 if (card == null) continue;
-                BattleArena.ActiveBattleTurnService.AddActiveCardFromHand(card);
-                card.Status = BattleStatus.Active;
+                if (BattleArena.ActiveBattleTurnService.AddActiveCardFromHand(card))
+                {
+                    card.Status = BattleStatus.Active;
+                }
+                else
+                {
+                    // @todo call not enough space in Arena
+                    AddHistoryLogSignal.Dispatch(new[]
+                    {
+                        "PLAYER '", StateService.ActivePlayer.Name, "' has ERROR! Add Cart '",
+                        card.SourceCard.name, "' to Arena 'not enough space'"
+                    }, LogType.Hand);
+                }
             }
 
             // add all trares to card
@@ -71,15 +82,16 @@ namespace Services
                         AddHistoryLogSignal.Dispatch(new[]
                         {
                             "PLAYER '", StateService.ActivePlayer.Name, "' has ERROR! Add Trate '",
-                            trate.SourceTrate.name, "'"
+                            trate.SourceTrate.name, "' to cart 'not enough space'"
                         }, LogType.Hand);
                     }
                 }
             }
 
             // Remove activate trate and cards
-            StateService.ActivePlayer.BattleHand =
-                StateService.ActivePlayer.BattleHand.FindAll(item => item.Status != BattleStatus.Active);
+            StateService.ActivePlayer.BattleHand = StateService.ActivePlayer.BattleHand.FindAll(
+                item => item.Status != BattleStatus.Active
+            );
 
             // Atack all emeny cards 
             var enemyCards = GetEnemyActiveCards();
@@ -90,7 +102,10 @@ namespace Services
                 {
                     foreach (var enemyCard in enemyCards.FindAll(card => card.Status != BattleStatus.Dead))
                     {
-                        BattleArena.ActiveBattleTurnService.HitEnemyCard(yourCard, enemyCard);
+                        if (yourCard.Status == BattleStatus.Active)
+                        {
+                            BattleArena.ActiveBattleTurnService.HitEnemyCard(yourCard, enemyCard);
+                        }
                     }
                 }
             }
@@ -101,7 +116,6 @@ namespace Services
 
         private bool AddTrateToCard(BattleTrate trate)
         {
-            
             foreach (var arenaCard in StateService.ActivePlayer.ArenaCards)
             {
                 if (trate.Status == BattleStatus.Active && arenaCard.Status != BattleStatus.Dead) continue;

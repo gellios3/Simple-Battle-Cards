@@ -12,5 +12,9 @@ MonoBehaviour:
   m_Name: Regular
   m_EditorClassIdentifier: 
   Id: regular
-  Defence: 2
-  Health: 2
+  Defence: 1
+  Health: 1
+  Attack: 1
+  Mana: 1
+  CriticalChance: 10
+  CriticalHit: 0.1

@@ -51,6 +51,9 @@ namespace Models.Arena
         /// </summary>
         public void InitActiveTurn()
         {
+            // Init mana pull
+            StateService.ActivePlayer.InitManaPull();
+            
             if (StateService.ActivePlayer.CardBattlePull.Count > 0)
             {
                 if (!AddCartToPlayerHand())
@@ -59,7 +62,7 @@ namespace Models.Arena
                 }
             }
 
-            for (var i = 1; i < Player.CartToAddCount; i++)
+            for (var i = 1; i < Arena.CartToAddCount; i++)
             {
                 if (Random.Range(0, 2) == 0)
                 {
@@ -89,7 +92,7 @@ namespace Models.Arena
         {
             var status = true;
 
-            if (StateService.ActivePlayer.BattleHand.Count < Player.HandLimitCount)
+            if (StateService.ActivePlayer.BattleHand.Count < Arena.HandLimitCount)
             {
                 StateService.ActivePlayer.BattleHand.Add(StateService.ActivePlayer.CardBattlePull[0]);
 
@@ -126,7 +129,7 @@ namespace Models.Arena
         {
             var status = true;
 
-            if (StateService.ActivePlayer.BattleHand.Count < Player.HandLimitCount)
+            if (StateService.ActivePlayer.BattleHand.Count < Arena.HandLimitCount)
             {
                 StateService.ActivePlayer.BattleHand.Add(StateService.ActivePlayer.TrateBattlePull[0]);
 
@@ -159,13 +162,21 @@ namespace Models.Arena
         /// </summary>
         public void EndTurn()
         {
-            // Switch active state
-            ActiveState = ActiveState == BattleState.YourTurn ? BattleState.EnemyTurn : BattleState.YourTurn;
+            // Activate all cards and remove dead carts
+            foreach (var arenaCard in StateService.ActivePlayer.ArenaCards)
+            {
+                if (arenaCard.Status != BattleStatus.Moving) continue;
+                arenaCard.Status = BattleStatus.Active;
+                AddHistoryLogSignal.Dispatch(new[]
+                {
+                    "PLAYER '", StateService.ActivePlayer.Name, "' Activate Moving '", arenaCard.SourceCard.name,
+                    "' battle card!"
+                }, LogType.Battle);
+            }
 
             // Set active all not dead areana cards 
             foreach (var card in StateService.ActivePlayer.ArenaCards)
             {
-                if (card.Status == BattleStatus.Dead) continue;
                 if (card.Status != BattleStatus.Wait) continue;
                 card.Status = BattleStatus.Active;
                 // 
@@ -175,6 +186,14 @@ namespace Models.Arena
                     "' battle card!"
                 }, LogType.Battle);
             }
+
+            // remove all dead carts
+            StateService.ActivePlayer.ArenaCards = StateService.ActivePlayer.ArenaCards.FindAll(
+                card => card.Status == BattleStatus.Active
+            );
+
+            // Switch active state
+            ActiveState = ActiveState == BattleState.YourTurn ? BattleState.EnemyTurn : BattleState.YourTurn;
 
             // Set wait status
             StateService.ActivePlayer.SetWaitStatus();
@@ -187,7 +206,7 @@ namespace Models.Arena
         /// <returns></returns>
         public bool IsGameOver(Player player)
         {
-            return player.CardBattlePull.Count == 0 &&
+            return player.CardBattlePull.Count == 0 && player.BattleHand.Count == 0 &&
                    player.ArenaCards.FindAll(card => card.Status != BattleStatus.Dead).Count == 0;
         }
     }

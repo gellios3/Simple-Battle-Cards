@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Models.Arena;
 using Models.ScriptableObjects;
-using Random = UnityEngine.Random;
+using UnityEngine;
 
 namespace Models
 {
@@ -20,7 +20,7 @@ namespace Models
         /// <summary>
         /// Active atack cards
         /// </summary>
-        public List<BattleCard> ArenaCards { get; } = new List<BattleCard>();
+        public List<BattleCard> ArenaCards { get; set; } = new List<BattleCard>();
 
         /// <summary>
         /// Random battle pul with cartd 
@@ -43,19 +43,14 @@ namespace Models
         private readonly List<int> _tratePositions = new List<int>();
 
         /// <summary>
+        /// Mana pull
+        /// </summary>
+        private int _manaPull;
+
+        /// <summary>
         /// Player Status
         /// </summary>
         public PlayerStatus Status { get; private set; }
-
-        /// <summary>
-        /// Hand limit count
-        /// </summary>
-        public const int HandLimitCount = 6;
-        
-        /// <summary>
-        /// Hand limit count
-        /// </summary>
-        public const int CartToAddCount = 3;
 
         /// <summary>
         /// Wait player
@@ -71,6 +66,26 @@ namespace Models
         public void SetActiveStatus()
         {
             Status = PlayerStatus.Active;
+        }
+
+        /// <summary>
+        /// InitManaPull
+        /// </summary>
+        public void InitManaPull()
+        {
+            _manaPull = Arena.Arena.ManaPullCount;
+        }
+
+        /// <summary>
+        /// Less mana pull
+        /// </summary>
+        /// <param name="lessCount"></param>
+        public void LessManaPull(int lessCount)
+        {
+            if (_manaPull > lessCount)
+            {
+                _manaPull -= lessCount;
+            }
         }
 
         /// <summary>
@@ -93,6 +108,7 @@ namespace Models
                 CardBattlePull.Add(new BattleCard(cartDeck.Cards[_cardPositions[cardCount]]));
                 cardCount++;
             }
+
             // fill trate battle pull
             foreach (var card in trateDeck.Trates)
             {

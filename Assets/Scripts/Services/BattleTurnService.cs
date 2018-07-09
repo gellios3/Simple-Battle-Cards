@@ -22,15 +22,19 @@ namespace Services
         /// Add active card from hand
         /// </summary>
         /// <param name="card"></param>
-        public void AddActiveCardFromHand(BattleCard card)
+        public bool AddActiveCardFromHand(BattleCard card)
         {
-            if (card.Status != BattleStatus.Wait) return;
+            if (StateService.ActivePlayer.ArenaCards.Count >= Arena.ArenaCartCount ||
+                card.Status != BattleStatus.Wait) return false;
+
             StateService.ActivePlayer.ArenaCards.Add(new BattleCard(card.SourceCard));
             // add history battle log
             AddHistoryLogSignal.Dispatch(new[]
             {
                 "Player '", StateService.ActivePlayer.Name, "' Add card '", card.SourceCard.name, "' to battle!"
             }, LogType.Hand);
+
+            return true;
         }
 
         /// <summary>
@@ -95,6 +99,7 @@ namespace Services
             }
             else
             {
+                yourCard.Status = BattleStatus.Moving;
                 AddHistoryLogSignal.Dispatch(new[]
                 {
                     "Player card '", yourCard.SourceCard.name, "' has '", yourCard.Health.ToString(),

@@ -9,17 +9,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d7f52f323def130438382cfa6cc8bc79, type: 3}
-  m_Name: CraftRegular
+  m_Name: Big
   m_EditorClassIdentifier: 
-  name: Craft
-  Id: craft_regular
+  name: Big
+  Id: big
   Description: 
   Artwork: {fileID: 0}
-  Defence: 5
-  Attack: 2
-  Health: 5
-  CriticalChance: 10
-  Trates:
-  - {fileID: 11400000, guid: 158597b79964ff84c8d18d0a2e232e55, type: 2}
-  - {fileID: 11400000, guid: 158597b79964ff84c8d18d0a2e232e55, type: 2}
-  Type: 2
+  Defence: 10
+  Attack: 7
+  Health: 2
+  Mana: 3
+  CriticalChance: 15
+  CriticalHit: 2
