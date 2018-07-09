@@ -24,7 +24,7 @@ namespace Services
         /// <param name="card"></param>
         public bool AddActiveCardFromHand(BattleCard card)
         {
-            if (StateService.ActivePlayer.ArenaCards.Count >= Player.ArenaCartCount ||
+            if (StateService.ActivePlayer.ArenaCards.Count >= Arena.ArenaCartCount ||
                 card.Status != BattleStatus.Wait) return false;
 
             StateService.ActivePlayer.ArenaCards.Add(new BattleCard(card.SourceCard));

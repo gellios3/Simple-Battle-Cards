@@ -51,6 +51,9 @@ namespace Models.Arena
         /// </summary>
         public void InitActiveTurn()
         {
+            // Init mana pull
+            StateService.ActivePlayer.InitManaPull();
+            
             if (StateService.ActivePlayer.CardBattlePull.Count > 0)
             {
                 if (!AddCartToPlayerHand())
@@ -59,7 +62,7 @@ namespace Models.Arena
                 }
             }
 
-            for (var i = 1; i < Player.CartToAddCount; i++)
+            for (var i = 1; i < Arena.CartToAddCount; i++)
             {
                 if (Random.Range(0, 2) == 0)
                 {
@@ -89,7 +92,7 @@ namespace Models.Arena
         {
             var status = true;
 
-            if (StateService.ActivePlayer.BattleHand.Count < Player.HandLimitCount)
+            if (StateService.ActivePlayer.BattleHand.Count < Arena.HandLimitCount)
             {
                 StateService.ActivePlayer.BattleHand.Add(StateService.ActivePlayer.CardBattlePull[0]);
 
@@ -126,7 +129,7 @@ namespace Models.Arena
         {
             var status = true;
 
-            if (StateService.ActivePlayer.BattleHand.Count < Player.HandLimitCount)
+            if (StateService.ActivePlayer.BattleHand.Count < Arena.HandLimitCount)
             {
                 StateService.ActivePlayer.BattleHand.Add(StateService.ActivePlayer.TrateBattlePull[0]);
 

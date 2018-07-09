@@ -12,10 +12,24 @@ namespace Models.ScriptableObjects
 
         public Sprite Artwork;
 
+        /// <summary>
+        /// Defence
+        /// </summary>
         public int Defence;
+        
+        /// <summary>
+        /// Attack
+        /// </summary>
         public int Attack;
+        
+        /// <summary>
+        /// Health
+        /// </summary>
         public int Health;
 
+        /// <summary>
+        /// Mana
+        /// </summary>
         public int Mana;
 
         /// <summary>
