@@ -45,47 +45,25 @@ namespace Models
         /// <summary>
         /// Mana pull
         /// </summary>
-        private int _manaPull;
-
-        /// <summary>
-        /// Player Status
-        /// </summary>
-        public PlayerStatus Status { get; private set; }
-
-        /// <summary>
-        /// Wait player
-        /// </summary>
-        public void SetWaitStatus()
-        {
-            Status = PlayerStatus.Wait;
-        }
-
-        /// <summary>
-        /// Activate Player
-        /// </summary>
-        public void SetActiveStatus()
-        {
-            Status = PlayerStatus.Active;
-        }
+        public int ManaPull { get; private set; }
 
         /// <summary>
         /// InitManaPull
         /// </summary>
         public void InitManaPull()
         {
-            _manaPull = Arena.Arena.ManaPullCount;
+            ManaPull = Arena.Arena.ManaPullCount;
         }
 
         /// <summary>
         /// Less mana pull
         /// </summary>
         /// <param name="lessCount"></param>
-        public void LessManaPull(int lessCount)
+        public bool LessManaPull(int lessCount)
         {
-            if (_manaPull > lessCount)
-            {
-                _manaPull -= lessCount;
-            }
+            if (ManaPull < lessCount) return false;
+            ManaPull -= lessCount;
+            return true;
         }
 
         /// <summary>
@@ -95,7 +73,7 @@ namespace Models
         /// <param name="trateDeck"></param>
         public Player(CartDeck cartDeck, TrateDeck trateDeck)
         {
-            Status = PlayerStatus.FistTurn;
+//            Status = PlayerStatus.FistTurn;
             // generate random positions
             InitRandomPositions(_cardPositions, cartDeck.Cards.Count);
             InitRandomPositions(_tratePositions, trateDeck.Trates.Count);
@@ -141,13 +119,5 @@ namespace Models
                 break;
             }
         }
-    }
-
-    public enum PlayerStatus
-    {
-        Wait,
-        Dead,
-        FistTurn,
-        Active
     }
 }

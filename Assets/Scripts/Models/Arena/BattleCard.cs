@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Models.ScriptableObjects;
-using Services;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -34,6 +33,11 @@ namespace Models.Arena
         public float CriticalHit { get; private set; }
 
         /// <summary>
+        /// Mana
+        /// </summary>
+        public int Mana { get; }
+
+        /// <summary>
         /// Source card
         /// </summary>
         public Card SourceCard { get; }
@@ -46,7 +50,7 @@ namespace Models.Arena
         /// <summary>
         /// Max tates count
         /// </summary>
-        private const int MaxTratesCount = 3;
+        public const int MaxTratesCount = 3;
 
         /// <summary>
         /// Constructor
@@ -61,6 +65,7 @@ namespace Models.Arena
             Health = card.Health;
             CriticalChance = card.CriticalChance;
             CriticalHit = card.CriticalHit;
+            Mana = card.Mana;
             Status = BattleStatus.Wait;
         }
 
@@ -129,16 +134,14 @@ namespace Models.Arena
         /// Add trate to battle card
         /// </summary>
         /// <param name="trate"></param>
-        public bool AddTrate(BattleTrate trate)
-        {
-            if (BattleTrates.Count >= MaxTratesCount) return false;
+        public void AddTrate(BattleTrate trate)
+        {        
             Defence += trate.Defence;
             Health += trate.Health;
             Attack += trate.Attack;
             CriticalChance += trate.CriticalChance;
             CriticalHit += trate.CriticalHit;
             BattleTrates.Add(trate);
-            return true;
         }
     }
 }

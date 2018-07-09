@@ -51,7 +51,7 @@ namespace Services
 
                 if (count > 100)
                 {
-//                    SaveGameSignal.Dispatch();
+                    SaveGameSignal.Dispatch();
                     break;
                 }
 

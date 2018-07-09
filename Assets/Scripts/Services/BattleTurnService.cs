@@ -22,10 +22,30 @@ namespace Services
         /// Add active card from hand
         /// </summary>
         /// <param name="card"></param>
-        public bool AddActiveCardFromHand(BattleCard card)
+        public bool AddCardToArenaFromHand(BattleCard card)
         {
             if (StateService.ActivePlayer.ArenaCards.Count >= Arena.ArenaCartCount ||
-                card.Status != BattleStatus.Wait) return false;
+                card.Status != BattleStatus.Wait)
+            {
+                //@todo call not enough space in Arena
+                AddHistoryLogSignal.Dispatch(new[]
+                {
+                    "PLAYER '", StateService.ActivePlayer.Name, "' has ERROR! Add Cart '",
+                    card.SourceCard.name, "' to Arena 'not enough space'"
+                }, LogType.Hand);
+                return false;
+            }
+
+            if (!StateService.ActivePlayer.LessManaPull(card.Mana))
+            {
+                //@todo call not enough mana!
+                AddHistoryLogSignal.Dispatch(new[]
+                {
+                    "Player '", StateService.ActivePlayer.Name, "' Has ERROR! add card '", card.SourceCard.name,
+                    "' to battle 'not enough mana!'"
+                }, LogType.Hand);
+                return false;
+            }
 
             StateService.ActivePlayer.ArenaCards.Add(new BattleCard(card.SourceCard));
             // add history battle log
@@ -44,10 +64,11 @@ namespace Services
         /// <param name="trate"></param>
         public bool AddTrateToActiveCard(BattleCard card, BattleTrate trate)
         {
-            var status = card.AddTrate(new BattleTrate(trate.SourceTrate));
+            if (card.BattleTrates.Count >= BattleCard.MaxTratesCount) return false;
 
-            if (status)
+            if (StateService.ActivePlayer.LessManaPull(trate.Mana))
             {
+                card.AddTrate(new BattleTrate(trate.SourceTrate));
                 // add history battle log
                 AddHistoryLogSignal.Dispatch(new[]
                 {
@@ -55,8 +76,19 @@ namespace Services
                     "' to battle card '", card.SourceCard.name, "'"
                 }, LogType.Hand);
             }
+            else
+            {
+                //@todo call not enough mana!
+                AddHistoryLogSignal.Dispatch(new[]
+                {
+                    "Player '", StateService.ActivePlayer.Name, "' Has ERROR! 'Add trate' '",
+                    trate.SourceTrate.name,
+                    "' to battle card '", card.SourceCard.name, "' 'not enough mana!'"
+                }, LogType.Hand);
+                return false;
+            }
 
-            return status;
+            return true;
         }
 
         /// <summary>
