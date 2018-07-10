@@ -5,7 +5,7 @@ namespace Interfaces
 {
     public interface IServerConnector
     {
-        void Connect();
+        void Connect(string url, int port);
         void DisconectFromServer();
 
         void Send(short msgId, MessageBase msg);

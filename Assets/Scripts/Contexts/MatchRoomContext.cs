@@ -1,4 +1,6 @@
-﻿using Client;
+﻿using Commands.Multiplayer;
+using Handlers;
+using Mediators;
 using strange.extensions.command.api;
 using strange.extensions.command.impl;
 using strange.extensions.context.api;
@@ -6,6 +8,7 @@ using strange.extensions.context.impl;
 using Services.Multiplayer;
 using Signals.multiplayer;
 using UnityEngine;
+using View.Multiplayer;
 
 namespace Contexts
 {
@@ -46,10 +49,8 @@ namespace Contexts
         public override IContext Start()
         {
             base.Start();
-
-//            var startSignal = injectionBinder.GetInstance<CreateNewGameSignal>();
-//            var startSignal = injectionBinder.GetInstance<LoadGameSignal>();
-//            startSignal.Dispatch();
+            var startSignal = injectionBinder.GetInstance<ConnectToServerSignal>();
+            startSignal.Dispatch();
 
             return this;
         }
@@ -61,19 +62,22 @@ namespace Contexts
         protected override void mapBindings()
         {
             // init Signals
-            injectionBinder.Bind<ConnectToServerSignal>().ToSingleton(); 
-            injectionBinder.Bind<ServerConnectedSignal>().ToSingleton();
-            injectionBinder.Bind<DisonnectedFromServerSignal>().ToSingleton();
-            
+            injectionBinder.Bind<ServerConnectedSignal>().ToSingleton().CrossContext();
+            injectionBinder.Bind<DisonnectedFromServerSignal>().ToSingleton().CrossContext();
+            injectionBinder.Bind<GetEnemyTurnSignal>().ToSingleton().CrossContext();
             
             // init models
 
             //Bind Services
-            injectionBinder.Bind<ServerConnectorService>().ToSingleton();
-
+            injectionBinder.Bind<ServerConnectorService>().ToSingleton().CrossContext();
+            injectionBinder.Bind<GetEnemyTurnHandler>().ToSingleton().CrossContext();
+            
             // Init comands
+            commandBinder.Bind<ConnectToServerSignal>().To<ConectToServerCommand>();
+            commandBinder.Bind<ServerConnectedSignal>().To<ServerConectedCommand>().Once();
 
             // Init mediators
+            mediationBinder.Bind<MathRoomView>().To<MathRoomMediator>();
         }
     }
 }

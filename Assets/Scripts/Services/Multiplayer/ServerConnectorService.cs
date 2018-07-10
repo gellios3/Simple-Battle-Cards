@@ -10,16 +10,6 @@ namespace Services.Multiplayer
     public class ServerConnectorService : IServerConnector
     {
         /// <summary>
-        /// Server url
-        /// </summary>
-        private const string Url = "localhost";
-
-        /// <summary>
-        /// Server port
-        /// </summary>
-        private const int Port = 45555;
-
-        /// <summary>
         /// Network client
         /// </summary>
         private NetworkClient _client;
@@ -39,10 +29,10 @@ namespace Services.Multiplayer
         /// </summary>
         [Inject] public GetEnemyTurnHandler GetEnemyTurnHandler { get; set; }
 
-        public void Connect()
+        public void Connect(string url, int port)
         {
             _client = new NetworkClient();
-            _client.Connect(Url, Port);
+            _client.Connect(url, port);
             _client.RegisterHandler(MsgType.Connect, msg => { ServerConnectedSignal.Dispatch(); });
             RegisterHandlers(new List<IServerMessageHandler> {GetEnemyTurnHandler});
         }
