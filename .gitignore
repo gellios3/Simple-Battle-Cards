@@ -36,3 +36,6 @@ sysinfo.txt
 *.unitypackage
 /.idea
 /Assets/StrangeIoC
+/Assets/Plugins
+/Assets/StrangeIoC.meta
+/ProjectSettings/ProjectVersion.txt

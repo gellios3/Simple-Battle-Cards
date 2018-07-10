@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using Models;
 using Models.Arena;
-using Models.ScriptableObjects;
 using Signals;
-using Signals.Arena;
 
 namespace Services
 {
@@ -50,41 +48,33 @@ namespace Services
         public void MakeBattleTurn()
         {
             // add all cards to battle arena
-            foreach (var item in StateService.ActivePlayer.BattleHand)
+
+            foreach (var battleItem in StateService.ActivePlayer.BattleHand.FindAll(item =>
             {
                 var card = item as BattleCard;
-                if (card == null) continue;
-                if (BattleArena.ActiveBattleTurnService.AddActiveCardFromHand(card))
+                return card != null;
+            }))
+            {
+                var item = (BattleCard) battleItem;
+                if (StateService.ActivePlayer.ManaPull <= 0) continue;
+                if (BattleArena.ActiveBattleTurnService.AddCardToArenaFromHand(item))
                 {
-                    card.Status = BattleStatus.Active;
-                }
-                else
-                {
-                    // @todo call not enough space in Arena
-                    AddHistoryLogSignal.Dispatch(new[]
-                    {
-                        "PLAYER '", StateService.ActivePlayer.Name, "' has ERROR! Add Cart '",
-                        card.SourceCard.name, "' to Arena 'not enough space'"
-                    }, LogType.Hand);
+                    item.Status = BattleStatus.Active;
                 }
             }
 
             // add all trares to card
             if (StateService.ActivePlayer.ArenaCards.Count > 0)
             {
-                foreach (var item in StateService.ActivePlayer.BattleHand)
+                foreach (var battleItem in StateService.ActivePlayer.BattleHand.FindAll(item =>
                 {
                     var trate = item as BattleTrate;
-                    if (trate == null) continue;
-                    if (!AddTrateToCard(trate))
-                    {
-                        // @todo call not enough space
-                        AddHistoryLogSignal.Dispatch(new[]
-                        {
-                            "PLAYER '", StateService.ActivePlayer.Name, "' has ERROR! Add Trate '",
-                            trate.SourceTrate.name, "' to cart 'not enough space'"
-                        }, LogType.Hand);
-                    }
+                    return trate != null;
+                }))
+                {
+                    var trate = (BattleTrate) battleItem;
+                    if (StateService.ActivePlayer.ManaPull <= 0 || StateService.ActivePlayer.ManaPull < trate.Mana) continue;
+                    AddTrateToCard(trate);
                 }
             }
 
@@ -114,7 +104,12 @@ namespace Services
             BattleArena.EndTurn();
         }
 
-        private bool AddTrateToCard(BattleTrate trate)
+        /// <summary>
+        /// Add trate to card
+        /// </summary>
+        /// <param name="trate"></param>
+        /// <returns></returns>
+        private void AddTrateToCard(BattleTrate trate)
         {
             foreach (var arenaCard in StateService.ActivePlayer.ArenaCards)
             {
@@ -125,7 +120,15 @@ namespace Services
                 break;
             }
 
-            return trate.Status == BattleStatus.Active;
+            if (trate.Status != BattleStatus.Active)
+            {
+                // @todo call not enough space
+                AddHistoryLogSignal.Dispatch(new[]
+                {
+                    "PLAYER '", StateService.ActivePlayer.Name, "' has ERROR! Add Trate '",
+                    trate.SourceTrate.name, "' to cart 'not enough space'"
+                }, LogType.Hand);
+            }
         }
 
         /// <summary>

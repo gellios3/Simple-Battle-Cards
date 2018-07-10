@@ -29,7 +29,6 @@ namespace Models.Arena
         /// </summary>
         public const int ArenaCartCount = 6;
         
-        
         /// <summary>
         /// Mana pull count
         /// </summary>

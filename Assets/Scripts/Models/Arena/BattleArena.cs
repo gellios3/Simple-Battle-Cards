@@ -51,9 +51,23 @@ namespace Models.Arena
         /// </summary>
         public void InitActiveTurn()
         {
+            // Increase turn count
+            StateService.IncreaseTurnCount();
+
+            // @todo call init turn 
+            AddHistoryLogSignal.Dispatch(new[] {"INIT '", StateService.TurnCount.ToString(), "' TURN!"}, LogType.Hand);
+
+            // On 2 Turn add more carts 
+            var addCartcount = Arena.CartToAddCount;
+            if (StateService.TurnCount == 2)
+            {
+                addCartcount++;
+            }
+
             // Init mana pull
             StateService.ActivePlayer.InitManaPull();
-            
+
+            // Add 3 item to hand
             if (StateService.ActivePlayer.CardBattlePull.Count > 0)
             {
                 if (!AddCartToPlayerHand())
@@ -62,7 +76,7 @@ namespace Models.Arena
                 }
             }
 
-            for (var i = 1; i < Arena.CartToAddCount; i++)
+            for (var i = 1; i < addCartcount; i++)
             {
                 if (Random.Range(0, 2) == 0)
                 {
@@ -81,8 +95,6 @@ namespace Models.Arena
                     }
                 }
             }
-
-            StateService.ActivePlayer.SetActiveStatus();
         }
 
         /// <summary>
@@ -194,9 +206,6 @@ namespace Models.Arena
 
             // Switch active state
             ActiveState = ActiveState == BattleState.YourTurn ? BattleState.EnemyTurn : BattleState.YourTurn;
-
-            // Set wait status
-            StateService.ActivePlayer.SetWaitStatus();
         }
 
         /// <summary>
@@ -206,7 +215,12 @@ namespace Models.Arena
         /// <returns></returns>
         public bool IsGameOver(Player player)
         {
-            return player.CardBattlePull.Count == 0 && player.BattleHand.Count == 0 &&
+            return player.CardBattlePull.Count == 0 &&
+                   player.BattleHand.FindAll(item =>
+                   {
+                       var card = item as BattleCard;
+                       return card != null;
+                   }).Count == 0 &&
                    player.ArenaCards.FindAll(card => card.Status != BattleStatus.Dead).Count == 0;
         }
     }

@@ -18,6 +18,16 @@ namespace Services
         /// </summary>
         public HistoryTurn ActiveHistotyTurn { get; private set; }
 
+        public int TurnCount { get; private set; }
+
+        /// <summary>
+        /// Increase turn count
+        /// </summary>
+        public void IncreaseTurnCount()
+        {
+            TurnCount++;
+        }
+
         /// <summary>
         /// Init active History turn
         /// </summary>
