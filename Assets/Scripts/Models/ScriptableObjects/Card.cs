@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Models.ScriptableObjects
@@ -13,20 +12,34 @@ namespace Models.ScriptableObjects
 
         public Sprite Artwork;
 
+        /// <summary>
+        /// Defence
+        /// </summary>
         public int Defence;
+        
+        /// <summary>
+        /// Attack
+        /// </summary>
         public int Attack;
+        
+        /// <summary>
+        /// Health
+        /// </summary>
         public int Health;
 
+        /// <summary>
+        /// Mana
+        /// </summary>
+        public int Mana;
+
+        /// <summary>
+        /// Critical chance
+        /// </summary>
         public int CriticalChance;
 
-        public List<Trate> Trates;
-        public CartType Type;
-    }
-
-    public enum CartType
-    {
-        regular,
-        epic,
-        craft
+        /// <summary>
+        /// Critical hit
+        /// </summary>
+        public float CriticalHit;
     }
 }

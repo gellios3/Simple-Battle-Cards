@@ -51,8 +51,8 @@ namespace Contexts
         {
             base.Start();
 
-//            var startSignal = injectionBinder.GetInstance<CreateNewGameSignal>();
-            var startSignal = injectionBinder.GetInstance<LoadGameSignal>();
+            var startSignal = injectionBinder.GetInstance<CreateNewGameSignal>();
+//            var startSignal = injectionBinder.GetInstance<LoadGameSignal>();
             startSignal.Dispatch();
 
             return this;

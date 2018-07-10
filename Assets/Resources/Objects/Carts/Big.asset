@@ -8,13 +8,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e5d024e4897d634f80e63216dc4f4a9, type: 3}
-  m_Name: Regular
+  m_Script: {fileID: 11500000, guid: d7f52f323def130438382cfa6cc8bc79, type: 3}
+  m_Name: Big
   m_EditorClassIdentifier: 
-  Id: regular
-  Defence: 1
-  Health: 1
-  Attack: 1
-  Mana: 1
-  CriticalChance: 10
-  CriticalHit: 0.1
+  name: Big
+  Id: big
+  Description: 
+  Artwork: {fileID: 0}
+  Defence: 10
+  Attack: 7
+  Health: 2
+  Mana: 3
+  CriticalChance: 15
+  CriticalHit: 2

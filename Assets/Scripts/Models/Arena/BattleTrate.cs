@@ -16,6 +16,26 @@ namespace Models.Arena
         public int Health { get; }
 
         /// <summary>
+        /// Attack
+        /// </summary>
+        public int Attack { get; }
+
+        /// <summary>
+        /// Mana
+        /// </summary>
+        public int Mana { get; }
+
+        /// <summary>
+        /// Critical chance
+        /// </summary>
+        public int CriticalChance { get; }
+
+        /// <summary>
+        /// Critical hit
+        /// </summary>
+        public float CriticalHit { get; }
+
+        /// <summary>
         /// Source trate
         /// </summary>
         public Trate SourceTrate { get; }
@@ -24,20 +44,17 @@ namespace Models.Arena
         /// Constructor
         /// </summary>
         /// <param name="trate"></param>
-        public BattleTrate(Trate trate = null)
+        public BattleTrate(Trate trate)
         {
             Status = BattleStatus.Wait;
-            if (trate != null)
-            {
-                SourceTrate = trate;
-                Defence = trate.Defence;
-                Health = trate.Health;
-            }
-            else
-            {
-                Defence = Random.Range(0, 5);
-                Health = Random.Range(0, 5);
-            }
+
+            SourceTrate = trate;
+            Defence = trate.Defence;
+            Health = trate.Health;
+            Attack = trate.Attack;
+            Mana = trate.Mana;
+            CriticalChance = trate.CriticalChance;
+            CriticalHit = trate.CriticalHit;
         }
     }
 }

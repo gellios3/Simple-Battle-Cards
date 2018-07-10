@@ -39,11 +39,12 @@ namespace Commands
         public override void Execute()
         {
             // Load regular deck
-            var deck = Resources.Load<Deck>("Objects/Decks/Regular");
+            var cartDeck = Resources.Load<CartDeck>("Objects/Decks/CartDeck");
+            var trateDeck = Resources.Load<TrateDeck>("Objects/Decks/TrateDeck");
             // Init batle in your turn
             BattleArena.ActiveState = BattleState.YourTurn;
             // init arena
-            Arena.Init(deck, deck);
+            Arena.Init(cartDeck, trateDeck);
             Arena.YourPlayer.Name = "HUMAN";
             Arena.EnemyPlayer.Name = "CPU 1";
             // Emulate game session

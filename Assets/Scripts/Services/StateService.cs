@@ -18,6 +18,16 @@ namespace Services
         /// </summary>
         public HistoryTurn ActiveHistotyTurn { get; private set; }
 
+        public int TurnCount { get; private set; }
+
+        /// <summary>
+        /// Increase turn count
+        /// </summary>
+        public void IncreaseTurnCount()
+        {
+            TurnCount++;
+        }
+
         /// <summary>
         /// Init active History turn
         /// </summary>
@@ -47,7 +57,7 @@ namespace Services
                 Name = player.Name,
                 BattleHand = GetStateItems(player.BattleHand),
                 ArenaCards = GetStateCards(player.ArenaCards),
-                BattlePull = GetStateItems(player.BattlePull),
+                BattlePull = GetStateItems(player.CardBattlePull),
                 isActive = ActivePlayer.Name == player.Name
             };
 

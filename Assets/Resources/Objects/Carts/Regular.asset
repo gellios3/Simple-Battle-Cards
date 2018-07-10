@@ -15,9 +15,9 @@ MonoBehaviour:
   Id: regular
   Description: Regular cart
   Artwork: {fileID: 0}
-  Defence: 2
-  Attack: 2
+  Defence: 3
+  Attack: 3
   Health: 5
-  CriticalChance: 5
-  Trates: []
-  Type: 0
+  Mana: 2
+  CriticalChance: 10
+  CriticalHit: 1.5

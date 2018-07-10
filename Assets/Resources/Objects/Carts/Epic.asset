@@ -16,8 +16,8 @@ MonoBehaviour:
   Description: Epic cart
   Artwork: {fileID: 0}
   Defence: 5
-  Attack: 5
+  Attack: 10
   Health: 10
-  CriticalChance: 15
-  Trates: []
-  Type: 1
+  Mana: 3
+  CriticalChance: 20
+  CriticalHit: 2
