@@ -18,6 +18,6 @@ MonoBehaviour:
   Defence: 0
   Attack: 10
   Health: 2
-  Mana: 4
+  Mana: 3
   CriticalChance: 50
   CriticalHit: 3

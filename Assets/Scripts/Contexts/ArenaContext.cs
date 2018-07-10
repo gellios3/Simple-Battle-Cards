@@ -1,5 +1,4 @@
 ﻿using Commands;
-using Models;
 using Models.Arena;
 using strange.extensions.command.api;
 using strange.extensions.command.impl;
