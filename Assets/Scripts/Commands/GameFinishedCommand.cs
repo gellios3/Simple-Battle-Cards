@@ -35,6 +35,7 @@ namespace Commands
                 ? Arena.EnemyPlayer
                 : Arena.YourPlayer;
             AddHistoryLogSignal.Dispatch(new[] {"\"", winPlayer.Name, "' WINS!"}, LogType.Battle);
+            // @todo call view 
         }
     }
 }

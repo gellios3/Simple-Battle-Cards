@@ -17,26 +17,44 @@ namespace Services.Multiplayer
         /// <summary>
         /// Disonnected from server signal
         /// </summary>
-        [Inject] public DisonnectedFromServerSignal DisonnectedFromServerSignal { get; set; }
+        [Inject]
+        public DisonnectedFromServerSignal DisonnectedFromServerSignal { get; set; }
 
         /// <summary>
         /// Server connected signal
         /// </summary>
-        [Inject] public ServerConnectedSignal ServerConnectedSignal { get; set; }
-        
+        [Inject]
+        public ServerConnectedSignal ServerConnectedSignal { get; set; }
+
+        /// <summary>
+        /// Register user handler
+        /// </summary>
+        [Inject]
+        public GetLobbyPlayersHandler GetLobbyPlayersHandler { get; set; }
+
         /// <summary>
         /// Get enemy turn handler
         /// </summary>
-        [Inject] public GetEnemyTurnHandler GetEnemyTurnHandler { get; set; }
+        [Inject]
+        public GetEnemyTurnHandler GetEnemyTurnHandler { get; set; }
 
+        /// <summary>
+        /// Connect to server
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="port"></param>
         public void Connect(string url, int port)
         {
             _client = new NetworkClient();
             _client.Connect(url, port);
             _client.RegisterHandler(MsgType.Connect, msg => { ServerConnectedSignal.Dispatch(); });
-            RegisterHandlers(new List<IServerMessageHandler> {GetEnemyTurnHandler});
+            _client.RegisterHandler(MsgType.Disconnect, mas => { DisonnectedFromServerSignal.Dispatch(); });
+            RegisterHandlers(new List<IServerMessageHandler> {GetEnemyTurnHandler, GetLobbyPlayersHandler});
         }
 
+        /// <summary>
+        /// Disconect fom server
+        /// </summary>
         public void DisconectFromServer()
         {
             if (_client != null)
@@ -50,6 +68,11 @@ namespace Services.Multiplayer
             }
         }
 
+        /// <summary>
+        /// Send message
+        /// </summary>
+        /// <param name="msgId"></param>
+        /// <param name="msg"></param>
         public void Send(short msgId, MessageBase msg)
         {
             if (_client != null && _client.isConnected)
@@ -62,6 +85,10 @@ namespace Services.Multiplayer
             }
         }
 
+        /// <summary>
+        /// Register handlers
+        /// </summary>
+        /// <param name="handlers"></param>
         public void RegisterHandlers(IEnumerable<IServerMessageHandler> handlers)
         {
             foreach (var handler in handlers)

@@ -71,13 +71,15 @@ namespace Contexts
             //Bind Services
             injectionBinder.Bind<ServerConnectorService>().ToSingleton().CrossContext();
             injectionBinder.Bind<GetEnemyTurnHandler>().ToSingleton().CrossContext();
+            injectionBinder.Bind<GetLobbyPlayersHandler>().ToSingleton().CrossContext();
             
             // Init comands
             commandBinder.Bind<ConnectToServerSignal>().To<ConectToServerCommand>();
+            commandBinder.Bind<DisonnectedFromServerSignal>().To<DisonnectedFromServerCommand>();
             commandBinder.Bind<ServerConnectedSignal>().To<ServerConectedCommand>().Once();
 
             // Init mediators
-            mediationBinder.Bind<MathRoomView>().To<MathRoomMediator>();
+            mediationBinder.Bind<NetwokLobbyView>().To<MathRoomMediator>();
         }
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace View.Multiplayer
 {
-    public class MathRoomView : EventView
+    public class NetwokLobbyView : EventView
     {
         [SerializeField] private StatusView _serverStatus;
         [SerializeField] private StatusView _payerOneStatus;
@@ -14,8 +14,23 @@ namespace View.Multiplayer
         /// </summary>
         public void OnServerConnected()
         {
-            _serverStatus.ToggleStatus();
-            _payerOneStatus.ToggleStatus();
+            _serverStatus.SetStatusOnline();
+        }
+
+        /// <summary>
+        /// On disconect from server
+        /// </summary>
+        public void OnServerDisconnected()
+        {
+            _serverStatus.SetStatusOffline();
+        }
+
+        /// <summary>
+        /// On current player connected
+        /// </summary>
+        public void OnCurrentPlayerConnected()
+        {
+            _payerOneStatus.SetStatusOnline();
         }
 
         /// <summary>
@@ -23,7 +38,7 @@ namespace View.Multiplayer
         /// </summary>
         public void OnOpponentConnected()
         {
-            _payerTwoStatus.ToggleStatus();
+            _payerTwoStatus.SetStatusOnline();
         }
     }
 }

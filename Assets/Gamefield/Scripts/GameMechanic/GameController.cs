@@ -8,7 +8,7 @@ using System;
 public class GameController : MonoBehaviour
 {
     public FightController fightController;
-  
+
 
     [SerializeField] private Button endTurnButton;
     [SerializeField] private GameObject cardPrefab;
@@ -28,12 +28,19 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
-        cardItemList = AssetDatabase.LoadAssetAtPath("Assets/GameField/ScriptableObjects/CardItemList.asset", typeof(CardItemList)) as CardItemList;
-        cardTreitList = AssetDatabase.LoadAssetAtPath("Assets/GameField/ScriptableObjects/CardTreitList.asset", typeof(CardTreitList)) as CardTreitList;
+#if UNITY_EDITOR
+        cardItemList =
+            AssetDatabase.LoadAssetAtPath("Assets/GameField/ScriptableObjects/CardItemList.asset", typeof(CardItemList))
+                as CardItemList;
+        cardTreitList =
+            AssetDatabase.LoadAssetAtPath("Assets/GameField/ScriptableObjects/CardTreitList.asset",
+                typeof(CardTreitList)) as CardTreitList;
+#endif
     }
+
     void Start()
     {
-       // newGame = true;
+        // newGame = true;
         SetPlayerCards();
         SetEnemyCards();
     }
@@ -45,7 +52,11 @@ public class GameController : MonoBehaviour
         {
             playerCardsCount = 3;
         }
-        else { playerCardsCount = playerCards.Count; }
+        else
+        {
+            playerCardsCount = playerCards.Count;
+        }
+
         for (int i = 0; i < playerCardsCount; i++)
         {
             int cardIndex;
@@ -55,8 +66,10 @@ public class GameController : MonoBehaviour
             index.indexCard = cardIndex;
             playerCards[i].transform.SetParent(playerPanell.transform);
         }
+
         SetTreitCardtoPlayer();
     }
+
     void SetEnemyCards()
     {
         int enemyCardsCount;
@@ -64,7 +77,11 @@ public class GameController : MonoBehaviour
         {
             enemyCardsCount = 3;
         }
-        else { enemyCardsCount = enemyCards.Count; }
+        else
+        {
+            enemyCardsCount = enemyCards.Count;
+        }
+
         for (int i = 0; i < enemyCardsCount; i++)
         {
             int cardIndex;
@@ -74,8 +91,10 @@ public class GameController : MonoBehaviour
             index.indexCard = cardIndex;
             enemyCards[i].transform.SetParent(enemyPanell.transform);
         }
+
         SetTreitCardtoEnemy();
     }
+
     public void EndTURN()
     {
         playerID = UnityEngine.Random.Range(0, playerCards.Count);
@@ -111,8 +130,8 @@ public class GameController : MonoBehaviour
                 playerTurn = true;
             }
         }
-
     }
+
     public void EndGame()
     {
         if (playerCards.Count == 0)
@@ -131,6 +150,7 @@ public class GameController : MonoBehaviour
             ChangeEnemy();
         }
     }
+
     private void ChangeEnemy()
     {
         SetEnemyCards();
@@ -140,6 +160,7 @@ public class GameController : MonoBehaviour
             hp.text = (Convert.ToInt32(Convert.ToInt32(hp.text) * 1.2f)).ToString();
         }
     }
+
     private void SetTreitCardtoPlayer()
     {
         int treitListIndex = 0;
@@ -151,6 +172,7 @@ public class GameController : MonoBehaviour
         playerTreit[treitListIndex].transform.SetParent(playerPanell.transform);
         treitListIndex++;
     }
+
     private void SetTreitCardtoEnemy()
     {
         int treitListIndex = 0;
@@ -162,5 +184,4 @@ public class GameController : MonoBehaviour
         enemyTreit[treitListIndex].transform.SetParent(enemyPanell.transform);
         treitListIndex++;
     }
-
 }

@@ -27,7 +27,6 @@ namespace Commands.Multiplayer
         /// </summary>
         public override void Execute()
         {
-            Debug.Log("ConectToServerCommand");
             ServerConnectorService.Connect(Url, Port);
         }
     }

@@ -16,20 +16,18 @@ namespace View.Multiplayer
 
         [SerializeField] private Status _currentStatus = Status.Offline;
 
-        public void ToggleStatus()
+        public void SetStatusOnline()
         {
-            if (_currentStatus == Status.Online)
-            {
-                _currentStatus = Status.Offline;
-                _offlineText.gameObject.SetActive(true);
-                _onlineText.gameObject.SetActive(false);
-            }
-            else
-            {
-                _currentStatus = Status.Online;
-                _offlineText.gameObject.SetActive(false);
-                _onlineText.gameObject.SetActive(true);
-            }
+            _currentStatus = Status.Online;
+            _offlineText.gameObject.SetActive(false);
+            _onlineText.gameObject.SetActive(true);
+        }
+
+        public void SetStatusOffline()
+        {
+            _currentStatus = Status.Offline;
+            _offlineText.gameObject.SetActive(true);
+            _onlineText.gameObject.SetActive(false);
         }
     }
 }

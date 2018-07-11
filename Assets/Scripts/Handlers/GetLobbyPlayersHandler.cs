@@ -1,28 +1,21 @@
 ﻿using Interfaces;
 using Models.Miltiplayer;
-using Signals.multiplayer;
+using UnityEngine;
 using UnityEngine.Networking;
 
 namespace Handlers
 {
-    public class GetEnemyTurnHandler : IServerMessageHandler
+    public class GetLobbyPlayersHandler : IServerMessageHandler
     {
-        /// <summary>
-        /// Message type
-        /// </summary>
-        public short MessageType => MsgStruct.EnemyTurnResponse;
-
-        /// <summary>
-        /// Room list data
-        /// </summary>
-        [Inject]
-        public GetEnemyTurnSignal GetEnemyTurnSignal { get; set; }
+        public short MessageType => MsgStruct.GetRegisteredPlayers;
 
         public void Handle(NetworkMessage msg)
         {
-            var regularMsg = msg.ReadMessage<EnemyTurnMessage>();
-            if (regularMsg != null)
+            Debug.Log("GetLobbyPlayersHandler");
+            var lobbyPlayersMessage = msg.ReadMessage<LobbyPlayersMessage>();
+            if (lobbyPlayersMessage != null)
             {
+                Debug.Log(lobbyPlayersMessage.Players.Length);
 //                UpdateRegularGameDataSignal.Dispatch(new BaseRegularGame
 //                {
 //                    CurrentPlayers = regularMsg.CurrentPlayers,
