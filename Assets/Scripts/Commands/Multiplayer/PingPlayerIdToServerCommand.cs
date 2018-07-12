@@ -5,8 +5,9 @@ using UnityEngine;
 
 namespace Commands.Multiplayer
 {
-    public class ServerConectedCommand : Command
+    public class PingPlayerIdToServerCommand : Command
     {
+        
         /// <summary>
         /// Server connector service
         /// </summary>
@@ -18,24 +19,16 @@ namespace Commands.Multiplayer
         /// </summary>
         [Inject]
         public NetworkPlayerService NetworkPlayerService { get; set; } 
-
+        
         /// <summary>
-        /// Execute event add log
+        /// Execute conect to server
         /// </summary>
         public override void Execute()
         {
-            NetworkPlayerService.PlayerStruct = new PlayerStruct
+            Debug.Log("PingPlayerIdToServerCommand");
+            ServerConnectorService.Send(MsgStruct.SendPlayerID, new PingPlayerMessage
             {
-                Id = Random.Range(0, 1000),
-                Name = "test " + Random.Range(0, 100),
-                IsConected = true
-            };
-            // Register player on server
-            ServerConnectorService.Send(MsgStruct.SendPlayer, new RegisterPlayerMessage
-            {
-                Id = NetworkPlayerService.PlayerStruct.Id,
-                Name = NetworkPlayerService.PlayerStruct.Name,
-                IsConected = NetworkPlayerService.PlayerStruct.IsConected
+                Id = NetworkPlayerService.PlayerStruct.Id
             });
         }
     }

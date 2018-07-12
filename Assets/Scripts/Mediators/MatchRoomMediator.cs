@@ -13,7 +13,7 @@ namespace Mediators
         [Inject]
         public ServerConnectedSignal ServerConnectedSignal { get; set; }
         
-        [Inject] public DisonnectedFromServerSignal DisonnectedFromServerSignal { get; set; }
+        [Inject] public DisconnectedFromServerSignal DisconnectedFromServerSignal { get; set; }
 
         /// <summary>
         /// On register mediator
@@ -21,7 +21,7 @@ namespace Mediators
         public override void OnRegister()
         {
             ServerConnectedSignal.AddListener(() => { View.OnServerConnected(); });
-            DisonnectedFromServerSignal.AddListener(() => { View.OnServerDisconnected(); });
+            DisconnectedFromServerSignal.AddListener(() => { View.OnServerDisconnected(); });
         }
     }
 }

@@ -1,13 +1,25 @@
-﻿using strange.extensions.mediation.impl;
+﻿using System.Collections;
+using strange.extensions.mediation.impl;
+using Signals.multiplayer;
 using UnityEngine;
 
 namespace View.Multiplayer
 {
     public class NetwokLobbyView : EventView
     {
+        /// <summary>
+        /// Disconned player from server signal
+        /// </summary>
+        [Inject] public PingPlayerIdToServerSignal PingPlayerIdToServerSignal { get; set; }
+        
         [SerializeField] private StatusView _serverStatus;
         [SerializeField] private StatusView _payerOneStatus;
         [SerializeField] private StatusView _payerTwoStatus;
+
+        private void Awake()
+        {
+            StartCoroutine(SpawnLoop());
+        }
 
         /// <summary>
         /// On server connected
@@ -39,6 +51,15 @@ namespace View.Multiplayer
         public void OnOpponentConnected()
         {
             _payerTwoStatus.SetStatusOnline();
+        }
+
+        private IEnumerator SpawnLoop()
+        {
+            while (enabled)
+            {
+                yield return new WaitForSeconds (5);
+                PingPlayerIdToServerSignal.Dispatch();
+            }
         }
     }
 }

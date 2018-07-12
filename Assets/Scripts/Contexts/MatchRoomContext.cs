@@ -63,19 +63,23 @@ namespace Contexts
         {
             // init Signals
             injectionBinder.Bind<ServerConnectedSignal>().ToSingleton().CrossContext();
-            injectionBinder.Bind<DisonnectedFromServerSignal>().ToSingleton().CrossContext();
+            injectionBinder.Bind<DisconnectedFromServerSignal>().ToSingleton().CrossContext();
+            injectionBinder.Bind<PingPlayerIdToServerSignal>().ToSingleton().CrossContext();
             injectionBinder.Bind<GetEnemyTurnSignal>().ToSingleton().CrossContext();
             
             // init models
 
             //Bind Services
             injectionBinder.Bind<ServerConnectorService>().ToSingleton().CrossContext();
+            injectionBinder.Bind<NetworkPlayerService>().ToSingleton().CrossContext();
+            
+            // Bind Handlers
             injectionBinder.Bind<GetEnemyTurnHandler>().ToSingleton().CrossContext();
-            injectionBinder.Bind<GetLobbyPlayersHandler>().ToSingleton().CrossContext();
+            injectionBinder.Bind<GetLobbyPlayersHandler>().ToSingleton().CrossContext();            
             
             // Init comands
             commandBinder.Bind<ConnectToServerSignal>().To<ConectToServerCommand>();
-            commandBinder.Bind<DisonnectedFromServerSignal>().To<DisonnectedFromServerCommand>();
+            commandBinder.Bind<PingPlayerIdToServerSignal>().To<PingPlayerIdToServerCommand>();
             commandBinder.Bind<ServerConnectedSignal>().To<ServerConectedCommand>().Once();
 
             // Init mediators

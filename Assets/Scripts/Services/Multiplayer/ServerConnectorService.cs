@@ -18,7 +18,7 @@ namespace Services.Multiplayer
         /// Disonnected from server signal
         /// </summary>
         [Inject]
-        public DisonnectedFromServerSignal DisonnectedFromServerSignal { get; set; }
+        public DisconnectedFromServerSignal DisconnectedFromServerSignal { get; set; }
 
         /// <summary>
         /// Server connected signal
@@ -48,7 +48,7 @@ namespace Services.Multiplayer
             _client = new NetworkClient();
             _client.Connect(url, port);
             _client.RegisterHandler(MsgType.Connect, msg => { ServerConnectedSignal.Dispatch(); });
-            _client.RegisterHandler(MsgType.Disconnect, mas => { DisonnectedFromServerSignal.Dispatch(); });
+            _client.RegisterHandler(MsgType.Disconnect, mas => { DisconnectedFromServerSignal.Dispatch(); });
             RegisterHandlers(new List<IServerMessageHandler> {GetEnemyTurnHandler, GetLobbyPlayersHandler});
         }
 
@@ -60,7 +60,7 @@ namespace Services.Multiplayer
             if (_client != null)
             {
                 _client.Disconnect();
-                DisonnectedFromServerSignal.Dispatch();
+                DisconnectedFromServerSignal.Dispatch();
             }
             else
             {

@@ -2,7 +2,7 @@
 
 namespace Signals.multiplayer
 {
-    public class DisonnectedFromServerSignal : Signal
+    public class DisconnectedFromServerSignal : Signal
     {
         
     }
