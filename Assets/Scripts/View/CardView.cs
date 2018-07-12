@@ -16,6 +16,7 @@ namespace View
         [SerializeField] private Text _manaText;
         [SerializeField] private Text _attackText;
         [SerializeField] private Text _healthText;
+        [SerializeField] private Text _defenceText;
 
         // Use this for initialization
         private void Start()
@@ -28,6 +29,7 @@ namespace View
             _manaText.text = _card.Defence.ToString();
             _attackText.text = _card.Attack.ToString();
             _healthText.text = _card.Health.ToString();
+            _defenceText.text = _card.Defence.ToString();
         }
     }
 }

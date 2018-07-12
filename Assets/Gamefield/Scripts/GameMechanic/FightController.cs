@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
 using System;
+using Gamefield.Scripts.GameMechanic;
 
 public class FightController : MonoBehaviour
 {
@@ -39,20 +40,20 @@ public class FightController : MonoBehaviour
                 if (victimHealth <= 0)
                 {
                     Destroy(victim);
-                    if (GameController.playerTurn)
+                    if (GameController.PlayerTurn)
                     {
-                        GameController.enemyCards.Remove(victim);
+                        GameController.EnemyCards.Remove(victim);
                         //Debug.Log(GameController.enemyCards.Count);
                     }
                     else
                     {
-                        GameController.playerCards.Remove(victim);
+                        GameController.PlayerCards.Remove(victim);
                        // Debug.Log(GameController.playerCards.Count);
                     }
                 }
             }
         }
-        if (GameController.enemyCards.Count == 0 || GameController.playerCards.Count == 0)
+        if (GameController.EnemyCards.Count == 0 || GameController.PlayerCards.Count == 0)
         {
             gameController.EndGame();
         }
@@ -82,19 +83,19 @@ public class FightController : MonoBehaviour
             {
                 victimHealth = 0;
                 Destroy(victim);
-                if (GameController.playerTurn)
+                if (GameController.PlayerTurn)
                 {
-                    GameController.enemyCards.Remove(victim);
+                    GameController.EnemyCards.Remove(victim);
                   //  Debug.Log(GameController.enemyCards.Count);
                 }
                 else
                 {
-                    GameController.playerCards.Remove(victim);
+                    GameController.PlayerCards.Remove(victim);
                   //  Debug.Log(GameController.playerCards.Count);
                 }
             }
         }
-        if (GameController.enemyCards.Count == 0 || GameController.playerCards.Count == 0)
+        if (GameController.EnemyCards.Count == 0 || GameController.PlayerCards.Count == 0)
         {
             gameController.EndGame();
         }
@@ -115,4 +116,4 @@ public class FightController : MonoBehaviour
 
     }
 
-}
+}*/

@@ -27,7 +27,6 @@ public class CardDisplay : MonoBehaviour {
     void ComponentFinder()
     {
         nameText = this.transform.Find("Name").GetComponent<Text>();
-        energyText = this.transform.Find("Energy").GetComponent<Text>();
         healthText= this.transform.Find("Health").GetComponent<Text>();
         defenceText= this.transform.Find("Defence").GetComponent<Text>();
         attackText= this.transform.Find("Damage").GetComponent<Text>();
@@ -37,7 +36,6 @@ public class CardDisplay : MonoBehaviour {
     void Initializer()
     {
         nameText.text = card.cardList[indexCard].cardName;
-        energyText.text = card.cardList[indexCard].energy.ToString();
         healthText.text = card.cardList[indexCard].health.ToString();
         defenceText.text = card.cardList[indexCard].defence.ToString();
         attackText.text = card.cardList[indexCard].damage.ToString();
