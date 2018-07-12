@@ -1,0 +1,356 @@
+{
+  "DataList": [
+    {
+      "HandLog": [
+        "PLAYER 'HUMAN' Add 'Epic' Card to Hand",
+        "PLAYER 'HUMAN' Add 'Big' Card to Hand",
+        "PLAYER 'HUMAN' Add 'Critical' Card to Hand",
+        "INIT '1' TURN!",
+        "Player 'HUMAN' Add card 'Epic' to battle!",
+        "Player 'HUMAN' Has ERROR! add card 'Big' to battle 'not enough mana!'",
+        "Player 'HUMAN' Has ERROR! add card 'Critical' to battle 'not enough mana!'"
+      ],
+      "BattleLog": [
+        "PLAYER 'HUMAN' Activate sleep 'Epic' battle card!"
+      ]
+    },
+    {
+      "HandLog": [
+        "PLAYER 'CPU 1' Add 'Regular' Card to Hand",
+        "PLAYER 'CPU 1' Add 'Big' Card to Hand",
+        "PLAYER 'CPU 1' Add 'Critical' Card to Hand",
+        "INIT '2' TURN!",
+        "Player 'CPU 1' Add card 'Regular' to battle!",
+        "Player 'CPU 1' Add card 'Big' to battle!"
+      ],
+      "BattleLog": [
+        "PLAYER 'CPU 1' Activate sleep 'Regular' battle card!",
+        "PLAYER 'CPU 1' Activate sleep 'Big' battle card!"
+      ]
+    },
+    {
+      "HandLog": [
+        "PLAYER 'HUMAN' Add 'Regular' Card to Hand",
+        "PLAYER 'HUMAN' Add 'Big' Card to Hand",
+        "PLAYER 'HUMAN' Add 'Regular' Trate To Hand",
+        "INIT '3' TURN!",
+        "Player 'HUMAN' Add card 'Big' to battle!",
+        "Player 'HUMAN' Has ERROR! add card 'Critical' to battle 'not enough mana!'",
+        "Player 'HUMAN' Add card 'Regular' to battle!"
+      ],
+      "BattleLog": [
+        "Player 'HUMAN' Use Card 'Epic' hit ememy Card 'Regular' take damage '10'",
+        "Enemy Card 'Regular' return  damage '3' to 'Epic'",
+        "Player card 'Epic' has '10' Health and '2' Defence",
+        "Enemy card 'Regular' has '9' Health and '-7' Defence",
+        "PLAYER 'HUMAN' Activate Moving 'Epic' battle card!",
+        "PLAYER 'HUMAN' Activate sleep 'Big' battle card!",
+        "PLAYER 'HUMAN' Activate sleep 'Regular' battle card!"
+      ]
+    },
+    {
+      "HandLog": [
+        "PLAYER 'CPU 1' Add 'Critical' Card to Hand",
+        "PLAYER 'CPU 1' Add 'Regular' Trate To Hand",
+        "PLAYER 'CPU 1' Add 'Big' Card to Hand",
+        "INIT '4' TURN!",
+        "Player 'CPU 1' Add card 'Critical' to battle!",
+        "Player 'CPU 1' Has ERROR! add card 'Critical' to battle 'not enough mana!'",
+        "Player 'CPU 1' Has ERROR! add card 'Big' to battle 'not enough mana!'",
+        "Player 'CPU 1' Add trate 'Regular' to battle card 'Regular'"
+      ],
+      "BattleLog": [
+        "Player 'CPU 1' Use Card 'Regular' hit ememy Card 'Epic' take damage '4'",
+        "Enemy Card 'Epic' return  damage '10' to 'Regular'",
+        "Player Card 'Regular' has dead!",
+        "Enemy card 'Epic' has '10' Health and '-2' Defence",
+        "Player 'CPU 1' Use Card 'Big' hit ememy Card 'Epic' take damage '7'",
+        "Enemy Card 'Epic' return  damage '10' to 'Big'",
+        "Player card 'Big' has '2' Health and '0' Defence",
+        "Enemy card 'Epic' has '3' Health and '-2' Defence",
+        "PLAYER 'CPU 1' Activate Moving 'Big' battle card!",
+        "PLAYER 'CPU 1' Activate sleep 'Critical' battle card!"
+      ]
+    },
+    {
+      "HandLog": [
+        "PLAYER 'HUMAN' Add 'Big' Card to Hand",
+        "PLAYER 'HUMAN' Add 'Epic' Card to Hand",
+        "PLAYER 'HUMAN' Add 'Regular' Trate To Hand",
+        "INIT '5' TURN!",
+        "Player 'HUMAN' Add card 'Critical' to battle!",
+        "Player 'HUMAN' Has ERROR! add card 'Big' to battle 'not enough mana!'",
+        "Player 'HUMAN' Has ERROR! add card 'Big' to battle 'not enough mana!'",
+        "Player 'HUMAN' Has ERROR! add card 'Epic' to battle 'not enough mana!'",
+        "Player 'HUMAN' Add trate 'Regular' to battle card 'Epic'",
+        "Player 'HUMAN' Add trate 'Regular' to battle card 'Epic'"
+      ],
+      "BattleLog": [
+        "Player 'HUMAN' Use Card 'Epic' hit ememy Card 'Big' take damage '12'",
+        "Enemy Card 'Big' return  damage '7' to 'Epic'",
+        "Player Card 'Epic' has dead!",
+        "Enemy Card 'Big' has dead!",
+        "Player 'HUMAN' Use Card 'Big' hit ememy Card 'Critical' take damage '7'",
+        "Enemy Card 'Critical' return  damage '10' to 'Big'",
+        "Player card 'Big' has '2' Health and '0' Defence",
+        "Enemy Card 'Critical' has dead!",
+        "PLAYER 'HUMAN' Activate Moving 'Big' battle card!",
+        "PLAYER 'HUMAN' Activate sleep 'Critical' battle card!"
+      ]
+    },
+    {
+      "HandLog": [
+        "PLAYER 'CPU 1' Add 'Regular' Card to Hand",
+        "PLAYER 'CPU 1' Add 'Regular' Trate To Hand",
+        "PLAYER 'CPU 1' Add 'Heal' Trate To Hand",
+        "INIT '6' TURN!",
+        "Player 'CPU 1' Add card 'Critical' to battle!",
+        "Player 'CPU 1' Has ERROR! add card 'Big' to battle 'not enough mana!'",
+        "Player 'CPU 1' Add card 'Regular' to battle!"
+      ],
+      "BattleLog": [
+        "PLAYER 'CPU 1' Activate sleep 'Critical' battle card!",
+        "PLAYER 'CPU 1' Activate sleep 'Regular' battle card!"
+      ]
+    },
+    {
+      "HandLog": [
+        "PLAYER 'HUMAN' Add 'Regular' Card to Hand",
+        "PLAYER 'HUMAN' Add 'Critical' Card to Hand",
+        "PLAYER 'HUMAN' Add 'Defence' Trate To Hand",
+        "INIT '7' TURN!",
+        "Player 'HUMAN' Add card 'Big' to battle!",
+        "Player 'HUMAN' Has ERROR! add card 'Big' to battle 'not enough mana!'",
+        "Player 'HUMAN' Has ERROR! add card 'Epic' to battle 'not enough mana!'",
+        "Player 'HUMAN' Add card 'Regular' to battle!"
+      ],
+      "BattleLog": [
+        "Player 'HUMAN' Use Card 'Big' hit ememy Card 'Critical' take damage '7'",
+        "Enemy Card 'Critical' return  damage '10' to 'Big'",
+        "Player Card 'Big' has dead!",
+        "Enemy Card 'Critical' has dead!",
+        "Player 'HUMAN' Use Card 'Regular' hit ememy Card 'Regular' take damage '3'",
+        "Enemy Card 'Regular' return  damage '3' to 'Regular'",
+        "Player card 'Regular' has '5' Health and '0' Defence",
+        "Enemy card 'Regular' has '5' Health and '0' Defence",
+        "Player 'HUMAN' Use Card 'Critical' hit ememy Card 'Regular' take damage '10'",
+        "Enemy Card 'Regular' return  damage '3' to 'Critical'",
+        "Player Card 'Critical' has dead!",
+        "Enemy Card 'Regular' has dead!",
+        "PLAYER 'HUMAN' Activate Moving 'Regular' battle card!",
+        "PLAYER 'HUMAN' Activate sleep 'Big' battle card!",
+        "PLAYER 'HUMAN' Activate sleep 'Regular' battle card!"
+      ]
+    },
+    {
+      "HandLog": [
+        "PLAYER 'CPU 1' Add 'Regular' Card to Hand",
+        "PLAYER 'CPU 1' Add 'Regular' Card to Hand",
+        "PLAYER 'CPU 1' Add 'Attack' Trate To Hand",
+        "INIT '8' TURN!",
+        "Player 'CPU 1' Add card 'Big' to battle!",
+        "Player 'CPU 1' Add card 'Regular' to battle!"
+      ],
+      "BattleLog": [
+        "PLAYER 'CPU 1' Activate sleep 'Big' battle card!",
+        "PLAYER 'CPU 1' Activate sleep 'Regular' battle card!"
+      ]
+    },
+    {
+      "HandLog": [
+        "PLAYER 'HUMAN' Add 'Regular' Card to Hand",
+        "PLAYER 'HUMAN' Add 'Regular' Card to Hand",
+        "PLAYER 'HUMAN' has add Card to Hand ERROR! ",
+        "INIT '9' TURN!",
+        "Player 'HUMAN' Add card 'Big' to battle!",
+        "Player 'HUMAN' Has ERROR! add card 'Epic' to battle 'not enough mana!'",
+        "Player 'HUMAN' Has ERROR! add card 'Critical' to battle 'not enough mana!'",
+        "Player 'HUMAN' Add card 'Regular' to battle!"
+      ],
+      "BattleLog": [
+        "Player 'HUMAN' Use Card 'Regular' hit ememy Card 'Big' take damage '3'",
+        "Enemy Card 'Big' return  damage '7' to 'Regular'",
+        "Player Card 'Regular' has dead!",
+        "Enemy card 'Big' has '2' Health and '7' Defence",
+        "Player 'HUMAN' Use Card 'Big' hit ememy Card 'Big' take damage '7'",
+        "Enemy Card 'Big' return  damage '7' to 'Big'",
+        "Player card 'Big' has '2' Health and '3' Defence",
+        "Enemy card 'Big' has '2' Health and '0' Defence",
+        "Player 'HUMAN' Use Card 'Regular' hit ememy Card 'Big' take damage '3'",
+        "Enemy Card 'Big' return  damage '7' to 'Regular'",
+        "Player card 'Regular' has '6' Health and '-4' Defence",
+        "Enemy Card 'Big' has dead!",
+        "PLAYER 'HUMAN' Activate Moving 'Big' battle card!",
+        "PLAYER 'HUMAN' Activate Moving 'Regular' battle card!",
+        "PLAYER 'HUMAN' Activate sleep 'Big' battle card!",
+        "PLAYER 'HUMAN' Activate sleep 'Regular' battle card!"
+      ]
+    },
+    {
+      "HandLog": [
+        "PLAYER 'CPU 1' Add 'Regular' Card to Hand",
+        "PLAYER 'CPU 1' Add 'Attack' Trate To Hand",
+        "PLAYER 'CPU 1' has add Card to Hand ERROR! ",
+        "INIT '10' TURN!",
+        "Player 'CPU 1' Add card 'Regular' to battle!",
+        "Player 'CPU 1' Add card 'Regular' to battle!",
+        "Player 'CPU 1' Add trate 'Regular' to battle card 'Big'"
+      ],
+      "BattleLog": [
+        "Player 'CPU 1' Use Card 'Regular' hit CRITICAL ememy Card 'Big'",
+        "Enemy Card 'Big' return  damage '7' to 'Regular'",
+        "Player card 'Regular' has '6' Health and '-4' Defence",
+        "Enemy card 'Big' has '2' Health and '-3' Defence",
+        "PLAYER 'CPU 1' Activate Moving 'Regular' battle card!",
+        "PLAYER 'CPU 1' Activate sleep 'Regular' battle card!",
+        "PLAYER 'CPU 1' Activate sleep 'Regular' battle card!"
+      ]
+    },
+    {
+      "HandLog": [
+        "PLAYER 'HUMAN' Add 'Regular' Card to Hand",
+        "PLAYER 'HUMAN' Add 'Epic' Trate To Hand",
+        "INIT '11' TURN!",
+        "Player 'HUMAN' Add card 'Epic' to battle!",
+        "Player 'HUMAN' Has ERROR! add card 'Critical' to battle 'not enough mana!'",
+        "Player 'HUMAN' Add card 'Regular' to battle!"
+      ],
+      "BattleLog": [
+        "Player 'HUMAN' Use Card 'Big' hit ememy Card 'Regular' take damage '7'",
+        "Enemy Card 'Regular' return  damage '3' to 'Big'",
+        "Player Card 'Big' has dead!",
+        "Enemy Card 'Regular' has dead!",
+        "Player 'HUMAN' Use Card 'Regular' hit ememy Card 'Regular' take damage '3'",
+        "Enemy Card 'Regular' return  damage '3' to 'Regular'",
+        "Player card 'Regular' has '3' Health and '-4' Defence",
+        "Enemy card 'Regular' has '5' Health and '0' Defence",
+        "Player 'HUMAN' Use Card 'Big' hit ememy Card 'Regular' take damage '7'",
+        "Enemy Card 'Regular' return  damage '3' to 'Big'",
+        "Player card 'Big' has '2' Health and '7' Defence",
+        "Enemy Card 'Regular' has dead!",
+        "Player 'HUMAN' Use Card 'Regular' hit ememy Card 'Regular' take damage '3'",
+        "Enemy Card 'Regular' return  damage '3' to 'Regular'",
+        "Player card 'Regular' has '5' Health and '0' Defence",
+        "Enemy card 'Regular' has '5' Health and '0' Defence",
+        "PLAYER 'HUMAN' Activate Moving 'Regular' battle card!",
+        "PLAYER 'HUMAN' Activate Moving 'Big' battle card!",
+        "PLAYER 'HUMAN' Activate Moving 'Regular' battle card!",
+        "PLAYER 'HUMAN' Activate sleep 'Epic' battle card!",
+        "PLAYER 'HUMAN' Activate sleep 'Regular' battle card!"
+      ]
+    },
+    {
+      "HandLog": [
+        "PLAYER 'CPU 1' Add 'Big' Card to Hand",
+        "PLAYER 'CPU 1' Add 'Epic' Card to Hand",
+        "PLAYER 'CPU 1' Add 'Heal' Trate To Hand",
+        "INIT '12' TURN!",
+        "Player 'CPU 1' Add card 'Big' to battle!",
+        "Player 'CPU 1' Has ERROR! add card 'Epic' to battle 'not enough mana!'",
+        "Player 'CPU 1' Add trate 'Heal' to battle card 'Regular'"
+      ],
+      "BattleLog": [
+        "Player 'CPU 1' Use Card 'Regular' hit ememy Card 'Regular' take damage '3'",
+        "Enemy Card 'Regular' return  damage '3' to 'Regular'",
+        "Player card 'Regular' has '2' Health and '0' Defence",
+        "Enemy Card 'Regular' has dead!",
+        "PLAYER 'CPU 1' Activate Moving 'Regular' battle card!",
+        "PLAYER 'CPU 1' Activate sleep 'Big' battle card!"
+      ]
+    },
+    {
+      "HandLog": [
+        "INIT '13' TURN!",
+        "Player 'HUMAN' Add card 'Critical' to battle!",
+        "PLAYER 'HUMAN' has ERROR! Add Cart 'Regular' to Arena 'not enough space'",
+        "Player 'HUMAN' Add trate 'Defence' to battle card 'Regular'"
+      ],
+      "BattleLog": [
+        "Player 'HUMAN' Use Card 'Big' hit ememy Card 'Regular' take damage '7'",
+        "Enemy Card 'Regular' return  damage '3' to 'Big'",
+        "Player card 'Big' has '2' Health and '4' Defence",
+        "Enemy Card 'Regular' has dead!",
+        "Player 'HUMAN' Use Card 'Regular' hit ememy Card 'Big' take damage '3'",
+        "Enemy Card 'Big' return  damage '7' to 'Regular'",
+        "Player Card 'Regular' has dead!",
+        "Enemy card 'Big' has '2' Health and '7' Defence",
+        "Player 'HUMAN' Use Card 'Epic' hit ememy Card 'Big' take damage '10'",
+        "Enemy Card 'Big' return  damage '7' to 'Epic'",
+        "Player card 'Epic' has '7' Health and '-2' Defence",
+        "Enemy Card 'Big' has dead!",
+        "PLAYER 'HUMAN' Activate Moving 'Big' battle card!",
+        "PLAYER 'HUMAN' Activate Moving 'Epic' battle card!",
+        "PLAYER 'HUMAN' Activate sleep 'Critical' battle card!"
+      ]
+    },
+    {
+      "HandLog": [
+        "PLAYER 'CPU 1' Add 'Epic' Card to Hand",
+        "PLAYER 'CPU 1' Add 'Heal' Trate To Hand",
+        "INIT '14' TURN!",
+        "Player 'CPU 1' Add card 'Epic' to battle!",
+        "Player 'CPU 1' Has ERROR! add card 'Epic' to battle 'not enough mana!'",
+        "Player 'CPU 1' Add trate 'Attack' to battle card 'Regular'"
+      ],
+      "BattleLog": [
+        "PLAYER 'CPU 1' Activate sleep 'Epic' battle card!"
+      ]
+    },
+    {
+      "HandLog": [
+        "PLAYER 'HUMAN' Add 'Regular' Trate To Hand",
+        "INIT '15' TURN!",
+        "Player 'HUMAN' Add card 'Regular' to battle!",
+        "Player 'HUMAN' Add trate 'Epic' to battle card 'Big'"
+      ],
+      "BattleLog": [
+        "Player 'HUMAN' Use Card 'Big' hit ememy Card 'Epic' take damage '7'",
+        "Enemy Card 'Epic' return  damage '10' to 'Big'",
+        "Player card 'Big' has '12' Health and '4' Defence",
+        "Enemy card 'Epic' has '7' Health and '-2' Defence",
+        "Player 'HUMAN' Use Card 'Epic' hit ememy Card 'Epic' take damage '10'",
+        "Enemy Card 'Epic' return  damage '10' to 'Epic'",
+        "Player Card 'Epic' has dead!",
+        "Enemy Card 'Epic' has dead!",
+        "PLAYER 'HUMAN' Activate Moving 'Big' battle card!",
+        "PLAYER 'HUMAN' Activate sleep 'Regular' battle card!"
+      ]
+    },
+    {
+      "HandLog": [
+        "PLAYER 'CPU 1' Add 'Regular' Trate To Hand",
+        "INIT '16' TURN!",
+        "Player 'CPU 1' Add card 'Epic' to battle!",
+        "Player 'CPU 1' Add trate 'Attack' to battle card 'Epic'"
+      ],
+      "BattleLog": [
+        "PLAYER 'CPU 1' Activate sleep 'Epic' battle card!"
+      ]
+    },
+    {
+      "HandLog": [
+        "PLAYER 'HUMAN' Add 'Regular' Trate To Hand",
+        "INIT '17' TURN!",
+        "Player 'HUMAN' Add trate 'Regular' to battle card 'Big'",
+        "Player 'HUMAN' Add trate 'Regular' to battle card 'Big'"
+      ],
+      "BattleLog": [
+        "Player 'HUMAN' Use Card 'Big' hit ememy Card 'Epic' take damage '9'",
+        "Enemy Card 'Epic' return  damage '10' to 'Big'",
+        "Player card 'Big' has '12' Health and '-4' Defence",
+        "Enemy card 'Epic' has '9' Health and '-4' Defence",
+        "Player 'HUMAN' Use Card 'Regular' hit CRITICAL ememy Card 'Epic'",
+        "Enemy Card 'Epic' return  damage '10' to 'Regular'",
+        "Player card 'Regular' has '9' Health and '-7' Defence",
+        "Enemy card 'Epic' has '3' Health and '-4' Defence",
+        "Player 'HUMAN' Use Card 'Critical' hit ememy Card 'Epic' take damage '10'",
+        "Enemy Card 'Epic' return  damage '10' to 'Critical'",
+        "Player Card 'Critical' has dead!",
+        "Enemy Card 'Epic' has dead!",
+        "PLAYER 'HUMAN' Activate Moving 'Big' battle card!",
+        "PLAYER 'HUMAN' Activate Moving 'Regular' battle card!",
+        "\"HUMAN' WINS!"
+      ]
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-﻿using Commands.Multiplayer;
+using Commands.Multiplayer;
 using Handlers;
 using Mediators;
 using strange.extensions.command.api;
