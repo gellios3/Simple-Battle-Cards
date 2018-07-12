@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Gamefield.Scripts.GameMechanic;
 
 namespace Gamefield.Scripts.GameMechanic
 {
