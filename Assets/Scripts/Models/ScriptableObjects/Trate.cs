@@ -7,6 +7,8 @@ namespace Models.ScriptableObjects
     {
         public string Id;
         
+        public Sprite Artwork;
+        
         public int Defence;
         public int Health;
         

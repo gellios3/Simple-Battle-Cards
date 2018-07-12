@@ -3,7 +3,7 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -14,10 +14,10 @@ MonoBehaviour:
   name: Big
   Id: big
   Description: 
-  Artwork: {fileID: 0}
-  Defence: 10
-  Attack: 7
-  Health: 2
-  Mana: 3
-  CriticalChance: 15
-  CriticalHit: 2
+  Artwork: {fileID: 21300000, guid: af63631000a9dd140814331f29c0e571, type: 3}
+  Defence: 5
+  Attack: 2
+  Health: 5
+  Mana: 0
+  CriticalChance: 10
+  CriticalHit: 0

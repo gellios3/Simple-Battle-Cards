@@ -1,5 +1,5 @@
 ﻿using Commands;
-using Models;
+using Mediators;
 using Models.Arena;
 using strange.extensions.command.api;
 using strange.extensions.command.impl;
@@ -77,14 +77,7 @@ namespace Contexts
             injectionBinder.Bind<StateService>().ToSingleton();
 
             // init Signals
-            injectionBinder.Bind<CreateNewGameSignal>().ToSingleton();
-            injectionBinder.Bind<MakeTurnSignal>().ToSingleton();
             injectionBinder.Bind<ArenaInitializedSignal>().ToSingleton();
-            injectionBinder.Bind<EndGameSignal>().ToSingleton();
-            injectionBinder.Bind<SaveLogSignal>().ToSingleton();
-            injectionBinder.Bind<AddHistoryLogSignal>().ToSingleton();
-            injectionBinder.Bind<SaveGameSignal>().ToSingleton();
-            injectionBinder.Bind<LoadGameSignal>().ToSingleton();
 
             // Init comands
             commandBinder.Bind<EndGameSignal>().To<GameFinishedCommand>();

@@ -7,41 +7,39 @@ using System.Diagnostics;
 
 public class TreitDisplay : MonoBehaviour
 {
-    [SerializeField] private CardTreitList treit;
-    public int indexTreit = 0;
-    private Text treitNameText;
-    private Text treitEnergyText;
-    private Text treitHealthText;
-    private Text treitDefenceText;
-    private Text treitAttackText;
-    private Image treitArtImage;
-    private Image trietBackgroundImage;
+    //private Transform rootTransform;
+    [SerializeField] private CardTreitList card;
+    public int indexCard=0;
+    private Text nameText;
+    private Text energyText;
+    private Text healthText;
+    private Text defenceText;
+    private Text attackText;
+    private Image artImage;
+    private Image backgroundImage;
+    
 
     void Start()
     {
-        TreitComponentFinder();
-        TreitInitializer();
+        ComponentFinder();
+        Initializer();
     }
-
-
-    void TreitComponentFinder()
+    void ComponentFinder()
     {
-        treitNameText = this.transform.Find("TreitName").GetComponent<Text>();
-        treitEnergyText = this.transform.Find("TreitEnergy").GetComponent<Text>();
-        treitHealthText = this.transform.Find("TreitHealth").GetComponent<Text>();
-        treitDefenceText = this.transform.Find("TreitDefence").GetComponent<Text>();
-        treitAttackText = this.transform.Find("TreitDamage").GetComponent<Text>();
-        treitArtImage = this.transform.Find("ArtworkMask/TreitArtwork").GetComponent<Image>();
-        trietBackgroundImage = this.transform.Find("CardTemplate/TreitBackground").GetComponent<Image>();
+        nameText = this.transform.Find("Name").GetComponent<Text>();
+        healthText= this.transform.Find("Health").GetComponent<Text>();
+        defenceText= this.transform.Find("Defence").GetComponent<Text>();
+        attackText= this.transform.Find("Damage").GetComponent<Text>();
+        artImage= this.transform.Find("ArtworkMask/Artwork").GetComponent<Image>();
+        backgroundImage = this.transform.Find("CardTemplate/Background").GetComponent<Image>();
     }
-    void TreitInitializer()
+    void Initializer()
     {
-        treitNameText.text = treit.treitList[indexTreit].cardName;
-        treitEnergyText.text = treit.treitList[indexTreit].energy.ToString();
-        treitHealthText.text = treit.treitList[indexTreit].healthModifier.ToString();
-        treitDefenceText.text = treit.treitList[indexTreit].defenceModifier.ToString();
-        treitAttackText.text = treit.treitList[indexTreit].damageModifier.ToString();
-        treitArtImage.sprite = treit.treitList[indexTreit].artwork;
-        trietBackgroundImage.sprite = treit.treitList[indexTreit].background;
+        nameText.text = card.treitList[indexCard].cardName;
+        healthText.text = card.treitList[indexCard].health.ToString();
+        defenceText.text = card.treitList[indexCard].defence.ToString();
+        attackText.text = card.treitList[indexCard].damage.ToString();
+        artImage.sprite = card.treitList[indexCard].artwork;
+        backgroundImage.sprite = card.treitList[indexCard].background;
     }
 }
