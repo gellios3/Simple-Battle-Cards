@@ -1,5 +1,4 @@
 ﻿using Commands;
-using Models;
 using Models.Arena;
 using strange.extensions.command.api;
 using strange.extensions.command.impl;
@@ -51,8 +50,8 @@ namespace Contexts
         {
             base.Start();
 
-//            var startSignal = injectionBinder.GetInstance<CreateNewGameSignal>();
-            var startSignal = injectionBinder.GetInstance<LoadGameSignal>();
+            var startSignal = injectionBinder.GetInstance<CreateNewGameSignal>();
+//            var startSignal = injectionBinder.GetInstance<LoadGameSignal>();
             startSignal.Dispatch();
 
             return this;

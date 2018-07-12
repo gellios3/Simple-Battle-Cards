@@ -1,166 +1,162 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEditor;
-using System;
+using View;
 
-public class GameController : MonoBehaviour
+namespace Gamefield.Scripts.GameMechanic
 {
-    public FightController fightController;
-  
+    public class GameController : MonoBehaviour
+    {
+        #region Variables
 
-    [SerializeField] private Button endTurnButton;
-    [SerializeField] private GameObject cardPrefab;
-    [SerializeField] private GameObject treitPrefab;
-    public GameObject playerPanell;
-    public GameObject enemyPanell;
-    public static List<GameObject> playerCards = new List<GameObject>();
-    public static List<GameObject> enemyCards = new List<GameObject>();
-    public static List<GameObject> playerTreit = new List<GameObject>();
-    public static List<GameObject> enemyTreit = new List<GameObject>();
-    public static CardItemList cardItemList;
-    public static CardTreitList cardTreitList;
-    public static bool playerTurn = true;
-    public static int playerID;
-    public static int enemyID;
-    public bool newGame;
+        [SerializeField] private Button _endTurnButton;
+        [SerializeField] private GameObject _cardPrefab;
+        [SerializeField] private GameObject _treitPrefab;
+        public GameObject PlayerPanell;
+        public GameObject EnemyPanell;
+        public static List<GameObject> PlayerCards = new List<GameObject>();
+        public static List<GameObject> EnemyCards = new List<GameObject>();
+        private static List<GameObject> _playerTreit = new List<GameObject>();
+        private static List<GameObject> _enemyTreit = new List<GameObject>();
+        private static CardItemList _cardItemList;
+        private static CardTreitList _cardTreitList;
+        public static bool PlayerTurn = true;
+        private static int _playerId;
+        private static int _enemyId;
+        public bool NewGame;
 
-    private void Awake()
-    {
-        cardItemList = AssetDatabase.LoadAssetAtPath("Assets/GameField/ScriptableObjects/CardItemList.asset", typeof(CardItemList)) as CardItemList;
-        cardTreitList = AssetDatabase.LoadAssetAtPath("Assets/GameField/ScriptableObjects/CardTreitList.asset", typeof(CardTreitList)) as CardTreitList;
-    }
-    void Start()
-    {
-       // newGame = true;
-        SetPlayerCards();
-        SetEnemyCards();
-    }
+        #endregion
 
-    void SetPlayerCards()
-    {
-        int playerCardsCount;
-        if (newGame)
+        private void Awake()
         {
-            playerCardsCount = 3;
+            _cardItemList =
+                AssetDatabase.LoadAssetAtPath("Assets/GameField/ScriptableObjects/CardItemList.asset",
+                    typeof(CardItemList)) as CardItemList;
+            _cardTreitList =
+                AssetDatabase.LoadAssetAtPath("Assets/GameField/ScriptableObjects/CardTreitList.asset",
+                    typeof(CardTreitList)) as CardTreitList;
         }
-        else { playerCardsCount = playerCards.Count; }
-        for (int i = 0; i < playerCardsCount; i++)
+
+        private void Start()
         {
-            int cardIndex;
-            cardIndex = UnityEngine.Random.Range(0, cardItemList.cardList.Count);
-            playerCards.Add(Instantiate(cardPrefab));
-            var index = playerCards[i].GetComponent<CardDisplay>();
-            index.indexCard = cardIndex;
-            playerCards[i].transform.SetParent(playerPanell.transform);
+            NewGame = true;
+            SetPlayerCards();
+            SetEnemyCards();
         }
-        SetTreitCardtoPlayer();
-    }
-    void SetEnemyCards()
-    {
-        int enemyCardsCount;
-        if (newGame)
+
+        private void SetPlayerCards()
         {
-            enemyCardsCount = 3;
-        }
-        else { enemyCardsCount = enemyCards.Count; }
-        for (int i = 0; i < enemyCardsCount; i++)
-        {
-            int cardIndex;
-            cardIndex = UnityEngine.Random.Range(0, cardItemList.cardList.Count);
-            enemyCards.Add(Instantiate(cardPrefab));
-            var index = enemyCards[i].GetComponent<CardDisplay>();
-            index.indexCard = cardIndex;
-            enemyCards[i].transform.SetParent(enemyPanell.transform);
-        }
-        SetTreitCardtoEnemy();
-    }
-    public void EndTURN()
-    {
-        playerID = UnityEngine.Random.Range(0, playerCards.Count);
-        enemyID = UnityEngine.Random.Range(0, enemyCards.Count);
-        int crit = UnityEngine.Random.Range(0, 100);
-        if (playerTurn)
-        {
-            if (playerCards[playerID].GetComponent<CardDisplay>().Legendary == true && crit > 0 && crit < 25)
+            var playerCardsCount = NewGame ? 3 : PlayerCards.Count;
+            for (var i = 0; i < playerCardsCount; i++)
             {
-                fightController.KriticalAttack(playerCards[playerID], enemyCards[enemyID]);
-                playerTurn = false;
-                if (enemyCards.Count != 0 || playerCards.Count != 0)
-                    EndTURN();
+                var cardIndex = UnityEngine.Random.Range(0, _cardItemList.cardList.Count);
+                PlayerCards.Add(Instantiate(_cardPrefab, PlayerPanell.transform));
+                var index = PlayerCards[i].GetComponent<CardView>();
+               // index.indexCard = cardIndex;
+                // playerCards[i].transform.SetParent(playerPanell.transform); 
             }
-            else
-            {
-                fightController.NormalAttack(playerCards[playerID], enemyCards[enemyID]);
-                playerTurn = false;
-                if (enemyCards.Count != 0 || playerCards.Count != 0)
-                    EndTURN();
-            }
-        }
-        else
-        {
-            if (enemyCards[enemyID].GetComponent<CardDisplay>().Legendary == true && crit > 0 && crit < 25)
-            {
-                fightController.KriticalAttack(enemyCards[enemyID], playerCards[playerID]);
-                playerTurn = true;
-            }
-            else
-            {
-                fightController.NormalAttack(enemyCards[enemyID], playerCards[playerID]);
-                playerTurn = true;
-            }
+            SetTreitCardtoPlayer();
         }
 
-    }
-    public void EndGame()
-    {
-        if (playerCards.Count == 0)
+        private void SetEnemyCards()
         {
-            Debug.Log("Enemy Win");
-            endTurnButton.interactable = false;
-            playerCards = null;
-            enemyCards = null;
-            playerTreit = null;
-            enemyTreit = null;
-            newGame = true;
+            var enemyCardsCount = NewGame ? 3 : EnemyCards.Count;
+            for (var i = 0; i < enemyCardsCount; i++)
+            {
+                var cardIndex = UnityEngine.Random.Range(0, _cardItemList.cardList.Count);
+                EnemyCards.Add(Instantiate(_cardPrefab, EnemyPanell.transform));
+               // var index = EnemyCards[i].GetComponent<CardView>();
+               // index.indexCard = cardIndex;
+                //enemyCards[i].transform.SetParent(enemyPanell.transform);
+            }
+            SetTreitCardtoEnemy();
         }
-        else if (enemyCards.Count == 0)
+        private void SetTreitCardtoPlayer()
         {
-            Debug.Log("You Win");
-            ChangeEnemy();
+            var treitListIndex = 0;
+            var treitIndex = UnityEngine.Random.Range(0, _cardTreitList.treitList.Count);
+            _playerTreit.Add(Instantiate(_treitPrefab, PlayerPanell.transform));
+            var index = _playerTreit[treitListIndex].GetComponent<TrateView>();
+           // index.indexCard = treitIndex;
+            //playerTreit[treitListIndex].transform.SetParent(playerPanell.transform);
         }
-    }
-    private void ChangeEnemy()
-    {
-        SetEnemyCards();
-        foreach (var card in playerCards)
-        {
-            var hp = card.transform.Find("Health").GetComponent<Text>();
-            hp.text = (Convert.ToInt32(Convert.ToInt32(hp.text) * 1.2f)).ToString();
-        }
-    }
-    private void SetTreitCardtoPlayer()
-    {
-        int treitListIndex = 0;
-        int treitIndex;
-        treitIndex = UnityEngine.Random.Range(0, cardTreitList.treitList.Count);
-        playerTreit.Add(Instantiate(treitPrefab));
-        var index = playerTreit[treitListIndex].GetComponent<TreitDisplay>();
-        index.indexTreit = treitIndex;
-        playerTreit[treitListIndex].transform.SetParent(playerPanell.transform);
-        treitListIndex++;
-    }
-    private void SetTreitCardtoEnemy()
-    {
-        int treitListIndex = 0;
-        int treitIndex;
-        treitIndex = UnityEngine.Random.Range(0, cardTreitList.treitList.Count);
-        enemyTreit.Add(Instantiate(treitPrefab));
-        var index = enemyTreit[treitListIndex].GetComponent<TreitDisplay>();
-        index.indexTreit = treitIndex;
-        enemyTreit[treitListIndex].transform.SetParent(enemyPanell.transform);
-        treitListIndex++;
-    }
 
+        private void SetTreitCardtoEnemy()
+        {
+            var treitListIndex = 0;
+            var treitIndex = UnityEngine.Random.Range(0, _cardTreitList.treitList.Count);
+            _enemyTreit.Add(Instantiate(_treitPrefab, EnemyPanell.transform));
+            var index = _enemyTreit[treitListIndex].GetComponent<TrateView>();
+           // index.indexCard = treitIndex;
+            //enemyTreit[treitListIndex].transform.SetParent(enemyPanell.transform);
+        }
+
+//        public void EndTURN()
+//        {
+//            _playerId = UnityEngine.Random.Range(0, PlayerCards.Count);
+//            _enemyId = UnityEngine.Random.Range(0, EnemyCards.Count);
+//            int crit = UnityEngine.Random.Range(0, 100);
+//            if (PlayerTurn)
+//            {
+//                if (PlayerCards[_playerId].GetComponent<CardDisplay>().Legendary == true && crit > 0 && crit < 25)
+//                {
+//                    FightController.KriticalAttack(PlayerCards[_playerId], EnemyCards[_enemyId]);
+//                    PlayerTurn = false;
+//                    if (EnemyCards.Count != 0 || PlayerCards.Count != 0)
+//                        EndTURN();
+//                }
+//                else
+//                {
+//                    FightController.NormalAttack(PlayerCards[_playerId], EnemyCards[_enemyId]);
+//                    PlayerTurn = false;
+//                    if (EnemyCards.Count != 0 || PlayerCards.Count != 0)
+//                        EndTURN();
+//                }
+//            }
+//            else
+//            {
+//                if (EnemyCards[_enemyId].GetComponent<CardDisplay>().Legendary == true && crit > 0 && crit < 25)
+//                {
+//                    FightController.KriticalAttack(EnemyCards[_enemyId], PlayerCards[_playerId]);
+//                    PlayerTurn = true;
+//                }
+//                else
+//                {
+//                    FightController.NormalAttack(EnemyCards[_enemyId], PlayerCards[_playerId]);
+//                    PlayerTurn = true;
+//                }
+//            }
+//        }
+
+        /*public void EndGame()
+        {
+            if (PlayerCards.Count == 0)
+            {
+                Debug.Log("Enemy Win");
+                _endTurnButton.interactable = false;
+                PlayerCards = null;
+                EnemyCards = null;
+                _playerTreit = null;
+                _enemyTreit = null;
+                NewGame = true;
+            }
+            else if (EnemyCards.Count == 0)
+            {
+                Debug.Log("You Win");
+                ChangeEnemy();
+            }
+        }*/
+
+        /*private void ChangeEnemy()
+        {
+            SetEnemyCards();
+            foreach (var card in PlayerCards)
+            {
+                var hp = card.transform.Find("Health").GetComponent<Text>();
+                hp.text = (Convert.ToInt32(Convert.ToInt32(hp.text) * 1.2f)).ToString();
+            }
+        }*/
+    }
 }

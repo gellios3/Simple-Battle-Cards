@@ -12,7 +12,6 @@ public class CardItem
     public int health;
     public int defence;
     public int damage;
-    public int energy;
     public bool isLegendary;
 
 }
@@ -23,8 +22,8 @@ public class CardTreit
     public string cardName;
     public Sprite artwork;
     public Sprite background;
-    public int healthModifier;
-    public int damageModifier;
-    public int defenceModifier;
-    public int energy;
+    public int health;
+    public int defence;
+    public int damage;
+    public bool isLegendary;
 }

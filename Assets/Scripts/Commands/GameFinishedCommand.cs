@@ -34,10 +34,7 @@ namespace Commands
             var winPlayer = BattleArena.ActiveState == BattleState.YourTurn
                 ? Arena.EnemyPlayer
                 : Arena.YourPlayer;
-            if (winPlayer.Status != PlayerStatus.Dead)
-            {
-                AddHistoryLogSignal.Dispatch(new[] {"\"", winPlayer.Name, "\" WINS!"}, LogType.Battle);
-            }
+            AddHistoryLogSignal.Dispatch(new[] {"\"", winPlayer.Name, "' WINS!"}, LogType.Battle);
         }
     }
 }
