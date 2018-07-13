@@ -66,6 +66,7 @@ namespace Contexts
             injectionBinder.Bind<DisconnectedFromServerSignal>().ToSingleton().CrossContext();
             injectionBinder.Bind<PingPlayerIdToServerSignal>().ToSingleton().CrossContext();
             injectionBinder.Bind<GetEnemyTurnSignal>().ToSingleton().CrossContext();
+            injectionBinder.Bind<ShowPlayersListSignal>().ToSingleton();
             
             // init models
 

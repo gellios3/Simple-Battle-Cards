@@ -1,7 +1,9 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using strange.extensions.mediation.impl;
 using Signals.multiplayer;
 using UnityEngine;
+using NetworkPlayer = Models.Miltiplayer.NetworkPlayer;
 
 namespace View.Multiplayer
 {
@@ -10,11 +12,12 @@ namespace View.Multiplayer
         /// <summary>
         /// Disconned player from server signal
         /// </summary>
-        [Inject] public PingPlayerIdToServerSignal PingPlayerIdToServerSignal { get; set; }
-        
+        [Inject]
+        public PingPlayerIdToServerSignal PingPlayerIdToServerSignal { get; set; }
+
         [SerializeField] private StatusView _serverStatus;
-        [SerializeField] private StatusView _payerOneStatus;
-        [SerializeField] private StatusView _payerTwoStatus;
+
+        private List<GameObject> _statusViews = new List<GameObject>();
 
         private void Awake()
         {
@@ -38,26 +41,42 @@ namespace View.Multiplayer
         }
 
         /// <summary>
-        /// On current player connected
+        /// 
         /// </summary>
-        public void OnCurrentPlayerConnected()
+        /// <param name="players"></param>
+        public void ShowPlayersList(IEnumerable<NetworkPlayer> players)
         {
-            _payerOneStatus.SetStatusOnline();
+            RefreshStatusList();
+            foreach (var item in players)
+            {
+                var statusView = (GameObject) Instantiate(
+                    Resources.Load("Prefabs/StatusItem", typeof(GameObject)), new Vector2(), Quaternion.identity,
+                    transform
+                );
+                _statusViews.Add(statusView);
+//                superRoom.GetComponent<StatusItem>().Game = game;
+            }
         }
 
         /// <summary>
-        /// On opponent connected
+        /// Refresh status list
         /// </summary>
-        public void OnOpponentConnected()
+        private void RefreshStatusList()
         {
-            _payerTwoStatus.SetStatusOnline();
+            foreach (var view in _statusViews)
+            {
+                Destroy(view);
+            }
+
+            _statusViews.Clear();
         }
+
 
         private IEnumerator SpawnLoop()
         {
             while (enabled)
             {
-                yield return new WaitForSeconds (5);
+                yield return new WaitForSeconds(5);
                 PingPlayerIdToServerSignal.Dispatch();
             }
         }

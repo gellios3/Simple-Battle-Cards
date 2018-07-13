@@ -31,12 +31,12 @@ namespace Gamefield.Scripts.GameMechanic
 
         private void Awake()
         {
-            _cardItemList =
-                AssetDatabase.LoadAssetAtPath("Assets/GameField/ScriptableObjects/CardItemList.asset",
-                    typeof(CardItemList)) as CardItemList;
-            _cardTreitList =
-                AssetDatabase.LoadAssetAtPath("Assets/GameField/ScriptableObjects/CardTreitList.asset",
-                    typeof(CardTreitList)) as CardTreitList;
+//            _cardItemList =
+//                AssetDatabase.LoadAssetAtPath("Assets/GameField/ScriptableObjects/CardItemList.asset",
+//                    typeof(CardItemList)) as CardItemList;
+//            _cardTreitList =
+//                AssetDatabase.LoadAssetAtPath("Assets/GameField/ScriptableObjects/CardTreitList.asset",
+//                    typeof(CardTreitList)) as CardTreitList;
         }
 
         private void Start()

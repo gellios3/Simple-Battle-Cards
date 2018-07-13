@@ -2,6 +2,7 @@
 using strange.extensions.command.impl;
 using Services.Multiplayer;
 using UnityEngine;
+using NetworkPlayer = Models.Miltiplayer.NetworkPlayer;
 
 namespace Commands.Multiplayer
 {
@@ -24,18 +25,16 @@ namespace Commands.Multiplayer
         /// </summary>
         public override void Execute()
         {
-            NetworkPlayerService.PlayerStruct = new PlayerStruct
+            NetworkPlayerService.NetworkPlayer = new NetworkPlayer
             {
                 Id = Random.Range(0, 1000),
-                Name = "test " + Random.Range(0, 100),
-                IsConected = true
+                Name = "test " + Random.Range(0, 100)
             };
             // Register player on server
             ServerConnectorService.Send(MsgStruct.SendPlayer, new RegisterPlayerMessage
             {
-                Id = NetworkPlayerService.PlayerStruct.Id,
-                Name = NetworkPlayerService.PlayerStruct.Name,
-                IsConected = NetworkPlayerService.PlayerStruct.IsConected
+                Id = NetworkPlayerService.NetworkPlayer.Id,
+                Name = NetworkPlayerService.NetworkPlayer.Name,
             });
         }
     }
