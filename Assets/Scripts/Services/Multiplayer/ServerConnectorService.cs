@@ -30,7 +30,13 @@ namespace Services.Multiplayer
         /// Register user handler
         /// </summary>
         [Inject]
-        public GetLobbyPlayersHandler GetLobbyPlayersHandler { get; set; }
+        public GetLobbyPlayerHandler GetLobbyPlayerHandler { get; set; }
+
+        /// <summary>
+        /// Register user handler
+        /// </summary>
+        [Inject]
+        public RemoveLobbyPlayerHandler RemoveLobbyPlayerHandler { get; set; }
 
         /// <summary>
         /// Get enemy turn handler
@@ -49,7 +55,12 @@ namespace Services.Multiplayer
             _client.Connect(url, port);
             _client.RegisterHandler(MsgType.Connect, msg => { ServerConnectedSignal.Dispatch(); });
             _client.RegisterHandler(MsgType.Disconnect, mas => { DisconnectedFromServerSignal.Dispatch(); });
-            RegisterHandlers(new List<IServerMessageHandler> {GetEnemyTurnHandler, GetLobbyPlayersHandler});
+            RegisterHandlers(new List<IServerMessageHandler>
+            {
+                GetEnemyTurnHandler,
+                GetLobbyPlayerHandler,
+                RemoveLobbyPlayerHandler
+            });
         }
 
         /// <summary>

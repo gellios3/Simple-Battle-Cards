@@ -1,6 +1,6 @@
 ﻿using strange.extensions.mediation.impl;
 
-namespace View
+namespace Mediators
 {
     public class TargetMediator<T> : EventMediator
         where T : EventView

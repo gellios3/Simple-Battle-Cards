@@ -19,7 +19,7 @@ namespace Mediators
         [Inject]
         public DisconnectedFromServerSignal DisconnectedFromServerSignal { get; set; }
 
-        [Inject] public ShowPlayersListSignal ShowPlayersListSignal { get; set; }
+        [Inject] public ShowLobbyPlayersSignal ShowLobbyPlayersSignal { get; set; }
 
         [Inject] public NetworkPlayerService NetworkPlayerService { get; set; }
 
@@ -30,7 +30,7 @@ namespace Mediators
         {
             ServerConnectedSignal.AddListener(() => { View.OnServerConnected(); });
             DisconnectedFromServerSignal.AddListener(() => { View.OnServerDisconnected(); });
-            ShowPlayersListSignal.AddListener(() => { View.ShowPlayersList(NetworkPlayerService.OnlinePlayers); });
+            ShowLobbyPlayersSignal.AddListener(() => { View.ShowPlayersList(NetworkPlayerService.OnlinePlayers); });
         }
     }
 }

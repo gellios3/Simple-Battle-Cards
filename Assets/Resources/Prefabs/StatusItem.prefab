@@ -19,6 +19,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 224745659988214050}
+  - component: {fileID: 114568393216596128}
   m_Layer: 5
   m_Name: StatusItem
   m_TagString: Untagged
@@ -140,6 +141,19 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Offline
+--- !u!114 &114568393216596128
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1425667063773488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f2c72c344121ee43a640d33c268f01e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _title: {fileID: 114627785985352364}
+  _status: {fileID: 114381789052699294}
 --- !u!114 &114627785985352364
 MonoBehaviour:
   m_ObjectHideFlags: 1

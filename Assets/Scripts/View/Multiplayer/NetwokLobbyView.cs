@@ -17,7 +17,7 @@ namespace View.Multiplayer
 
         [SerializeField] private StatusView _serverStatus;
 
-        private List<GameObject> _statusViews = new List<GameObject>();
+        private readonly List<GameObject> _statusViews = new List<GameObject>();
 
         private void Awake()
         {
@@ -53,8 +53,9 @@ namespace View.Multiplayer
                     Resources.Load("Prefabs/StatusItem", typeof(GameObject)), new Vector2(), Quaternion.identity,
                     transform
                 );
+                var statusItemView = statusView.GetComponent<StatusItemView>();
+                statusItemView.InitPlayer(item);
                 _statusViews.Add(statusView);
-//                superRoom.GetComponent<StatusItem>().Game = game;
             }
         }
 

@@ -66,7 +66,7 @@ namespace Contexts
             injectionBinder.Bind<DisconnectedFromServerSignal>().ToSingleton().CrossContext();
             injectionBinder.Bind<PingPlayerIdToServerSignal>().ToSingleton().CrossContext();
             injectionBinder.Bind<GetEnemyTurnSignal>().ToSingleton().CrossContext();
-            injectionBinder.Bind<ShowPlayersListSignal>().ToSingleton();
+            injectionBinder.Bind<ShowLobbyPlayersSignal>().ToSingleton();
             
             // init models
 
@@ -76,7 +76,8 @@ namespace Contexts
             
             // Bind Handlers
             injectionBinder.Bind<GetEnemyTurnHandler>().ToSingleton().CrossContext();
-            injectionBinder.Bind<GetLobbyPlayersHandler>().ToSingleton().CrossContext();            
+            injectionBinder.Bind<GetLobbyPlayerHandler>().ToSingleton().CrossContext();  
+            injectionBinder.Bind<RemoveLobbyPlayerHandler>().ToSingleton().CrossContext();            
             
             // Init comands
             commandBinder.Bind<ConnectToServerSignal>().To<ConectToServerCommand>();
@@ -84,7 +85,8 @@ namespace Contexts
             commandBinder.Bind<ServerConnectedSignal>().To<ServerConectedCommand>().Once();
 
             // Init mediators
-            mediationBinder.Bind<NetwokLobbyView>().To<MathRoomMediator>();
+            mediationBinder.Bind<NetwokLobbyView>().To<MathRoomMediator>(); 
+            mediationBinder.Bind<StatusItemView>().To<StatusItemMediator>();
         }
     }
 }
