@@ -1,7 +1,10 @@
-﻿using Interfaces;
+﻿using System.Collections.Generic;
+using Interfaces;
 using Models.Miltiplayer;
-using UnityEngine;
+using Services.Multiplayer;
+using Signals.multiplayer;
 using UnityEngine.Networking;
+using NetworkPlayer = Models.Miltiplayer.NetworkPlayer;
 
 namespace Handlers
 {
@@ -9,22 +12,29 @@ namespace Handlers
     {
         public short MessageType => MsgStruct.GetRegisteredPlayers;
 
+        [Inject] public NetworkPlayerService NetworkPlayerService { get; set; }
+        [Inject] public ShowPlayersListSignal ShowPlayersListSignal { get; set; }
+
+        /// <summary>
+        /// Handle
+        /// </summary>
+        /// <param name="msg"></param>
         public void Handle(NetworkMessage msg)
         {
-            Debug.Log("GetLobbyPlayersHandler");
             var lobbyPlayersMessage = msg.ReadMessage<LobbyPlayersMessage>();
-            if (lobbyPlayersMessage != null)
+            if (lobbyPlayersMessage == null) return;
+
+            NetworkPlayerService.OnlinePlayers = new List<NetworkPlayer>();
+            foreach (var item in lobbyPlayersMessage.NetworkPlayers)
             {
-                Debug.Log(lobbyPlayersMessage.Players.Length);
-//                UpdateRegularGameDataSignal.Dispatch(new BaseRegularGame
-//                {
-//                    CurrentPlayers = regularMsg.CurrentPlayers,
-//                    Id = regularMsg.Id,
-//                    MaxPlayers = regularMsg.MaxPlayers,
-//                    Name = regularMsg.Name,
-//                    Price = regularMsg.Price
-//                });
+                NetworkPlayerService.OnlinePlayers.Add(new NetworkPlayer
+                {
+                    Id = item.Id,
+                    Name = item.Name
+                });
             }
+
+            ShowPlayersListSignal.Dispatch();
         }
     }
 }

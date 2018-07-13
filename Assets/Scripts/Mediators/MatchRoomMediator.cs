@@ -1,5 +1,5 @@
-﻿using Signals.multiplayer;
-using UnityEngine;
+﻿using Services.Multiplayer;
+using Signals.multiplayer;
 using View;
 using View.Multiplayer;
 
@@ -12,8 +12,16 @@ namespace Mediators
         /// </summary>
         [Inject]
         public ServerConnectedSignal ServerConnectedSignal { get; set; }
-        
-        [Inject] public DisconnectedFromServerSignal DisconnectedFromServerSignal { get; set; }
+
+        /// <summary>
+        /// Disconnected from server signal
+        /// </summary>
+        [Inject]
+        public DisconnectedFromServerSignal DisconnectedFromServerSignal { get; set; }
+
+        [Inject] public ShowPlayersListSignal ShowPlayersListSignal { get; set; }
+
+        [Inject] public NetworkPlayerService NetworkPlayerService { get; set; }
 
         /// <summary>
         /// On register mediator
@@ -22,6 +30,7 @@ namespace Mediators
         {
             ServerConnectedSignal.AddListener(() => { View.OnServerConnected(); });
             DisconnectedFromServerSignal.AddListener(() => { View.OnServerDisconnected(); });
+            ShowPlayersListSignal.AddListener(() => { View.ShowPlayersList(NetworkPlayerService.OnlinePlayers); });
         }
     }
 }

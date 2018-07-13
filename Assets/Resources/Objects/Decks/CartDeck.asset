@@ -8,7 +8,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0aa2fcce67a4bfd98923776fc17f79c, type: 3}
+  m_Script: {fileID: 11500000, guid: 8f01dd68855b8844995431cb110f2f02, type: 3}
   m_Name: CartDeck
   m_EditorClassIdentifier: 
   Cards:
@@ -17,11 +17,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 26ad966809ba0fc43afde7224d59c7ce, type: 2}
   - {fileID: 11400000, guid: 26ad966809ba0fc43afde7224d59c7ce, type: 2}
   - {fileID: 11400000, guid: 26ad966809ba0fc43afde7224d59c7ce, type: 2}
+  - {fileID: 11400000, guid: 868bb4cfb2ebdaf478ecf9165d0f5002, type: 2}
+  - {fileID: 11400000, guid: 868bb4cfb2ebdaf478ecf9165d0f5002, type: 2}
+  - {fileID: 11400000, guid: 868bb4cfb2ebdaf478ecf9165d0f5002, type: 2}
+  - {fileID: 11400000, guid: 08873d5d89d7b764c882b8150436c19d, type: 2}
+  - {fileID: 11400000, guid: 08873d5d89d7b764c882b8150436c19d, type: 2}
   - {fileID: 11400000, guid: 637e7fbd05090674ba45a8e060bc3434, type: 2}
-  - {fileID: 11400000, guid: 6f56fb5b611fdc14e9fa00d9c06f96c7, type: 2}
-  - {fileID: 11400000, guid: 6f56fb5b611fdc14e9fa00d9c06f96c7, type: 2}
   - {fileID: 11400000, guid: 637e7fbd05090674ba45a8e060bc3434, type: 2}
-  - {fileID: 11400000, guid: b7dd2910445ade149a8a1bae483929e9, type: 2}
-  - {fileID: 11400000, guid: b7dd2910445ade149a8a1bae483929e9, type: 2}
-  - {fileID: 11400000, guid: 6f56fb5b611fdc14e9fa00d9c06f96c7, type: 2}
-  - {fileID: 11400000, guid: 26ad966809ba0fc43afde7224d59c7ce, type: 2}
+  - {fileID: 11400000, guid: 868bb4cfb2ebdaf478ecf9165d0f5002, type: 2}
