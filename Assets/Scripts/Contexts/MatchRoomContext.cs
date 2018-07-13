@@ -7,6 +7,7 @@ using strange.extensions.context.api;
 using strange.extensions.context.impl;
 using Services.Multiplayer;
 using Signals.multiplayer;
+using Signals.MainMenu;
 using UnityEngine;
 using View.Multiplayer;
 
@@ -65,14 +66,13 @@ namespace Contexts
             injectionBinder.Bind<ServerConnectedSignal>().ToSingleton().CrossContext();
             injectionBinder.Bind<DisconnectedFromServerSignal>().ToSingleton().CrossContext();
             injectionBinder.Bind<PingPlayerIdToServerSignal>().ToSingleton().CrossContext();
-            injectionBinder.Bind<GetEnemyTurnSignal>().ToSingleton().CrossContext();
+            injectionBinder.Bind<GetEnemyTurnSignal>().ToSingleton().CrossContext();          
             injectionBinder.Bind<ShowLobbyPlayersSignal>().ToSingleton();
             
             // init models
 
             //Bind Services
             injectionBinder.Bind<ServerConnectorService>().ToSingleton().CrossContext();
-            injectionBinder.Bind<NetworkPlayerService>().ToSingleton().CrossContext();
             
             // Bind Handlers
             injectionBinder.Bind<GetEnemyTurnHandler>().ToSingleton().CrossContext();

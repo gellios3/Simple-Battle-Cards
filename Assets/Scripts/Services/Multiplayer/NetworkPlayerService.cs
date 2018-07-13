@@ -5,8 +5,8 @@ namespace Services.Multiplayer
 {
     public class NetworkPlayerService
     {
-        public NetworkPlayer NetworkPlayer { get; set; }
+        public NetworkLobbyPlayer NetworkLobbyPlayer { get; set; }
 
-        public List<NetworkPlayer> OnlinePlayers { get; } = new List<NetworkPlayer>();
+        public List<NetworkLobbyPlayer> OnlinePlayers { get; } = new List<NetworkLobbyPlayer>();
     }
 }

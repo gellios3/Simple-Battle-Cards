@@ -28,7 +28,7 @@ namespace Commands.Multiplayer
             Debug.Log("PingPlayerIdToServerCommand");
             ServerConnectorService.Send(MsgStruct.SendPlayerID, new PingPlayerMessage
             {
-                Id = NetworkPlayerService.NetworkPlayer.Id
+                Id = NetworkPlayerService.NetworkLobbyPlayer.Id
             });
         }
     }

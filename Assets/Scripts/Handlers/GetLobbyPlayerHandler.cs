@@ -3,7 +3,7 @@ using Models.Miltiplayer;
 using Services.Multiplayer;
 using Signals.multiplayer;
 using UnityEngine.Networking;
-using NetworkPlayer = Models.Miltiplayer.NetworkPlayer;
+using NetworkLobbyPlayer = Models.Miltiplayer.NetworkLobbyPlayer;
 
 namespace Handlers
 {
@@ -22,12 +22,21 @@ namespace Handlers
         {
             var lobbyPlayerMessage = msg.ReadMessage<LobbyPlayerMessage>();
             if (lobbyPlayerMessage == null) return;
-
-            NetworkPlayerService.OnlinePlayers.Add(new NetworkPlayer
+            var item = new NetworkLobbyPlayer
             {
                 Id = lobbyPlayerMessage.Id,
                 Name = lobbyPlayerMessage.Name
-            });
+            };
+            var index = NetworkPlayerService.OnlinePlayers.IndexOf(item);
+            if (index == -1)
+            {
+                NetworkPlayerService.OnlinePlayers.Add(item);
+            }
+            else
+            {
+                NetworkPlayerService.OnlinePlayers[index] = item;
+            }
+
             ShowLobbyPlayersSignal.Dispatch();
         }
     }

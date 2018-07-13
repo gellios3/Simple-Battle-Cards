@@ -1,20 +1,20 @@
-﻿using strange.extensions.mediation.impl;
+﻿using Models.Miltiplayer;
+using strange.extensions.mediation.impl;
 using UnityEngine;
 using UnityEngine.UI;
-using NetworkPlayer = Models.Miltiplayer.NetworkPlayer;
 
 namespace View.Multiplayer
 {
     public class StatusItemView : EventView
     {
         [SerializeField] private Text _title;
-        [SerializeField] private NetworkPlayer _networkPlayer;
+        [SerializeField] private NetworkLobbyPlayer _networkLobbyPlayer;
         [SerializeField] private StatusView _status;
 
-        public void InitPlayer(NetworkPlayer player)
+        public void InitPlayer(NetworkLobbyPlayer lobbyPlayer)
         {
-            _networkPlayer = player;
-            _title.text = player.Name;
+            _networkLobbyPlayer = lobbyPlayer;
+            _title.text = lobbyPlayer.Name;
             _status.SetStatusOnline();
         }
     }

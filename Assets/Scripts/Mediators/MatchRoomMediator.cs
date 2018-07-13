@@ -1,6 +1,7 @@
 ﻿using Services.Multiplayer;
 using Signals.multiplayer;
-using View;
+using Signals.MainMenu;
+using UnityEngine;
 using View.Multiplayer;
 
 namespace Mediators

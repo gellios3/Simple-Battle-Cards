@@ -1,6 +1,7 @@
-﻿using strange.extensions.context.impl;
+﻿using Contexts;
+using strange.extensions.context.impl;
 
-namespace Contexts
+namespace View.Root
 {
     public class ArenaRoot : ContextView
     {

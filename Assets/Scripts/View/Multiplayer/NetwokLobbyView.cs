@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Models.Miltiplayer;
 using strange.extensions.mediation.impl;
 using Signals.multiplayer;
 using UnityEngine;
-using NetworkPlayer = Models.Miltiplayer.NetworkPlayer;
 
 namespace View.Multiplayer
 {
@@ -44,7 +44,7 @@ namespace View.Multiplayer
         /// 
         /// </summary>
         /// <param name="players"></param>
-        public void ShowPlayersList(IEnumerable<NetworkPlayer> players)
+        public void ShowPlayersList(IEnumerable<NetworkLobbyPlayer> players)
         {
             RefreshStatusList();
             foreach (var item in players)
