@@ -15,7 +15,6 @@ namespace View
 
         public void OnArenaInitialized()
         {
-            Debug.Log("OnInitArena");
             SaveLogSignal.Dispatch();
         }
     }

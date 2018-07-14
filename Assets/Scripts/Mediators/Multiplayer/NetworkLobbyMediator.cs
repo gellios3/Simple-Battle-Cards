@@ -1,12 +1,11 @@
 ﻿using Services.Multiplayer;
 using Signals.multiplayer;
-using Signals.MainMenu;
-using UnityEngine;
+using UnityEngine.SceneManagement;
 using View.Multiplayer;
 
-namespace Mediators
+namespace Mediators.Multiplayer
 {
-    public class MathRoomMediator : TargetMediator<NetwokLobbyView>
+    public class NetworkLobbyMediator : TargetMediator<NetwokLobbyView>
     {
         /// <summary>
         /// Arena initialized signal
@@ -29,6 +28,7 @@ namespace Mediators
         /// </summary>
         public override void OnRegister()
         {
+            View.GetStartGameBtn().onClick.AddListener(() => { SceneManager.LoadScene("GameArena"); });
             ServerConnectedSignal.AddListener(() => { View.OnServerConnected(); });
             DisconnectedFromServerSignal.AddListener(() => { View.OnServerDisconnected(); });
             ShowLobbyPlayersSignal.AddListener(() => { View.ShowPlayersList(NetworkPlayerService.OnlinePlayers); });

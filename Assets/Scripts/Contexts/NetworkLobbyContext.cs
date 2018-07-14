@@ -1,6 +1,7 @@
 using Commands.Multiplayer;
 using Handlers;
 using Mediators;
+using Mediators.Multiplayer;
 using strange.extensions.command.api;
 using strange.extensions.command.impl;
 using strange.extensions.context.api;
@@ -13,19 +14,19 @@ using View.Multiplayer;
 
 namespace Contexts
 {
-    public class MatchRoomContext : MVCSContext
+    public class NetworkLobbyContext : MVCSContext
     {
-        public MatchRoomContext(MonoBehaviour view) : base(view)
+        public NetworkLobbyContext(MonoBehaviour view) : base(view)
         {
             _instance = this;
         }
 
-        public MatchRoomContext(MonoBehaviour view, ContextStartupFlags flags) : base(view, flags)
+        public NetworkLobbyContext(MonoBehaviour view, ContextStartupFlags flags) : base(view, flags)
         {
             _instance = this;
         }
 
-        private static MatchRoomContext _instance;
+        private static NetworkLobbyContext _instance;
 
         public static T Get<T>()
         {
@@ -85,7 +86,7 @@ namespace Contexts
             commandBinder.Bind<ServerConnectedSignal>().To<ServerConectedCommand>().Once();
 
             // Init mediators
-            mediationBinder.Bind<NetwokLobbyView>().To<MathRoomMediator>(); 
+            mediationBinder.Bind<NetwokLobbyView>().To<NetworkLobbyMediator>(); 
             mediationBinder.Bind<StatusItemView>().To<StatusItemMediator>();
         }
     }

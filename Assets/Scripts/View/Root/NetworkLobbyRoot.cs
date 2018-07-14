@@ -3,12 +3,11 @@ using strange.extensions.context.impl;
 
 namespace View.Root
 {
-    public class MainMenuRoot : ContextView
+    public class NetworkLobbyRoot : ContextView
     {
         private void Awake()
         {
-            DontDestroyOnLoad(gameObject);
-            context = new MainMenuContext(this);
+            context = new NetworkLobbyContext(this);
         }
     }
 }

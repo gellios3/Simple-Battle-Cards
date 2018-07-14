@@ -1,4 +1,5 @@
-﻿using Signals.MainMenu;
+﻿using Services;
+using Signals.MainMenu;
 using UnityEngine.SceneManagement;
 using View;
 
@@ -11,6 +12,12 @@ namespace Mediators
         /// </summary>
         [Inject]
         public StartOnlineGameSignal StartOnlineGameSignal { get; set; }
+        
+        /// <summary>
+        /// Arena initialized signal
+        /// </summary>
+        [Inject]
+        public GameStateService GameStateService { get; set; }
 
         /// <summary>
         /// On register mediator
@@ -21,9 +28,16 @@ namespace Mediators
             {
                 var playerName = View.GetPlayerName().text;
                 if (playerName.Length <= 0) return;
+                GameStateService.InitMultiplayer();
                 // Load lobby scene
                 StartOnlineGameSignal.Dispatch(playerName);
-                SceneManager.LoadScene("NetworkLobby",LoadSceneMode.Additive);
+                SceneManager.LoadScene("NetworkLobby");
+            });
+
+            View.GetSingleGameBtn().onClick.AddListener(() =>
+            {
+                GameStateService.InitSingleGame();
+                SceneManager.LoadScene("GameArena");
             });
         }
     }

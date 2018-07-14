@@ -4,6 +4,7 @@ using Models.Miltiplayer;
 using strange.extensions.mediation.impl;
 using Signals.multiplayer;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace View.Multiplayer
 {
@@ -15,7 +16,15 @@ namespace View.Multiplayer
         [Inject]
         public PingPlayerIdToServerSignal PingPlayerIdToServerSignal { get; set; }
 
+        /// <summary>
+        ///  Status view
+        /// </summary>
         [SerializeField] private StatusView _serverStatus;
+
+        /// <summary>
+        /// Start game
+        /// </summary>
+        [SerializeField] private Button _startGameBtn;
 
         private readonly List<GameObject> _statusViews = new List<GameObject>();
 
@@ -41,6 +50,15 @@ namespace View.Multiplayer
         }
 
         /// <summary>
+        /// Get start game btn
+        /// </summary>
+        /// <returns></returns>
+        public Button GetStartGameBtn()
+        {
+            return _startGameBtn;
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="players"></param>
@@ -56,6 +74,11 @@ namespace View.Multiplayer
                 var statusItemView = statusView.GetComponent<StatusItemView>();
                 statusItemView.InitPlayer(item);
                 _statusViews.Add(statusView);
+            }
+
+            if (_statusViews.Count > 1)
+            {
+                _startGameBtn.interactable = true;
             }
         }
 

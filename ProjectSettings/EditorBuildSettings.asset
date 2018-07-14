@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameField.unity
     guid: 313ecb8ef4000b048bffa33eb9fd3d54
+  - enabled: 1
+    path: Assets/Scenes/GameArena.unity
+    guid: 3eea67d2b3dca364d8cb63be983b087d
   m_configObjects: {}

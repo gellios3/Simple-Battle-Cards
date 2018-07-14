@@ -3,11 +3,11 @@ using strange.extensions.context.impl;
 
 namespace View.Root
 {
-    public class MatсhRoomRoot : ContextView
+    public class GameArenaRoot : ContextView
     {
         private void Awake()
         {
-            context = new MatchRoomContext(this);
+            context = new GameArenaContext(this);
         }
     }
 }

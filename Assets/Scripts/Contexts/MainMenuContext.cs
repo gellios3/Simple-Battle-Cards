@@ -1,16 +1,11 @@
-﻿using Commands;
-using Commands.Multiplayer;
+﻿using Commands.Multiplayer;
 using Mediators;
-using Models.Arena;
 using strange.extensions.command.api;
 using strange.extensions.command.impl;
 using strange.extensions.context.api;
 using strange.extensions.context.impl;
 using Services;
 using Services.Multiplayer;
-using Signals;
-using Signals.Arena;
-using Signals.multiplayer;
 using Signals.MainMenu;
 using UnityEngine;
 using View;
@@ -47,20 +42,6 @@ namespace Contexts
             injectionBinder.Bind<ICommandBinder>().To<SignalCommandBinder>().ToSingleton();
         }
 
-        /// <summary>
-        /// Override Start so that we can fire the StartSignal 
-        /// </summary>
-        /// <returns></returns>
-        public override IContext Start()
-        {
-            base.Start();
-
-//            var startSignal = injectionBinder.GetInstance<CreateNewGameSignal>();
-//            startSignal.Dispatch();
-
-            return this;
-        }
-
         /// <inheritdoc />
         /// <summary>
         /// Ovverade Bindings map
@@ -73,7 +54,8 @@ namespace Contexts
             // init models          
             
             // Init sevises
-            injectionBinder.Bind<NetworkPlayerService>().ToSingleton().CrossContext();
+            injectionBinder.Bind<NetworkPlayerService>().ToSingleton().CrossContext(); 
+            injectionBinder.Bind<GameStateService>().ToSingleton().CrossContext();
          
             // Init comands
             commandBinder.Bind<StartOnlineGameSignal>().To<StartOnlineGameCommand>().Once();

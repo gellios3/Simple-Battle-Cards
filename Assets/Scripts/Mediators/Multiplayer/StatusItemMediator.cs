@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using View.Multiplayer;
 
-namespace Mediators
+namespace Mediators.Multiplayer
 {
     public class StatusItemMediator : TargetMediator<StatusItemView>
     {

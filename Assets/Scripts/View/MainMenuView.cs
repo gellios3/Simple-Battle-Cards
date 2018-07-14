@@ -10,10 +10,14 @@ namespace View
         [SerializeField] private Button _startSingleGameBtn;
         [SerializeField] private InputField _playerName;
 
-
         public Button GetOnlineGameBtn()
         {
             return _startOnlineGameBtn;
+        }
+
+        public Button GetSingleGameBtn()
+        {
+            return _startSingleGameBtn;
         }
 
         public InputField GetPlayerName()
