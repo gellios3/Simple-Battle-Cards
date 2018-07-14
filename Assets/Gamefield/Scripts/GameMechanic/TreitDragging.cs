@@ -19,8 +19,8 @@ namespace Gamefield.Scripts.GameMechanic
         {
             if (!_isDraggable) return;
 
-            var turn = gameObject.AddComponent<PlayerTurnMode>();
-            _playerTurn = turn.PlayerTurn;
+//            var turn = gameObject.AddComponent<PlayerTurnMode>();
+//            _playerTurn = turn.PlayerTurn;
 
             _placeHolder = new GameObject();
             _startPositionParent = new GameObject();

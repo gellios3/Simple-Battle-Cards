@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Models
 {
-    public class Player
+    public class ArenaPlayer
     {
         /// <summary>
         /// Player name 
@@ -48,6 +48,11 @@ namespace Models
         public int ManaPull { get; private set; }
 
         /// <summary>
+        /// Is CPU
+        /// </summary>
+        public bool IsCpu { get; set; }
+
+        /// <summary>
         /// InitManaPull
         /// </summary>
         public void InitManaPull()
@@ -71,7 +76,7 @@ namespace Models
         /// </summary>
         /// <param name="cartDeck"></param>
         /// <param name="trateDeck"></param>
-        public Player(CartDeck cartDeck, TrateDeck trateDeck)
+        public ArenaPlayer(CartDeck cartDeck, TrateDeck trateDeck)
         {
 //            Status = PlayerStatus.FistTurn;
             // generate random positions

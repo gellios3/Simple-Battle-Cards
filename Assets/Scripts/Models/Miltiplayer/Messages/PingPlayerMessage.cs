@@ -1,6 +1,6 @@
 ﻿using UnityEngine.Networking;
 
-namespace Models.Miltiplayer
+namespace Models.Miltiplayer.Messages
 {
     public class PingPlayerMessage : MessageBase
     {

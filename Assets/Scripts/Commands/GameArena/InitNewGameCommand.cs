@@ -1,38 +1,41 @@
 ﻿using Models.Arena;
 using Models.ScriptableObjects;
 using strange.extensions.command.impl;
-using Services;
+using Services.GameArena;
+using Signals;
 using Signals.Arena;
+using Signals.GameArena;
 using UnityEngine;
 
-namespace Commands
+namespace Commands.GameArena
 {
-    public class GenerateNewGameCommand : Command
+    public class InitNewGameCommand : Command
     {
-        /// <summary>
-        /// Arena
-        /// </summary>
-        [Inject]
-        public Arena Arena { get; set; }
-
+        
         /// <summary>
         /// Battle
         /// </summary>
         [Inject]
         public BattleArena BattleArena { get; set; }
-
+        
         /// <summary>
-        ///  Arena game manager
+        /// Arena
         /// </summary>
         [Inject]
-        public GenarateGameSessionService GenarateGameSessionService { get; set; }
-
+        public Arena Arena { get; set; }
+        
+        /// <summary>
+        /// Arena initialized signal
+        /// </summary>
+        [Inject]
+        public GameStateService GameStateService { get; set; }
+        
         /// <summary>
         /// Areana initialed signal
         /// </summary>
         [Inject]
-        public ArenaInitializedSignal ArenaInitializedSignal { get; set; }
-
+        public InitBattleTurnSignal InitBattleTurnSignal { get; set; }
+        
         /// <summary>
         /// Execute event init areana
         /// </summary>
@@ -45,11 +48,16 @@ namespace Commands
             BattleArena.ActiveState = BattleState.YourTurn;
             // init arena
             Arena.Init(cartDeck, trateDeck);
-            Arena.YourPlayer.Name = "HUMAN";
-            Arena.EnemyPlayer.Name = "CPU 1";
-            // Emulate game session
-            GenarateGameSessionService.EmulateGameSession();
-            ArenaInitializedSignal.Dispatch();
+            // Init single game players
+            if (GameStateService.GameType == GameType.Single)
+            {
+                Arena.Player.Name = GameStateService.PlayerName;
+                Arena.Opponent.IsCpu = true;
+                Arena.Opponent.Name = "CPU 1";
+            }
+            
+            // Init battle turn
+            InitBattleTurnSignal.Dispatch();
         }
     }
 }

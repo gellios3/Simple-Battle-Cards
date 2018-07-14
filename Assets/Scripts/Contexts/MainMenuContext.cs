@@ -5,6 +5,7 @@ using strange.extensions.command.impl;
 using strange.extensions.context.api;
 using strange.extensions.context.impl;
 using Services;
+using Services.GameArena;
 using Services.Multiplayer;
 using Signals.MainMenu;
 using UnityEngine;

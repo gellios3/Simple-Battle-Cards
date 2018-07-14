@@ -25,7 +25,7 @@ namespace Models.Arena
         /// Batle turn
         /// </summary>
         [Inject]
-        public BattleTurnService ActiveBattleTurnService { get; private set; }
+        public BattleTurnService ActiveBattleTurnService { get; set; }
 
         /// <summary>
         /// Active state
@@ -54,47 +54,49 @@ namespace Models.Arena
             // Increase turn count
             StateService.IncreaseTurnCount();
 
-            // @todo call init turn 
+            // init turn history
+            InitHistory();
+
             AddHistoryLogSignal.Dispatch(new[] {"INIT '", StateService.TurnCount.ToString(), "' TURN!"}, LogType.Hand);
 
-            // On 2 Turn add more carts 
-            var addCartcount = Arena.CartToAddCount;
-            if (StateService.TurnCount == 2)
-            {
-                addCartcount++;
-            }
-
-            // Init mana pull
-            StateService.ActivePlayer.InitManaPull();
-
-            // Add 3 item to hand
-            if (StateService.ActivePlayer.CardBattlePull.Count > 0)
-            {
-                if (!AddCartToPlayerHand())
-                {
-                    // @todo call not enough space in hand
-                }
-            }
-
-            for (var i = 1; i < addCartcount; i++)
-            {
-                if (Random.Range(0, 2) == 0)
-                {
-                    if (StateService.ActivePlayer.CardBattlePull.Count <= 0) continue;
-                    if (!AddCartToPlayerHand())
-                    {
-                        // @todo call not enough space in hand
-                    }
-                }
-                else
-                {
-                    if (StateService.ActivePlayer.TrateBattlePull.Count <= 0) continue;
-                    if (!AddTrateToPlayerHand())
-                    {
-                        // @todo call not enough space in hand            
-                    }
-                }
-            }
+//            // On 2 Turn add more carts 
+//            var addCartcount = Arena.CartToAddCount;
+//            if (StateService.TurnCount == 2)
+//            {
+//                addCartcount++;
+//            }
+//
+//            // Init mana pull
+//            StateService.ActiveArenaPlayer.InitManaPull();
+//
+//            // Add 3 item to hand
+//            if (StateService.ActiveArenaPlayer.CardBattlePull.Count > 0)
+//            {
+//                if (!AddCartToPlayerHand())
+//                {
+//                    // @todo call not enough space in hand
+//                }
+//            }
+//
+//            for (var i = 1; i < addCartcount; i++)
+//            {
+//                if (Random.Range(0, 2) == 0)
+//                {
+//                    if (StateService.ActiveArenaPlayer.CardBattlePull.Count <= 0) continue;
+//                    if (!AddCartToPlayerHand())
+//                    {
+//                        // @todo call not enough space in hand
+//                    }
+//                }
+//                else
+//                {
+//                    if (StateService.ActiveArenaPlayer.TrateBattlePull.Count <= 0) continue;
+//                    if (!AddTrateToPlayerHand())
+//                    {
+//                        // @todo call not enough space in hand            
+//                    }
+//                }
+//            }
         }
 
         /// <summary>
@@ -104,16 +106,16 @@ namespace Models.Arena
         {
             var status = true;
 
-            if (StateService.ActivePlayer.BattleHand.Count < Arena.HandLimitCount)
+            if (StateService.ActiveArenaPlayer.BattleHand.Count < Arena.HandLimitCount)
             {
-                StateService.ActivePlayer.BattleHand.Add(StateService.ActivePlayer.CardBattlePull[0]);
+                StateService.ActiveArenaPlayer.BattleHand.Add(StateService.ActiveArenaPlayer.CardBattlePull[0]);
 
-                var card = StateService.ActivePlayer.CardBattlePull[0];
+                var card = StateService.ActiveArenaPlayer.CardBattlePull[0];
                 if (card != null)
                 {
                     AddHistoryLogSignal.Dispatch(new[]
                     {
-                        "PLAYER '", StateService.ActivePlayer.Name, "' Add '", card.SourceCard.name,
+                        "PLAYER '", StateService.ActiveArenaPlayer.Name, "' Add '", card.SourceCard.name,
                         "' Card to Hand"
                     }, LogType.Hand);
                 }
@@ -123,11 +125,11 @@ namespace Models.Arena
                 status = false;
 
                 AddHistoryLogSignal.Dispatch(
-                    new[] {"PLAYER '", StateService.ActivePlayer.Name, "' has add Card to Hand ERROR! "},
+                    new[] {"PLAYER '", StateService.ActiveArenaPlayer.Name, "' has add Card to Hand ERROR! "},
                     LogType.Hand);
             }
 
-            StateService.ActivePlayer.CardBattlePull.RemoveAt(0);
+            StateService.ActiveArenaPlayer.CardBattlePull.RemoveAt(0);
 
 
             return status;
@@ -141,16 +143,16 @@ namespace Models.Arena
         {
             var status = true;
 
-            if (StateService.ActivePlayer.BattleHand.Count < Arena.HandLimitCount)
+            if (StateService.ActiveArenaPlayer.BattleHand.Count < Arena.HandLimitCount)
             {
-                StateService.ActivePlayer.BattleHand.Add(StateService.ActivePlayer.TrateBattlePull[0]);
+                StateService.ActiveArenaPlayer.BattleHand.Add(StateService.ActiveArenaPlayer.TrateBattlePull[0]);
 
-                var trate = StateService.ActivePlayer.TrateBattlePull[0];
+                var trate = StateService.ActiveArenaPlayer.TrateBattlePull[0];
                 if (trate != null)
                 {
                     AddHistoryLogSignal.Dispatch(new[]
                     {
-                        "PLAYER '", StateService.ActivePlayer.Name, "' Add '", trate.SourceTrate.name,
+                        "PLAYER '", StateService.ActiveArenaPlayer.Name, "' Add '", trate.SourceTrate.name,
                         "' Trate To Hand"
                     }, LogType.Hand);
                 }
@@ -160,11 +162,11 @@ namespace Models.Arena
                 status = false;
 
                 AddHistoryLogSignal.Dispatch(
-                    new[] {"PLAYER '", StateService.ActivePlayer.Name, "' has add Trate to Hand ERROR! "},
+                    new[] {"PLAYER '", StateService.ActiveArenaPlayer.Name, "' has add Trate to Hand ERROR! "},
                     LogType.Hand);
             }
 
-            StateService.ActivePlayer.TrateBattlePull.RemoveAt(0);
+            StateService.ActiveArenaPlayer.TrateBattlePull.RemoveAt(0);
 
             return status;
         }
@@ -175,59 +177,59 @@ namespace Models.Arena
         public void EndTurn()
         {
             // Activate all cards and remove dead carts
-            foreach (var arenaCard in StateService.ActivePlayer.ArenaCards)
+            foreach (var arenaCard in StateService.ActiveArenaPlayer.ArenaCards)
             {
                 if (arenaCard.Status != BattleStatus.Moving) continue;
                 arenaCard.Status = BattleStatus.Active;
                 AddHistoryLogSignal.Dispatch(new[]
                 {
-                    "PLAYER '", StateService.ActivePlayer.Name, "' Activate Moving '", arenaCard.SourceCard.name,
+                    "PLAYER '", StateService.ActiveArenaPlayer.Name, "' Activate Moving '", arenaCard.SourceCard.name,
                     "' battle card!"
                 }, LogType.Battle);
             }
 
             // Set active all not dead areana cards 
-            foreach (var card in StateService.ActivePlayer.ArenaCards)
+            foreach (var card in StateService.ActiveArenaPlayer.ArenaCards)
             {
                 if (card.Status != BattleStatus.Wait) continue;
                 card.Status = BattleStatus.Active;
                 // 
                 AddHistoryLogSignal.Dispatch(new[]
                 {
-                    "PLAYER '", StateService.ActivePlayer.Name, "' Activate sleep '", card.SourceCard.name,
+                    "PLAYER '", StateService.ActiveArenaPlayer.Name, "' Activate sleep '", card.SourceCard.name,
                     "' battle card!"
                 }, LogType.Battle);
             }
 
             // remove all dead carts
-            StateService.ActivePlayer.ArenaCards = StateService.ActivePlayer.ArenaCards.FindAll(
+            StateService.ActiveArenaPlayer.ArenaCards = StateService.ActiveArenaPlayer.ArenaCards.FindAll(
                 card => card.Status == BattleStatus.Active
             );
 
             // Switch active state
-            ActiveState = ActiveState == BattleState.YourTurn ? BattleState.EnemyTurn : BattleState.YourTurn;
+            ActiveState = ActiveState == BattleState.YourTurn ? BattleState.OpponentTurn : BattleState.YourTurn;
         }
 
         /// <summary>
         /// Is game over
         /// </summary>
-        /// <param name="player"></param>
+        /// <param name="arenaPlayer"></param>
         /// <returns></returns>
-        public bool IsGameOver(Player player)
+        public bool IsGameOver(ArenaPlayer arenaPlayer)
         {
-            return player.CardBattlePull.Count == 0 &&
-                   player.BattleHand.FindAll(item =>
+            return arenaPlayer.CardBattlePull.Count == 0 &&
+                   arenaPlayer.BattleHand.FindAll(item =>
                    {
                        var card = item as BattleCard;
                        return card != null;
                    }).Count == 0 &&
-                   player.ArenaCards.FindAll(card => card.Status != BattleStatus.Dead).Count == 0;
+                   arenaPlayer.ArenaCards.FindAll(card => card.Status != BattleStatus.Dead).Count == 0;
         }
     }
 
     public enum BattleState
     {
         YourTurn,
-        EnemyTurn
+        OpponentTurn
     }
 }

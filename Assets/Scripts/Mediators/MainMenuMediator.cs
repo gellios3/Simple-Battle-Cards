@@ -1,4 +1,5 @@
 ﻿using Services;
+using Services.GameArena;
 using Signals.MainMenu;
 using UnityEngine.SceneManagement;
 using View;
@@ -12,7 +13,7 @@ namespace Mediators
         /// </summary>
         [Inject]
         public StartOnlineGameSignal StartOnlineGameSignal { get; set; }
-        
+
         /// <summary>
         /// Arena initialized signal
         /// </summary>
@@ -36,6 +37,9 @@ namespace Mediators
 
             View.GetSingleGameBtn().onClick.AddListener(() =>
             {
+                var playerName = View.GetPlayerName().text;
+                if (playerName.Length <= 0) return;
+                GameStateService.InitPlayerName(playerName);
                 GameStateService.InitSingleGame();
                 SceneManager.LoadScene("GameArena");
             });

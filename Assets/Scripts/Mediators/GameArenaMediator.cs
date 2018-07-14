@@ -1,4 +1,6 @@
-﻿using Signals.Arena;
+﻿using Signals;
+using Signals.Arena;
+using Signals.GameArena;
 using View;
 
 namespace Mediators
@@ -12,7 +14,7 @@ namespace Mediators
         /// Arena initialized signal
         /// </summary>
         [Inject]
-        public ArenaInitializedSignal ArenaInitializedSignal { get; set; }
+        public InitBattleTurnSignal InitBattleTurnSignal { get; set; }
         
         
 
@@ -21,7 +23,7 @@ namespace Mediators
         /// </summary>
         public override void OnRegister()
         {
-            ArenaInitializedSignal.AddListener(() => { View.OnArenaInitialized(); });
+            InitBattleTurnSignal.AddListener(() => { View.OnArenaInitialized(); });
         }
     }
 }

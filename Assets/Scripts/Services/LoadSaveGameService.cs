@@ -34,8 +34,8 @@ namespace Services
             // create state history log
             var stateData = new StateData
             {
-                YourPlayer = StateService.GetStatePlayer(Arena.YourPlayer),
-                EnemyPlayer = StateService.GetStatePlayer(Arena.EnemyPlayer)
+                YourPlayer = StateService.GetStatePlayer(Arena.Player),
+                EnemyPlayer = StateService.GetStatePlayer(Arena.Opponent)
             };
 
             var json = JsonWorkService.SerializeToJson(stateData);

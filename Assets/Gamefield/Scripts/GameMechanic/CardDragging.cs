@@ -23,9 +23,9 @@ namespace Gamefield.Scripts.GameMechanic
         public void OnBeginDrag(PointerEventData eventData)
         {
             if (!_isDraggable) return;
-            var turn = gameObject.AddComponent<PlayerTurnMode>();
-            _playerTurn = turn.PlayerTurn;
-            Debug.Log(_playerTurn);
+//            var turn = gameObject.AddComponent<PlayerTurnMode>();
+//            _playerTurn = turn.PlayerTurn;
+//            Debug.Log(_playerTurn);
             _placeHolder = new GameObject();
             _startPositionParent = new GameObject();
             _placeHolder.transform.SetParent(transform.parent);

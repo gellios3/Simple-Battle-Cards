@@ -1,7 +1,10 @@
-﻿using strange.extensions.command.api;
+﻿using Commands;
+using Commands.GameArena;
+using strange.extensions.command.api;
 using strange.extensions.command.impl;
 using strange.extensions.context.api;
 using strange.extensions.context.impl;
+using Signals.GameArena;
 using UnityEngine;
 
 namespace Contexts
@@ -35,7 +38,7 @@ namespace Contexts
             injectionBinder.Unbind<ICommandBinder>();
             injectionBinder.Bind<ICommandBinder>().To<SignalCommandBinder>().ToSingleton();
         }
-        
+
         /// <summary>
         /// Override Start so that we can fire the StartSignal 
         /// </summary>
@@ -44,9 +47,8 @@ namespace Contexts
         {
             base.Start();
 
-//            var startSignal = injectionBinder.GetInstance<CreateNewGameSignal>();
-////            var startSignal = injectionBinder.GetInstance<LoadGameSignal>();
-//            startSignal.Dispatch();
+            var startSignal = injectionBinder.GetInstance<InitNewGameSignal>();
+            startSignal.Dispatch();
 
             return this;
         }
@@ -57,6 +59,9 @@ namespace Contexts
         /// </summary>
         protected override void mapBindings()
         {
+            // Init comands
+            commandBinder.Bind<InitNewGameSignal>().To<InitNewGameCommand>();
+            commandBinder.Bind<InitBattleTurnSignal>().To<InitBattleTurnCommand>();
         }
     }
 }

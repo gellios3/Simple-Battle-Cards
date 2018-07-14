@@ -1,5 +1,6 @@
 ﻿using Interfaces;
 using Models.Miltiplayer;
+using Models.Miltiplayer.Messages;
 using Services.Multiplayer;
 using Signals.multiplayer;
 using UnityEngine.Networking;

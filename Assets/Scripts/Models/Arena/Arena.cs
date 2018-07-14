@@ -7,12 +7,12 @@ namespace Models.Arena
         /// <summary>
         /// Your player
         /// </summary>
-        public Player YourPlayer { get; private set; }
+        public ArenaPlayer Player { get; private set; }
 
         /// <summary>
         /// Enemy player
         /// </summary>
-        public Player EnemyPlayer { get; private set; }
+        public ArenaPlayer Opponent { get; private set; }
         
         /// <summary>
         /// Hand limit count
@@ -41,8 +41,8 @@ namespace Models.Arena
         /// <param name="playerTrateDeck"></param>
         public void Init(CartDeck playerCartDeck, TrateDeck playerTrateDeck)
         {
-            YourPlayer = new Player(playerCartDeck, playerTrateDeck);
-            EnemyPlayer = new Player(playerCartDeck, playerTrateDeck);
+            Player = new ArenaPlayer(playerCartDeck, playerTrateDeck);
+            Opponent = new ArenaPlayer(playerCartDeck, playerTrateDeck);
         }
     }
 }
