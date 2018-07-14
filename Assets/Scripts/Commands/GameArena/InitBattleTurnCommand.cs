@@ -3,18 +3,18 @@ using Models.Arena;
 using strange.extensions.command.impl;
 using Services;
 using Signals;
+using UnityEngine;
 
 namespace Commands.GameArena
 {
     public class InitBattleTurnCommand : Command
     {
-
         /// <summary>
         /// Battle
         /// </summary>
         [Inject]
         public BattleArena BattleArena { get; set; }
-        
+
         /// <summary>
         /// State service
         /// </summary>
@@ -35,9 +35,14 @@ namespace Commands.GameArena
             var player = BattleArena.ActiveState == BattleState.YourTurn
                 ? Arena.Player
                 : Arena.Opponent;
+
             StateService.InitActivePlayer(player);
             // init active turn
-            BattleArena.InitActiveTurn();
+            // Increase turn count
+            StateService.IncreaseTurnCount();
+
+            // init turn history
+            BattleArena.InitHistory();
         }
     }
 }

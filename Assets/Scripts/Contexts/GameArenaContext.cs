@@ -1,11 +1,15 @@
-﻿using Commands;
-using Commands.GameArena;
+﻿using Commands.GameArena;
+using Mediators.GameArena;
+using Models.Arena;
 using strange.extensions.command.api;
 using strange.extensions.command.impl;
 using strange.extensions.context.api;
 using strange.extensions.context.impl;
+using Services;
+using Signals;
 using Signals.GameArena;
 using UnityEngine;
+using View.GameArena;
 
 namespace Contexts
 {
@@ -59,9 +63,24 @@ namespace Contexts
         /// </summary>
         protected override void mapBindings()
         {
+            // init Signals
+            injectionBinder.Bind<AddHistoryLogToViewSignal>().ToSingleton();
+            
             // Init comands
             commandBinder.Bind<InitNewGameSignal>().To<InitNewGameCommand>();
             commandBinder.Bind<InitBattleTurnSignal>().To<InitBattleTurnCommand>();
+            commandBinder.Bind<AddHistoryLogSignal>().To<AddHistoryLogCommand>();
+            
+            // init models
+            injectionBinder.Bind<Arena>().ToSingleton();
+            injectionBinder.Bind<BattleArena>().ToSingleton();
+            
+            // Init sevises
+            injectionBinder.Bind<StateService>().ToSingleton();
+            injectionBinder.Bind<BattleTurnService>().ToSingleton();
+            
+            // Init mediators
+            mediationBinder.Bind<HistoryLogView>().To<HistoryLogMediator>();
         }
     }
 }

@@ -11,31 +11,30 @@ namespace Commands.GameArena
 {
     public class InitNewGameCommand : Command
     {
-        
         /// <summary>
         /// Battle
         /// </summary>
         [Inject]
         public BattleArena BattleArena { get; set; }
-        
+
         /// <summary>
         /// Arena
         /// </summary>
         [Inject]
         public Arena Arena { get; set; }
-        
+
         /// <summary>
         /// Arena initialized signal
         /// </summary>
         [Inject]
         public GameStateService GameStateService { get; set; }
-        
+
         /// <summary>
         /// Areana initialed signal
         /// </summary>
         [Inject]
         public InitBattleTurnSignal InitBattleTurnSignal { get; set; }
-        
+
         /// <summary>
         /// Execute event init areana
         /// </summary>
@@ -55,7 +54,6 @@ namespace Commands.GameArena
                 Arena.Opponent.IsCpu = true;
                 Arena.Opponent.Name = "CPU 1";
             }
-            
             // Init battle turn
             InitBattleTurnSignal.Dispatch();
         }

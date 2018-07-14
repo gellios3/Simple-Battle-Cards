@@ -9,6 +9,11 @@ namespace Models
         /// Hand log
         /// </summary>
         public readonly List<string> HandLog = new List<string>();
+        
+        /// <summary>
+        /// Hand log
+        /// </summary>
+        public readonly List<string> GeneralLog = new List<string>();
 
         /// <summary>
         /// Battle log
@@ -30,6 +35,9 @@ namespace Models
                 case LogType.Hand:
                     HandLog.Add(str);
                     break;
+                case LogType.General:
+                    GeneralLog.Add(str);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
@@ -38,6 +46,7 @@ namespace Models
 
     public enum LogType
     {
+        General,
         Battle,
         Hand
     }

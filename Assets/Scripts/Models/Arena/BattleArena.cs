@@ -44,6 +44,8 @@ namespace Models.Arena
         {
             StateService.InitActiveHistoryTurn();
             History.Add(StateService.ActiveHistotyTurn);
+            AddHistoryLogSignal.Dispatch(new[] {"INIT '", StateService.TurnCount.ToString(), "' TURN!"},
+                LogType.General);
         }
 
         /// <summary>
@@ -51,14 +53,6 @@ namespace Models.Arena
         /// </summary>
         public void InitActiveTurn()
         {
-            // Increase turn count
-            StateService.IncreaseTurnCount();
-
-            // init turn history
-            InitHistory();
-
-            AddHistoryLogSignal.Dispatch(new[] {"INIT '", StateService.TurnCount.ToString(), "' TURN!"}, LogType.Hand);
-
 //            // On 2 Turn add more carts 
 //            var addCartcount = Arena.CartToAddCount;
 //            if (StateService.TurnCount == 2)

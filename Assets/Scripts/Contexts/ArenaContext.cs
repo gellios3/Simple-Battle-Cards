@@ -1,4 +1,5 @@
 ﻿using Commands;
+using Commands.GameArena;
 using Mediators;
 using Models.Arena;
 using strange.extensions.command.api;
@@ -85,12 +86,12 @@ namespace Contexts
 //            commandBinder.Bind<InitNewGameSignal>().To<GenerateNewGameCommand>();
 //            commandBinder.Bind<MakeTurnSignal>().To<MakeTurnCommand>();
             commandBinder.Bind<SaveLogSignal>().To<SaveLogCommand>();
-            commandBinder.Bind<AddHistoryLogSignal>().To<AddLogCommand>();
+            commandBinder.Bind<AddHistoryLogSignal>().To<AddHistoryLogCommand>();
             commandBinder.Bind<SaveGameSignal>().To<SaveGameCommand>();
             commandBinder.Bind<LoadGameSignal>().To<LoadGameCommand>();
 
             // Init mediators
-            mediationBinder.Bind<GameArenaView>().To<GameArenaMediator>();
+//            mediationBinder.Bind<GameArenaView>().To<GameArenaMediator>();
         }
     }
 }
