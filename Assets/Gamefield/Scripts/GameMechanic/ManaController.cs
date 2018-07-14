@@ -1,32 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class ManaController : MonoBehaviour
+namespace Gamefield.Scripts.GameMechanic
 {
-    [SerializeField] private GameObject[] manaArray = new GameObject[5];
-    [SerializeField] private int _manaValue = 5;
-    private void Start()
+    public class ManaController : MonoBehaviour
     {
-        ManaChanged(_manaValue);
-    }
-    public void ManaChanged(int mana)
-    {
-        if (mana > 0 && mana <= 5)
+        [SerializeField] private GameObject[] _manaArray = new GameObject[5];
+        [SerializeField] private int _manaValue = 5;
+        private void Start()
         {
-            for (int i = 0; i < manaArray.Length; i++)
+            ManaChanged(_manaValue);
+        }
+
+        private void ManaChanged(int mana)
+        {
+            if (mana > 0 && mana <= 5)
             {
-                if (i < _manaValue)
+                for (var i = 0; i < _manaArray.Length; i++)
                 {
-                    manaArray[i].SetActive(true);
-                }
-                else
-                {
-                    manaArray[i].SetActive(false);
+                    _manaArray[i].SetActive(i < _manaValue);
                 }
             }
+            else { Debug.Log("Incorrect Mana Value"); }
         }
-        else { Debug.Log("Incorrect Mana Value"); }
-    }
 
+    }
 }

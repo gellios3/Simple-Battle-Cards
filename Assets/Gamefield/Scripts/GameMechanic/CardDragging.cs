@@ -6,15 +6,14 @@ namespace Gamefield.Scripts.GameMechanic
 {
     public class CardDragging : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
-        #region Variables
         [SerializeField] private bool _isDraggable = true;
-        public Transform ParentToReturn = null;
-        public Transform PlaceHolderParent = null;
-        private GameObject _startPositionParent = null;
-        private GameObject _placeHolder = null;
-        private LayoutElement _layoutelem = null;
+        public Transform ParentToReturn;
+        public Transform PlaceHolderParent;
+        private GameObject _startPositionParent;
+        private GameObject _placeHolder;
+        private LayoutElement _layoutelem;
         private int _playerTurn;
-        #endregion
+
 
         /// <inheritdoc />
         /// <summary>
@@ -29,18 +28,18 @@ namespace Gamefield.Scripts.GameMechanic
             Debug.Log(_playerTurn);
             _placeHolder = new GameObject();
             _startPositionParent = new GameObject();
-            _placeHolder.transform.SetParent(this.transform.parent);
-            _startPositionParent.transform.SetParent(this.transform.parent);
+            _placeHolder.transform.SetParent(transform.parent);
+            _startPositionParent.transform.SetParent(transform.parent);
             var elem = _placeHolder.AddComponent<LayoutElement>();
-            elem.preferredHeight = this.GetComponent<LayoutElement>().preferredHeight;
-            elem.preferredWidth = this.GetComponent<LayoutElement>().preferredWidth;
+            elem.preferredHeight = GetComponent<LayoutElement>().preferredHeight;
+            elem.preferredWidth = GetComponent<LayoutElement>().preferredWidth;
             elem.flexibleHeight = 0;
-            _placeHolder.transform.SetSiblingIndex(this.transform.GetSiblingIndex());
-            ParentToReturn = this.transform.parent;
+            _placeHolder.transform.SetSiblingIndex(transform.GetSiblingIndex());
+            ParentToReturn = transform.parent;
             PlaceHolderParent = ParentToReturn;
-            this.transform.SetParent(this.transform.parent.parent);
+            transform.SetParent(transform.parent.parent);
             GetComponent<CanvasGroup>().blocksRaycasts = false;
-            _layoutelem = this.GetComponent<LayoutElement>();
+            _layoutelem = GetComponent<LayoutElement>();
             _layoutelem.ignoreLayout = true;
         }
 
@@ -52,7 +51,7 @@ namespace Gamefield.Scripts.GameMechanic
         public void OnDrag(PointerEventData eventData)
         {
             if (!_isDraggable) return;
-            this.transform.position = eventData.position;
+            transform.position = eventData.position;
             if (_placeHolder.transform.parent != PlaceHolderParent)
             {
                 _placeHolder.transform.SetParent(PlaceHolderParent);
@@ -61,7 +60,7 @@ namespace Gamefield.Scripts.GameMechanic
             var newSiblingIndex = PlaceHolderParent.childCount;
             for (var i = 0; i < PlaceHolderParent.childCount; i++)
             {
-                if (!(this.transform.position.x < PlaceHolderParent.GetChild(i).position.x)) continue;
+                if (!(transform.position.x < PlaceHolderParent.GetChild(i).position.x)) continue;
                 newSiblingIndex = i;
                 if (_placeHolder.transform.GetSiblingIndex() < newSiblingIndex)
                 {
@@ -86,24 +85,24 @@ namespace Gamefield.Scripts.GameMechanic
             _layoutelem.ignoreLayout = false;
             if (ParentToReturn.CompareTag("PlayerFinish") && _playerTurn == 1)
             {
-                this.transform.SetParent(ParentToReturn);
-                this.transform.SetSiblingIndex(_placeHolder.transform.GetSiblingIndex());
+                transform.SetParent(ParentToReturn);
+                transform.SetSiblingIndex(_placeHolder.transform.GetSiblingIndex());
                 _isDraggable = false;
                 Destroy(_placeHolder);
                 Destroy(_startPositionParent);
             }
             else if (ParentToReturn.CompareTag("EnemyFinish") && _playerTurn == 2)
             {
-                this.transform.SetParent(ParentToReturn);
-                this.transform.SetSiblingIndex(_placeHolder.transform.GetSiblingIndex());
+                transform.SetParent(ParentToReturn);
+                transform.SetSiblingIndex(_placeHolder.transform.GetSiblingIndex());
                 _isDraggable = false;
                 Destroy(_placeHolder);
                 Destroy(_startPositionParent);
             }
             else
             {
-                this.transform.SetParent(_startPositionParent.transform.parent);
-                this.transform.SetSiblingIndex(_placeHolder.transform.GetSiblingIndex());
+                transform.SetParent(_startPositionParent.transform.parent);
+                transform.SetSiblingIndex(_placeHolder.transform.GetSiblingIndex());
                 Destroy(_placeHolder);
                 Destroy(_startPositionParent);
             }

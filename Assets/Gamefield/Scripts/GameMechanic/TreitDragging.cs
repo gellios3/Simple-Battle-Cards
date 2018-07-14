@@ -1,93 +1,83 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class TreitDragging : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+namespace Gamefield.Scripts.GameMechanic
 {
-    [SerializeField] private bool _isDraggable = true;
-    public Transform parentToReturn = null;
-    public Transform placeHolderParent = null;
-    GameObject startPositionParent = null;
-    GameObject _placeHolder = null;
-    LayoutElement _layoutelem = null;
-    private int playerTurn;
-
-
-    public void OnBeginDrag(PointerEventData eventData)
+    public class TreitDragging : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
-        if (_isDraggable)
+        [SerializeField] private bool _isDraggable = true;
+        public Transform ParentToReturn;
+        public Transform PlaceHolderParent;
+        private GameObject _startPositionParent;
+        private GameObject _placeHolder;
+        private LayoutElement _layoutelem;
+        private int _playerTurn;
+
+
+        public void OnBeginDrag(PointerEventData eventData)
         {
-            PlayerTurnMode _turn = new PlayerTurnMode();
-            playerTurn = _turn.PlayerTurn;
-            //Debug.Log(playerTurn);
-            //Debug.Log("Begin Drag");
+            if (!_isDraggable) return;
+
+            var turn = gameObject.AddComponent<PlayerTurnMode>();
+            _playerTurn = turn.PlayerTurn;
+
             _placeHolder = new GameObject();
-            startPositionParent = new GameObject();
-            _placeHolder.transform.SetParent(this.transform.parent);
-            startPositionParent.transform.SetParent(this.transform.parent);
-            LayoutElement _elem = _placeHolder.AddComponent<LayoutElement>();
-            _elem.preferredHeight = this.GetComponent<LayoutElement>().preferredHeight;
-            _elem.preferredWidth = this.GetComponent<LayoutElement>().preferredWidth;
-            _elem.flexibleHeight = 0;
-//            _elem.flexibleWidth = 0;
-            _placeHolder.transform.SetSiblingIndex(this.transform.GetSiblingIndex());
-            parentToReturn = this.transform.parent;
-            placeHolderParent = parentToReturn;
-            this.transform.SetParent(this.transform.parent.parent);
+            _startPositionParent = new GameObject();
+            _placeHolder.transform.SetParent(transform.parent);
+            _startPositionParent.transform.SetParent(transform.parent);
+            var elem = _placeHolder.AddComponent<LayoutElement>();
+            elem.preferredHeight = GetComponent<LayoutElement>().preferredHeight;
+            elem.preferredWidth = GetComponent<LayoutElement>().preferredWidth;
+            elem.flexibleHeight = 0;
+
+            _placeHolder.transform.SetSiblingIndex(transform.GetSiblingIndex());
+            ParentToReturn = transform.parent;
+            PlaceHolderParent = ParentToReturn;
+            transform.SetParent(transform.parent.parent);
             GetComponent<CanvasGroup>().blocksRaycasts = false;
-            _layoutelem = this.GetComponent<LayoutElement>();
+            _layoutelem = GetComponent<LayoutElement>();
             _layoutelem.ignoreLayout = true;
         }
-    }
 
-    public void OnDrag(PointerEventData eventData)
-    {
-        if (_isDraggable)
+        public void OnDrag(PointerEventData eventData)
         {
-            //Debug.Log("Drag");
-            this.transform.position = eventData.position;
-            if (_placeHolder.transform.parent != placeHolderParent)
+            if (!_isDraggable) return;
+            transform.position = eventData.position;
+            if (_placeHolder.transform.parent != PlaceHolderParent)
             {
-                _placeHolder.transform.SetParent(placeHolderParent);
+                _placeHolder.transform.SetParent(PlaceHolderParent);
             }
-            
         }
-    }
 
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        if (_isDraggable)
+        public void OnEndDrag(PointerEventData eventData)
         {
-            //Debug.Log("End Drag");
-            // this.transform.SetParent(parentToReturn);
-            //this.transform.SetSiblingIndex(_placeHolder.transform.GetSiblingIndex());
+            if (!_isDraggable) return;
+            
             GetComponent<CanvasGroup>().blocksRaycasts = true;
-            // Destroy(_placeHolder);
             _layoutelem.ignoreLayout = false;
-            if (parentToReturn.tag == "PlayerFinish" && playerTurn == 1)
+            if (ParentToReturn.CompareTag("PlayerFinish") && _playerTurn == 1)
             {
-                this.transform.SetParent(parentToReturn);
-                this.transform.SetSiblingIndex(_placeHolder.transform.GetSiblingIndex());
+                transform.SetParent(ParentToReturn);
+                transform.SetSiblingIndex(_placeHolder.transform.GetSiblingIndex());
                 _isDraggable = false;
                 Destroy(_placeHolder);
-                Destroy(startPositionParent);
+                Destroy(_startPositionParent);
             }
-            else if (parentToReturn.tag == "EnemyFinish" && playerTurn == 2)
+            else if (ParentToReturn.CompareTag("EnemyFinish") && _playerTurn == 2)
             {
-                this.transform.SetParent(parentToReturn);
-                this.transform.SetSiblingIndex(_placeHolder.transform.GetSiblingIndex());
+                transform.SetParent(ParentToReturn);
+                transform.SetSiblingIndex(_placeHolder.transform.GetSiblingIndex());
                 _isDraggable = false;
                 Destroy(_placeHolder);
-                Destroy(startPositionParent);
+                Destroy(_startPositionParent);
             }
             else
             {
-                this.transform.SetParent(startPositionParent.transform.parent);
-                this.transform.SetSiblingIndex(_placeHolder.transform.GetSiblingIndex());
+                transform.SetParent(_startPositionParent.transform.parent);
+                transform.SetSiblingIndex(_placeHolder.transform.GetSiblingIndex());
                 Destroy(_placeHolder);
-                Destroy(startPositionParent);
+                Destroy(_startPositionParent);
             }
         }
     }
