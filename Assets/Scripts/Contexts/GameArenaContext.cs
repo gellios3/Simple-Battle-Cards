@@ -65,12 +65,14 @@ namespace Contexts
         {
             // init Signals
             injectionBinder.Bind<AddHistoryLogToViewSignal>().ToSingleton();
-            injectionBinder.Bind<InitAllDecksSignal>().ToSingleton();
+            injectionBinder.Bind<InitAllDecksSignal>().ToSingleton();  
+            injectionBinder.Bind<ShowManaSignal>().ToSingleton();
 
             // Init comands
             commandBinder.Bind<InitNewGameSignal>().To<InitNewGameCommand>();
             commandBinder.Bind<InitBattleTurnSignal>().To<InitBattleTurnCommand>();
             commandBinder.Bind<AddHistoryLogSignal>().To<AddHistoryLogCommand>();
+            commandBinder.Bind<InitManaSignal>().To<InitManaCommand>();
 
             // init models
             injectionBinder.Bind<Arena>().ToSingleton();
@@ -83,6 +85,7 @@ namespace Contexts
             // Init mediators
             mediationBinder.Bind<HistoryLogView>().To<HistoryLogMediator>();
             mediationBinder.Bind<SideDecksView>().To<SideDecksMediator>();
+            mediationBinder.Bind<ManaView>().To<ManaMediator>();
         }
     }
 }

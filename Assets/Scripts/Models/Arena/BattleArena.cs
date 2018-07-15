@@ -49,6 +49,15 @@ namespace Models.Arena
         }
 
         /// <summary>
+        /// Get arena player
+        /// </summary>
+        /// <returns></returns>
+        public ArenaPlayer GetActivePlayer()
+        {
+            return StateService.ActiveArenaPlayer;
+        }
+
+        /// <summary>
         /// Init battle turn
         /// </summary>
         public void InitActiveTurn()
@@ -60,8 +69,6 @@ namespace Models.Arena
 //                addCartcount++;
 //            }
 //
-//            // Init mana pull
-//            StateService.ActiveArenaPlayer.InitManaPull();
 //
 //            // Add 3 item to hand
 //            if (StateService.ActiveArenaPlayer.CardBattlePull.Count > 0)

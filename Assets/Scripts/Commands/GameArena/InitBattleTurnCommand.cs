@@ -14,6 +14,12 @@ namespace Commands.GameArena
         public InitAllDecksSignal InitAllDecksSignal { get; set; }
 
         /// <summary>
+        /// Init mana signal
+        /// </summary>
+        [Inject]
+        public InitManaSignal InitManaSignal { get; set; }
+
+        /// <summary>
         /// Battle
         /// </summary>
         [Inject]
@@ -50,6 +56,9 @@ namespace Commands.GameArena
 
             // ini card desk
             InitAllDecksSignal.Dispatch();
+            
+            // Init mana view
+            InitManaSignal.Dispatch();
         }
     }
 }
