@@ -25,12 +25,10 @@ namespace Mediators.GameArena
                 if (View.GetCurrentSide() == BattleSide.Player)
                 {
                     View.SetCardDeckCount(Arena.Player.CardBattlePull.Count);
-//                    View.SetTrateDeckCount(Arena.Player.TrateBattlePull.Count);
                 }
                 else if (View.GetCurrentSide() == BattleSide.Opponent)
                 {
                     View.SetCardDeckCount(Arena.Opponent.CardBattlePull.Count);
-//                    View.SetTrateDeckCount(Arena.Opponent.TrateBattlePull.Count);
                 }
             });
         }

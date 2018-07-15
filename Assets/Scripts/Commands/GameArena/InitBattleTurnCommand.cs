@@ -2,7 +2,6 @@
 using strange.extensions.command.impl;
 using Services;
 using Signals.GameArena;
-using UnityEngine;
 
 namespace Commands.GameArena
 {

@@ -1,6 +1,5 @@
 ﻿using Models.Arena;
 using Signals.GameArena;
-using UnityEngine;
 using View.GameArena;
 
 namespace Mediators.GameArena

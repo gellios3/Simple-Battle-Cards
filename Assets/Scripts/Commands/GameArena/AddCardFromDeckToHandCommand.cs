@@ -25,6 +25,12 @@ namespace Commands.GameArena
         /// </summary>
         [Inject]
         public InitCardDeckSignal InitCardDeckSignal { get; set; }
+        
+        /// <summary>
+        /// Init card deck signal
+        /// </summary>
+        [Inject]
+        public AddCardToHandViewSignal AddCardToHandViewSignal { get; set; }
 
         /// <summary>
         /// Execute add card to hand log
@@ -36,8 +42,9 @@ namespace Commands.GameArena
                 var card = BattleArena.GetActivePlayer().CardBattlePull[0];
                 if (card != null)
                 {
-                    // @todo Add card to hand
-                    BattleArena.GetActivePlayer().BattleHand.Add(card);
+                    // add card to battle hand
+                    BattleArena.GetActivePlayer().BattleHand.Add(card);                   
+                    AddCardToHandViewSignal.Dispatch(card);
 
                     AddHistoryLogSignal.Dispatch(new[]
                     {

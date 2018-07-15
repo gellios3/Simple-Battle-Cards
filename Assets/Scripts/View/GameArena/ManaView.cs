@@ -12,12 +12,12 @@ namespace View.GameArena
 
             for (var i = 0; i < manaCount; i++)
             {
-                var manaObj = (GameObject) Instantiate(
+                var manaGameObject = (GameObject) Instantiate(
                     Resources.Load("Prefabs/Mana", typeof(GameObject)), new Vector3(), Quaternion.identity,
                     transform
                 );
-                manaObj.transform.localPosition = new Vector3(manaObj.transform.localRotation.x,
-                    manaObj.transform.localRotation.y, 0);
+                manaGameObject.transform.localPosition = new Vector3(manaGameObject.transform.localRotation.x,
+                    manaGameObject.transform.localRotation.y, 0);
             }
         }
 

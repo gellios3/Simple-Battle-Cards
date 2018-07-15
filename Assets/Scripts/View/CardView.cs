@@ -1,12 +1,13 @@
-﻿using Models.ScriptableObjects;
+﻿using Models.Arena;
+using strange.extensions.mediation.impl;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace View
 {
-    public class CardView : MonoBehaviour
+    public class CardView : EventView
     {
-        [SerializeField] private Card _card;
+        [SerializeField] private BattleCard _card;
 
         [SerializeField] private Text _nameText;
         [SerializeField] private Text _descriptionText;
@@ -18,14 +19,12 @@ namespace View
         [SerializeField] private Text _healthText;
         [SerializeField] private Text _defenceText;
 
-        // Use this for initialization
-        private void Start()
+        public void Init(BattleCard card)
         {
-            _nameText.text = _card.name;
-            _descriptionText.text = _card.Description;
-
-            _artworkImage.sprite = _card.Artwork;
-
+            _card = card;
+            _nameText.text = _card.SourceCard.name;
+            _descriptionText.text = _card.SourceCard.Description;
+            _artworkImage.sprite = _card.SourceCard.Artwork;
             _manaText.text = _card.Defence.ToString();
             _attackText.text = _card.Attack.ToString();
             _healthText.text = _card.Health.ToString();

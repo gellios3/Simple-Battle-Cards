@@ -21,6 +21,12 @@ namespace Commands.GameArena
         public InitTrateDeckSignal InitTrateDeckSignal { get; set; }
 
         /// <summary>
+        /// Add trate to hand view signal
+        /// </summary>
+        [Inject]
+        public AddTrateToHandViewSignal AddTrateToHandViewSignal { get; set; }
+
+        /// <summary>
         /// Add history log
         /// </summary>
         [Inject]
@@ -33,9 +39,10 @@ namespace Commands.GameArena
                 var trate = BattleArena.GetActivePlayer().TrateBattlePull[0];
                 if (trate != null)
                 {
+                    // add trate to battle hand
                     BattleArena.GetActivePlayer().BattleHand.Add(trate);
+                    AddTrateToHandViewSignal.Dispatch(trate);
 
-                    // @todo Add trate to hand
                     AddHistoryLogSignal.Dispatch(new[]
                     {
                         "PLAYER '", BattleArena.GetActivePlayer().Name, "' Add '", trate.SourceTrate.name,
