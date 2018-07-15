@@ -222,12 +222,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 224531647339484860, guid: 8825046c17be6af40966ce33e8ab8f4f,
     type: 2}
   m_PrefabInternal: {fileID: 56058159}
---- !u!114 &56058161 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114963709899016774, guid: 8825046c17be6af40966ce33e8ab8f4f,
-    type: 2}
-  m_PrefabInternal: {fileID: 56058159}
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &69741668
 GameObject:
   m_ObjectHideFlags: 0
@@ -378,8 +372,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1508926012}
   m_HandleRect: {fileID: 1508926011}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.9969682
+  m_Value: 0
+  m_Size: 0.9495102
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1117,15 +1111,14 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 114172267160739454, guid: 8825046c17be6af40966ce33e8ab8f4f,
+        type: 2}
+      propertyPath: _battleSide
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8825046c17be6af40966ce33e8ab8f4f, type: 2}
   m_IsPrefabAsset: 0
---- !u!114 &778801541 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114963709899016774, guid: 8825046c17be6af40966ce33e8ab8f4f,
-    type: 2}
-  m_PrefabInternal: {fileID: 778801540}
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &802431225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1198,7 +1191,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000040356277, y: 17.672523}
+  m_AnchoredPosition: {x: -0.000040356277, y: 0.000022888184}
   m_SizeDelta: {x: 0, y: 350}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &813344830
@@ -1250,7 +1243,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _battleSide: 0
   _cardDeckCountText: {fileID: 1282487859}
-  _trateDeckCountText: {fileID: 778801541}
 --- !u!1 &858644601
 GameObject:
   m_ObjectHideFlags: 0
@@ -1710,15 +1702,14 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 114749353917512136, guid: 750ef15ddfc4f6f4284f1d1429c7aef4,
+        type: 2}
+      propertyPath: _battleSide
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 750ef15ddfc4f6f4284f1d1429c7aef4, type: 2}
   m_IsPrefabAsset: 0
---- !u!114 &1242937076 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114701553181798244, guid: 750ef15ddfc4f6f4284f1d1429c7aef4,
-    type: 2}
-  m_PrefabInternal: {fileID: 1242937075}
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &1258098326
 GameObject:
   m_ObjectHideFlags: 0
@@ -2081,8 +2072,8 @@ RectTransform:
   m_Father: {fileID: 536144488}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.0030317903}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0.9495102}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2629,7 +2620,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2066678255}
-  - component: {fileID: 2066678256}
   m_Layer: 5
   m_Name: OpponentField
   m_TagString: Untagged
@@ -2657,17 +2647,3 @@ RectTransform:
   m_AnchoredPosition: {x: 50.00003, y: -114.748505}
   m_SizeDelta: {x: 100.00006, y: 229.49702}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2066678256
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2066678254}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 676338b2bd954710ac3df15fce2b7209, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _battleSide: 1
-  _cardDeckCountText: {fileID: 1242937076}
-  _trateDeckCountText: {fileID: 56058161}

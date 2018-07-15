@@ -2,16 +2,23 @@
 using strange.extensions.command.impl;
 using Services;
 using Signals.GameArena;
+using UnityEngine;
 
 namespace Commands.GameArena
 {
     public class InitBattleTurnCommand : Command
     {
         /// <summary>
-        /// Init all decks signal
+        /// Init card deck signal
         /// </summary>
         [Inject]
-        public InitAllDecksSignal InitAllDecksSignal { get; set; }
+        public InitCardDeckSignal InitCardDeckSignal { get; set; }
+
+        /// <summary>
+        /// Init trate deck signal
+        /// </summary>
+        [Inject]
+        public InitTrateDeckSignal InitTrateDeckSignal { get; set; }
 
         /// <summary>
         /// Init mana signal
@@ -73,18 +80,20 @@ namespace Commands.GameArena
                 BattleArena.CountOfCardsAddingToHand++;
             }
 
-            // Init all desks
-            InitAllDecksSignal.Dispatch();
+            // Init card desk
+            InitCardDeckSignal.Dispatch();
+
+            // Init trate deck signal
+            InitTrateDeckSignal.Dispatch();
 
             // Init mana view
             InitManaSignal.Dispatch();
 
             // Init hand panel
             InitHandPanelSignal.Dispatch();
-            
+
             //Init battle arena
             InitBattleArenaSignal.Dispatch();
-            
         }
     }
 }

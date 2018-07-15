@@ -2,6 +2,7 @@
 using Models.Arena;
 using strange.extensions.command.impl;
 using Signals;
+using Signals.GameArena;
 
 namespace Commands.GameArena
 {
@@ -14,6 +15,12 @@ namespace Commands.GameArena
         public BattleArena BattleArena { get; set; }
 
         /// <summary>
+        /// Init trate deck signal
+        /// </summary>
+        [Inject]
+        public InitTrateDeckSignal InitTrateDeckSignal { get; set; }
+
+        /// <summary>
         /// Add history log
         /// </summary>
         [Inject]
@@ -23,11 +30,12 @@ namespace Commands.GameArena
         {
             if (BattleArena.GetActivePlayer().BattleHand.Count < Arena.HandLimitCount)
             {
-                BattleArena.GetActivePlayer().BattleHand.Add(BattleArena.GetActivePlayer().TrateBattlePull[0]);
-
                 var trate = BattleArena.GetActivePlayer().TrateBattlePull[0];
                 if (trate != null)
                 {
+                    BattleArena.GetActivePlayer().BattleHand.Add(trate);
+
+                    // @todo Add trate to hand
                     AddHistoryLogSignal.Dispatch(new[]
                     {
                         "PLAYER '", BattleArena.GetActivePlayer().Name, "' Add '", trate.SourceTrate.name,
@@ -37,14 +45,16 @@ namespace Commands.GameArena
             }
             else
             {
-                //@todo call limit hand count
-                AddHistoryLogSignal.Dispatch(
-                    new[] {"PLAYER '", BattleArena.GetActivePlayer().Name, "' has add Trate to Hand ERROR! "},
-                    LogType.Hand);
+                AddHistoryLogSignal.Dispatch(new[]
+                {
+                    "PLAYER '", BattleArena.GetActivePlayer().Name, "' has add Trate to Hand ERROR! "
+                }, LogType.Error);
             }
 
             BattleArena.GetActivePlayer().TrateBattlePull.RemoveAt(0);
-            //@todo call Decreace Card pull
+
+            // Init trate deck signal
+            InitTrateDeckSignal.Dispatch();
         }
     }
 }

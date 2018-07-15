@@ -5,10 +5,9 @@ using UnityEngine.UI;
 
 namespace View.GameArena
 {
-    public class SideDecksView : EventView
+    public class TrateDeskView : EventView
     {
         [SerializeField] private BattleSide _battleSide;
-        [SerializeField] private Text _cardDeckCountText;
         [SerializeField] private Text _trateDeckCountText;
 
         public BattleSide GetCurrentSide()
@@ -16,11 +15,6 @@ namespace View.GameArena
             return _battleSide;
         }
 
-        public void SetCardDeckCount(int count)
-        {
-            _cardDeckCountText.text = count.ToString();
-        }
-        
         public void SetTrateDeckCount(int count)
         {
             _trateDeckCountText.text = count.ToString();

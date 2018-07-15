@@ -53,6 +53,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 224836513722428818}
+  - component: {fileID: 114749353917512136}
   m_Layer: 0
   m_Name: CardPull
   m_TagString: Untagged
@@ -116,7 +117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6367924, g: 1, b: 0.98899275, a: 0.14117648}
+  m_Color: {r: 0.7469197, g: 0.7338868, b: 0.9811321, a: 0.23137255}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -143,7 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.7758196, b: 0.43400002, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.8509804}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -164,6 +165,19 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 0
+--- !u!114 &114749353917512136
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1473190091094664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 676338b2bd954710ac3df15fce2b7209, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _battleSide: 0
+  _cardDeckCountText: {fileID: 114701553181798244}
 --- !u!222 &222693848716006536
 CanvasRenderer:
   m_ObjectHideFlags: 1

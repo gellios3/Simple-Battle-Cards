@@ -19,6 +19,11 @@ namespace Models
         /// Battle log
         /// </summary>
         public readonly List<string> BattleLog = new List<string>();
+        
+        /// <summary>
+        /// Battle log
+        /// </summary>
+        public readonly List<string> ErrorLog = new List<string>();
 
         /// <summary>
         /// Add History log
@@ -38,6 +43,9 @@ namespace Models
                 case LogType.General:
                     GeneralLog.Add(str);
                     break;
+                case LogType.Error:
+                    ErrorLog.Add(str);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
@@ -48,6 +56,7 @@ namespace Models
     {
         General,
         Battle,
+        Error,
         Hand
     }
 }
