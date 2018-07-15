@@ -65,7 +65,7 @@ namespace Contexts
         {
             // init Signals
             injectionBinder.Bind<AddHistoryLogToViewSignal>().ToSingleton();
-            injectionBinder.Bind<InitAllDecksSignal>().ToSingleton();  
+            injectionBinder.Bind<InitAllDecksSignal>().ToSingleton();
             injectionBinder.Bind<ShowManaSignal>().ToSingleton();
 
             // Init comands
@@ -73,6 +73,10 @@ namespace Contexts
             commandBinder.Bind<InitBattleTurnSignal>().To<InitBattleTurnCommand>();
             commandBinder.Bind<AddHistoryLogSignal>().To<AddHistoryLogCommand>();
             commandBinder.Bind<InitManaSignal>().To<InitManaCommand>();
+            commandBinder.Bind<InitBattleArenaSignal>().To<InitBattleArenaCommand>();
+            commandBinder.Bind<InitHandPanelSignal>().To<InitHandPanelCommand>();
+            commandBinder.Bind<AddCardFromDeckToHandSignal>().To<AddCardFromDeckToHandCommand>();
+            commandBinder.Bind<AddTrateFromDeckToHandSignal>().To<AddTrateFromDeckToHandCommand>();
 
             // init models
             injectionBinder.Bind<Arena>().ToSingleton();

@@ -379,7 +379,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1508926011}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.98285335
+  m_Size: 0.9969682
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -502,7 +502,7 @@ GameObject:
   - component: {fileID: 354396358}
   - component: {fileID: 354396357}
   m_Layer: 5
-  m_Name: ArenaPanel
+  m_Name: BattleArena
   m_TagString: EnemyFinish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -523,8 +523,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 272.58533, y: -163.32195}
-  m_SizeDelta: {x: 545.17065, y: 108.881294}
+  m_AnchoredPosition: {x: 272.49997, y: -172.12277}
+  m_SizeDelta: {x: 544.99994, y: 114.74851}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &354396357
 MonoBehaviour:
@@ -534,10 +534,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 354396355}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 384586fd0f630eb47afdd72d2214a7cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 6c9fdff88ec347f3a7b135934a2e13bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _battleLog: {fileID: 802431226}
+  _battleSide: 1
 --- !u!114 &354396358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -605,7 +605,7 @@ GameObject:
   - component: {fileID: 361788719}
   - component: {fileID: 361788717}
   m_Layer: 5
-  m_Name: BattlePanell
+  m_Name: BattleField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -669,8 +669,9 @@ GameObject:
   m_Component:
   - component: {fileID: 437845456}
   - component: {fileID: 437845457}
+  - component: {fileID: 437845458}
   m_Layer: 5
-  m_Name: OpponentPanel
+  m_Name: OpponentField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -693,8 +694,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 272.58533, y: -108.881294}
-  m_SizeDelta: {x: 545.17065, y: 217.76259}
+  m_AnchoredPosition: {x: 272.49997, y: -114.748505}
+  m_SizeDelta: {x: 544.99994, y: 229.49702}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &437845457
 MonoBehaviour:
@@ -718,6 +719,18 @@ MonoBehaviour:
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
   m_ChildControlHeight: 1
+--- !u!114 &437845458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 437845455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c9fdff88ec347f3a7b135934a2e13bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _battleSide: 1
 --- !u!1 &461122540
 GameObject:
   m_ObjectHideFlags: 0
@@ -806,7 +819,7 @@ GameObject:
   - component: {fileID: 474698021}
   - component: {fileID: 474698020}
   m_Layer: 5
-  m_Name: PlayerHandPanell
+  m_Name: HandPanel
   m_TagString: PlayerStart
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -827,8 +840,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 272.58533, y: -163.32195}
-  m_SizeDelta: {x: 545.17065, y: 108.881294}
+  m_AnchoredPosition: {x: 272.49997, y: -172.12277}
+  m_SizeDelta: {x: 544.99994, y: 114.74851}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &474698020
 MonoBehaviour:
@@ -838,10 +851,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 474698018}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 384586fd0f630eb47afdd72d2214a7cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 598cd60551794145ab42947b51a4aba9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _battleLog: {fileID: 802431226}
+  _battleSide: 0
 --- !u!114 &474698021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1142,7 +1155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.46787477, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.7758196, b: 0.43400002, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1151,17 +1164,17 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: de75c11cfbbde984396ace26637764e5, type: 3}
-    m_FontSize: 12
+    m_FontSize: 11
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
     m_MaxSize: 40
-    m_Alignment: 1
+    m_Alignment: 0
     m_AlignByGeometry: 1
     m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
-    m_LineSpacing: 1.5
+    m_LineSpacing: 1.2
   m_Text: 
 --- !u!222 &802431227
 CanvasRenderer:
@@ -1185,7 +1198,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000040356277, y: 6.0671945}
+  m_AnchoredPosition: {x: -0.000040356277, y: 17.672523}
   m_SizeDelta: {x: 0, y: 350}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &813344830
@@ -1198,7 +1211,7 @@ GameObject:
   - component: {fileID: 813344831}
   - component: {fileID: 813344832}
   m_Layer: 5
-  m_Name: PlayerPull
+  m_Name: PlayerField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1221,8 +1234,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50.08539, y: -326.6439}
-  m_SizeDelta: {x: 100.17078, y: 217.76259}
+  m_AnchoredPosition: {x: 50.00003, y: -344.24554}
+  m_SizeDelta: {x: 100.00006, y: 229.49702}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &813344832
 MonoBehaviour:
@@ -1372,7 +1385,7 @@ GameObject:
   - component: {fileID: 1015816855}
   - component: {fileID: 1015816854}
   m_Layer: 5
-  m_Name: HistoryPanell
+  m_Name: HistoryField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1483,12 +1496,12 @@ Prefab:
     - target: {fileID: 224675542322048076, guid: 58d4abfcc0ac7084f8eb1948e5b6b566,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 75.08475
+      value: 75.00003
       objectReference: {fileID: 0}
     - target: {fileID: 224675542322048076, guid: 58d4abfcc0ac7084f8eb1948e5b6b566,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -15.2625885
+      value: -26.997025
       objectReference: {fileID: 0}
     - target: {fileID: 224675542322048076, guid: 58d4abfcc0ac7084f8eb1948e5b6b566,
         type: 2}
@@ -1719,7 +1732,7 @@ GameObject:
   - component: {fileID: 1258098329}
   - component: {fileID: 1258098328}
   m_Layer: 5
-  m_Name: PlayerActiveCardField
+  m_Name: BattleArena
   m_TagString: PlayerFinish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1740,8 +1753,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 272.58533, y: -54.440647}
-  m_SizeDelta: {x: 545.17065, y: 108.881294}
+  m_AnchoredPosition: {x: 272.49997, y: -57.374256}
+  m_SizeDelta: {x: 544.99994, y: 114.74851}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1258098328
 MonoBehaviour:
@@ -1751,10 +1764,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1258098326}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 384586fd0f630eb47afdd72d2214a7cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 6c9fdff88ec347f3a7b135934a2e13bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _battleLog: {fileID: 802431226}
+  _battleSide: 0
 --- !u!114 &1258098329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2068,7 +2081,7 @@ RectTransform:
   m_Father: {fileID: 536144488}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.017146647}
+  m_AnchorMin: {x: 0, y: 0.0030317903}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
@@ -2119,7 +2132,7 @@ GameObject:
   - component: {fileID: 1762391625}
   - component: {fileID: 1762391624}
   m_Layer: 5
-  m_Name: CardPanell
+  m_Name: DeckField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2453,7 +2466,7 @@ GameObject:
   - component: {fileID: 1949843426}
   - component: {fileID: 1949843425}
   m_Layer: 5
-  m_Name: HandPanell
+  m_Name: HandPanel
   m_TagString: EnemyStart
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2474,8 +2487,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 272.58533, y: -54.440647}
-  m_SizeDelta: {x: 545.17065, y: 108.881294}
+  m_AnchoredPosition: {x: 272.49997, y: -57.374256}
+  m_SizeDelta: {x: 544.99994, y: 114.74851}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1949843425
 MonoBehaviour:
@@ -2485,10 +2498,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1949843423}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 384586fd0f630eb47afdd72d2214a7cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 598cd60551794145ab42947b51a4aba9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _battleLog: {fileID: 802431226}
+  _battleSide: 1
 --- !u!114 &1949843426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2555,7 +2568,7 @@ GameObject:
   - component: {fileID: 2004734395}
   - component: {fileID: 2004734396}
   m_Layer: 5
-  m_Name: PlayerPanel
+  m_Name: PlayerField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2578,8 +2591,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 272.58533, y: -326.6439}
-  m_SizeDelta: {x: 545.17065, y: 217.76259}
+  m_AnchoredPosition: {x: 272.49997, y: -344.24554}
+  m_SizeDelta: {x: 544.99994, y: 229.49702}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2004734396
 MonoBehaviour:
@@ -2618,7 +2631,7 @@ GameObject:
   - component: {fileID: 2066678255}
   - component: {fileID: 2066678256}
   m_Layer: 5
-  m_Name: OpponentPull
+  m_Name: OpponentField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2641,8 +2654,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50.08539, y: -108.881294}
-  m_SizeDelta: {x: 100.17078, y: 217.76259}
+  m_AnchoredPosition: {x: 50.00003, y: -114.748505}
+  m_SizeDelta: {x: 100.00006, y: 229.49702}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2066678256
 MonoBehaviour:

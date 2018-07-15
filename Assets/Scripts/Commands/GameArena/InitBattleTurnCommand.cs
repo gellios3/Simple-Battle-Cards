@@ -20,6 +20,18 @@ namespace Commands.GameArena
         public InitManaSignal InitManaSignal { get; set; }
 
         /// <summary>
+        /// Init battle arena signal
+        /// </summary>
+        [Inject]
+        public InitBattleArenaSignal InitBattleArenaSignal { get; set; }
+
+        /// <summary>
+        /// Init battle arena signal
+        /// </summary>
+        [Inject]
+        public InitHandPanelSignal InitHandPanelSignal { get; set; }
+
+        /// <summary>
         /// Battle
         /// </summary>
         [Inject]
@@ -54,11 +66,25 @@ namespace Commands.GameArena
             // init turn history
             BattleArena.InitHistory();
 
-            // ini card desk
+            // On 2 Turn add more carts 
+            BattleArena.CountOfCardsAddingToHand = Arena.CartToAddCount;
+            if (StateService.TurnCount == 2)
+            {
+                BattleArena.CountOfCardsAddingToHand++;
+            }
+
+            // Init all desks
             InitAllDecksSignal.Dispatch();
-            
+
             // Init mana view
             InitManaSignal.Dispatch();
+
+            // Init hand panel
+            InitHandPanelSignal.Dispatch();
+            
+            //Init battle arena
+            InitBattleArenaSignal.Dispatch();
+            
         }
     }
 }

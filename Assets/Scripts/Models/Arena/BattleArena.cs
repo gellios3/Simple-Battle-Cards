@@ -36,6 +36,11 @@ namespace Models.Arena
         /// Battle history
         /// </summary>
         public readonly List<HistoryTurn> History = new List<HistoryTurn>();  
+        
+        /// <summary>
+        /// Count of cards adding to hand
+        /// </summary>
+        public int CountOfCardsAddingToHand { get; set; }
 
         /// <summary>
         /// Init history
@@ -55,121 +60,6 @@ namespace Models.Arena
         public ArenaPlayer GetActivePlayer()
         {
             return StateService.ActiveArenaPlayer;
-        }
-
-        /// <summary>
-        /// Init battle turn
-        /// </summary>
-        public void InitActiveTurn()
-        {
-//            // On 2 Turn add more carts 
-//            var addCartcount = Arena.CartToAddCount;
-//            if (StateService.TurnCount == 2)
-//            {
-//                addCartcount++;
-//            }
-//
-//
-//            // Add 3 item to hand
-//            if (StateService.ActiveArenaPlayer.CardBattlePull.Count > 0)
-//            {
-//                if (!AddCartToPlayerHand())
-//                {
-//                    // @todo call not enough space in hand
-//                }
-//            }
-//
-//            for (var i = 1; i < addCartcount; i++)
-//            {
-//                if (Random.Range(0, 2) == 0)
-//                {
-//                    if (StateService.ActiveArenaPlayer.CardBattlePull.Count <= 0) continue;
-//                    if (!AddCartToPlayerHand())
-//                    {
-//                        // @todo call not enough space in hand
-//                    }
-//                }
-//                else
-//                {
-//                    if (StateService.ActiveArenaPlayer.TrateBattlePull.Count <= 0) continue;
-//                    if (!AddTrateToPlayerHand())
-//                    {
-//                        // @todo call not enough space in hand            
-//                    }
-//                }
-//            }
-        }
-
-        /// <summary>
-        /// Fill Battle hand
-        /// </summary>
-        private bool AddCartToPlayerHand()
-        {
-            var status = true;
-
-            if (StateService.ActiveArenaPlayer.BattleHand.Count < Arena.HandLimitCount)
-            {
-                StateService.ActiveArenaPlayer.BattleHand.Add(StateService.ActiveArenaPlayer.CardBattlePull[0]);
-
-                var card = StateService.ActiveArenaPlayer.CardBattlePull[0];
-                if (card != null)
-                {
-                    AddHistoryLogSignal.Dispatch(new[]
-                    {
-                        "PLAYER '", StateService.ActiveArenaPlayer.Name, "' Add '", card.SourceCard.name,
-                        "' Card to Hand"
-                    }, LogType.Hand);
-                }
-            }
-            else
-            {
-                status = false;
-
-                AddHistoryLogSignal.Dispatch(
-                    new[] {"PLAYER '", StateService.ActiveArenaPlayer.Name, "' has add Card to Hand ERROR! "},
-                    LogType.Hand);
-            }
-
-            StateService.ActiveArenaPlayer.CardBattlePull.RemoveAt(0);
-
-
-            return status;
-        }
-
-        /// <summary>
-        /// ФAdd trate to player hand
-        /// </summary>
-        /// <returns></returns>
-        private bool AddTrateToPlayerHand()
-        {
-            var status = true;
-
-            if (StateService.ActiveArenaPlayer.BattleHand.Count < Arena.HandLimitCount)
-            {
-                StateService.ActiveArenaPlayer.BattleHand.Add(StateService.ActiveArenaPlayer.TrateBattlePull[0]);
-
-                var trate = StateService.ActiveArenaPlayer.TrateBattlePull[0];
-                if (trate != null)
-                {
-                    AddHistoryLogSignal.Dispatch(new[]
-                    {
-                        "PLAYER '", StateService.ActiveArenaPlayer.Name, "' Add '", trate.SourceTrate.name,
-                        "' Trate To Hand"
-                    }, LogType.Hand);
-                }
-            }
-            else
-            {
-                status = false;
-
-                AddHistoryLogSignal.Dispatch(
-                    new[] {"PLAYER '", StateService.ActiveArenaPlayer.Name, "' has add Trate to Hand ERROR! "},
-                    LogType.Hand);
-            }
-
-            StateService.ActiveArenaPlayer.TrateBattlePull.RemoveAt(0);
-
-            return status;
         }
 
         /// <summary>
