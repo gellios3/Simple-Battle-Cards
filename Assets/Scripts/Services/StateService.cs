@@ -11,7 +11,7 @@ namespace Services
         /// <summary>
         /// Active player
         /// </summary>
-        public Player ActivePlayer { get; private set; }
+        public ArenaPlayer ActiveArenaPlayer { get; private set; }
 
         /// <summary>
         /// Turn history
@@ -39,26 +39,26 @@ namespace Services
         /// <summary>
         /// Init active player
         /// </summary>
-        /// <param name="player"></param>
-        public void InitActivePlayer(Player player)
+        /// <param name="arenaPlayer"></param>
+        public void InitActivePlayer(ArenaPlayer arenaPlayer)
         {
-            ActivePlayer = player;
+            ActiveArenaPlayer = arenaPlayer;
         }
 
         /// <summary>
         /// Get state player
         /// </summary>
-        /// <param name="player"></param>
+        /// <param name="arenaPlayer"></param>
         /// <returns></returns>
-        public StatePlayer GetStatePlayer(Player player)
+        public StatePlayer GetStatePlayer(ArenaPlayer arenaPlayer)
         {
             var statePlayer = new StatePlayer
             {
-                Name = player.Name,
-                BattleHand = GetStateItems(player.BattleHand),
-                ArenaCards = GetStateCards(player.ArenaCards),
-                BattlePull = GetStateItems(player.CardBattlePull),
-                isActive = ActivePlayer.Name == player.Name
+                Name = arenaPlayer.Name,
+                BattleHand = GetStateItems(arenaPlayer.BattleHand),
+                ArenaCards = GetStateCards(arenaPlayer.ArenaCards),
+                BattlePull = GetStateItems(arenaPlayer.CardBattlePull),
+                isActive = ActiveArenaPlayer.Name == arenaPlayer.Name
             };
 
             return statePlayer;

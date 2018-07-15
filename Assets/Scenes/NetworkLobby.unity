@@ -762,8 +762,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 100.2, y: 77.600006}
-  m_SizeDelta: {x: 200.4, y: -155.20003}
+  m_AnchoredPosition: {x: 133, y: -101}
+  m_SizeDelta: {x: 266, y: 202}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1778197733
 GameObject:
@@ -773,8 +773,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1778197734}
-  - component: {fileID: 1778197735}
   - component: {fileID: 1778197736}
+  - component: {fileID: 1778197735}
   m_Layer: 5
   m_Name: StatusList
   m_TagString: Untagged
@@ -813,6 +813,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _serverStatus: {fileID: 10588799}
+  _startGameBtn: {fileID: 2109398661}
 --- !u!114 &1778197736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -829,12 +830,12 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 0
+  m_ChildAlignment: 4
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
+  m_ChildControlWidth: 1
+  m_ChildControlHeight: 1
 --- !u!1 &2109398659
 GameObject:
   m_ObjectHideFlags: 0

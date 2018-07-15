@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Models.Miltiplayer;
 using strange.extensions.mediation.impl;
 using Signals.multiplayer;
 using UnityEngine;
-using NetworkPlayer = Models.Miltiplayer.NetworkPlayer;
+using UnityEngine.UI;
 
 namespace View.Multiplayer
 {
@@ -15,9 +16,17 @@ namespace View.Multiplayer
         [Inject]
         public PingPlayerIdToServerSignal PingPlayerIdToServerSignal { get; set; }
 
+        /// <summary>
+        ///  Status view
+        /// </summary>
         [SerializeField] private StatusView _serverStatus;
 
-        private List<GameObject> _statusViews = new List<GameObject>();
+        /// <summary>
+        /// Start game
+        /// </summary>
+        [SerializeField] private Button _startGameBtn;
+
+        private readonly List<GameObject> _statusViews = new List<GameObject>();
 
         private void Awake()
         {
@@ -41,10 +50,19 @@ namespace View.Multiplayer
         }
 
         /// <summary>
+        /// Get start game btn
+        /// </summary>
+        /// <returns></returns>
+        public Button GetStartGameBtn()
+        {
+            return _startGameBtn;
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="players"></param>
-        public void ShowPlayersList(IEnumerable<NetworkPlayer> players)
+        public void ShowPlayersList(IEnumerable<NetworkLobbyPlayer> players)
         {
             RefreshStatusList();
             foreach (var item in players)
@@ -53,8 +71,14 @@ namespace View.Multiplayer
                     Resources.Load("Prefabs/StatusItem", typeof(GameObject)), new Vector2(), Quaternion.identity,
                     transform
                 );
+                var statusItemView = statusView.GetComponent<StatusItemView>();
+                statusItemView.InitPlayer(item);
                 _statusViews.Add(statusView);
-//                superRoom.GetComponent<StatusItem>().Game = game;
+            }
+
+            if (_statusViews.Count > 1)
+            {
+                _startGameBtn.interactable = true;
             }
         }
 

@@ -1,4 +1,5 @@
 ﻿using Commands;
+using Commands.GameArena;
 using Mediators;
 using Models.Arena;
 using strange.extensions.command.api;
@@ -8,6 +9,7 @@ using strange.extensions.context.impl;
 using Services;
 using Signals;
 using Signals.Arena;
+using Signals.GameArena;
 using UnityEngine;
 using View;
 
@@ -51,7 +53,7 @@ namespace Contexts
         {
             base.Start();
 
-            var startSignal = injectionBinder.GetInstance<CreateNewGameSignal>();
+            var startSignal = injectionBinder.GetInstance<InitNewGameSignal>();
 //            var startSignal = injectionBinder.GetInstance<LoadGameSignal>();
             startSignal.Dispatch();
 
@@ -73,23 +75,23 @@ namespace Contexts
 
             // Init sevises
             injectionBinder.Bind<PlayerCpuBehaviorService>().ToSingleton();
-            injectionBinder.Bind<GenarateGameSessionService>().ToSingleton();
+//            injectionBinder.Bind<GenarateGameSessionService>().ToSingleton();
             injectionBinder.Bind<StateService>().ToSingleton();
 
             // init Signals
-            injectionBinder.Bind<ArenaInitializedSignal>().ToSingleton();
+            injectionBinder.Bind<InitBattleTurnSignal>().ToSingleton();
 
             // Init comands
             commandBinder.Bind<EndGameSignal>().To<GameFinishedCommand>();
-            commandBinder.Bind<CreateNewGameSignal>().To<GenerateNewGameCommand>();
-            commandBinder.Bind<MakeTurnSignal>().To<MakeTurnCommand>();
+//            commandBinder.Bind<InitNewGameSignal>().To<GenerateNewGameCommand>();
+//            commandBinder.Bind<MakeTurnSignal>().To<MakeTurnCommand>();
             commandBinder.Bind<SaveLogSignal>().To<SaveLogCommand>();
-            commandBinder.Bind<AddHistoryLogSignal>().To<AddLogCommand>();
+            commandBinder.Bind<AddHistoryLogSignal>().To<AddHistoryLogCommand>();
             commandBinder.Bind<SaveGameSignal>().To<SaveGameCommand>();
             commandBinder.Bind<LoadGameSignal>().To<LoadGameCommand>();
 
             // Init mediators
-            mediationBinder.Bind<GameArenaView>().To<GameArenaMediator>();
+//            mediationBinder.Bind<GameArenaView>().To<GameArenaMediator>();
         }
     }
 }

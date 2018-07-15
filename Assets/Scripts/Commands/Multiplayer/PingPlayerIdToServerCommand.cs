@@ -1,4 +1,5 @@
 ﻿using Models.Miltiplayer;
+using Models.Miltiplayer.Messages;
 using strange.extensions.command.impl;
 using Services.Multiplayer;
 using UnityEngine;
@@ -28,7 +29,7 @@ namespace Commands.Multiplayer
             Debug.Log("PingPlayerIdToServerCommand");
             ServerConnectorService.Send(MsgStruct.SendPlayerID, new PingPlayerMessage
             {
-                Id = NetworkPlayerService.NetworkPlayer.Id
+                Id = NetworkPlayerService.NetworkLobbyPlayer.Id
             });
         }
     }

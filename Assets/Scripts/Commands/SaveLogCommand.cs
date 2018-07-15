@@ -35,7 +35,7 @@ namespace Commands
                 stateHistory.Add(new StateHistoryTurn
                 {
                     BattleLog = histotyTurn.BattleLog.ToArray(),
-                    HandLog = histotyTurn.HandLog.ToArray()
+                    HandLog = histotyTurn.HandLog.ToArray()               
                 });
             }
 

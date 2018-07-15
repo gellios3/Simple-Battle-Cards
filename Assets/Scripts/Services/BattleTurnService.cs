@@ -24,34 +24,34 @@ namespace Services
         /// <param name="card"></param>
         public bool AddCardToArenaFromHand(BattleCard card)
         {
-            if (StateService.ActivePlayer.ArenaCards.Count >= Arena.ArenaCartCount ||
+            if (StateService.ActiveArenaPlayer.ArenaCards.Count >= Arena.ArenaCartCount ||
                 card.Status != BattleStatus.Wait)
             {
                 //@todo call not enough space in Arena
                 AddHistoryLogSignal.Dispatch(new[]
                 {
-                    "PLAYER '", StateService.ActivePlayer.Name, "' has ERROR! Add Cart '",
+                    "PLAYER '", StateService.ActiveArenaPlayer.Name, "' has ERROR! Add Cart '",
                     card.SourceCard.name, "' to Arena 'not enough space'"
                 }, LogType.Hand);
                 return false;
             }
 
-            if (!StateService.ActivePlayer.LessManaPull(card.Mana))
+            if (!StateService.ActiveArenaPlayer.LessManaPull(card.Mana))
             {
                 //@todo call not enough mana!
                 AddHistoryLogSignal.Dispatch(new[]
                 {
-                    "Player '", StateService.ActivePlayer.Name, "' Has ERROR! add card '", card.SourceCard.name,
+                    "Player '", StateService.ActiveArenaPlayer.Name, "' Has ERROR! add card '", card.SourceCard.name,
                     "' to battle 'not enough mana!'"
                 }, LogType.Hand);
                 return false;
             }
 
-            StateService.ActivePlayer.ArenaCards.Add(new BattleCard(card.SourceCard));
+            StateService.ActiveArenaPlayer.ArenaCards.Add(new BattleCard(card.SourceCard));
             // add history battle log
             AddHistoryLogSignal.Dispatch(new[]
             {
-                "Player '", StateService.ActivePlayer.Name, "' Add card '", card.SourceCard.name, "' to battle!"
+                "Player '", StateService.ActiveArenaPlayer.Name, "' Add card '", card.SourceCard.name, "' to battle!"
             }, LogType.Hand);
 
             return true;
@@ -66,13 +66,13 @@ namespace Services
         {
             if (card.BattleTrates.Count >= BattleCard.MaxTratesCount) return false;
 
-            if (StateService.ActivePlayer.LessManaPull(trate.Mana))
+            if (StateService.ActiveArenaPlayer.LessManaPull(trate.Mana))
             {
                 card.AddTrate(new BattleTrate(trate.SourceTrate));
                 // add history battle log
                 AddHistoryLogSignal.Dispatch(new[]
                 {
-                    "Player '", StateService.ActivePlayer.Name, "' Add trate '", trate.SourceTrate.name,
+                    "Player '", StateService.ActiveArenaPlayer.Name, "' Add trate '", trate.SourceTrate.name,
                     "' to battle card '", card.SourceCard.name, "'"
                 }, LogType.Hand);
             }
@@ -81,7 +81,7 @@ namespace Services
                 //@todo call not enough mana!
                 AddHistoryLogSignal.Dispatch(new[]
                 {
-                    "Player '", StateService.ActivePlayer.Name, "' Has ERROR! 'Add trate' '",
+                    "Player '", StateService.ActiveArenaPlayer.Name, "' Has ERROR! 'Add trate' '",
                     trate.SourceTrate.name,
                     "' to battle card '", card.SourceCard.name, "' 'not enough mana!'"
                 }, LogType.Hand);
@@ -102,7 +102,7 @@ namespace Services
             {
                 AddHistoryLogSignal.Dispatch(new[]
                 {
-                    "Player '", StateService.ActivePlayer.Name, "' Use Card '", yourCard.SourceCard.name,
+                    "Player '", StateService.ActiveArenaPlayer.Name, "' Use Card '", yourCard.SourceCard.name,
                     "' hit CRITICAL ememy Card '", enemyCard.SourceCard.name, "'"
                 }, LogType.Battle);
             }
@@ -110,7 +110,7 @@ namespace Services
             {
                 AddHistoryLogSignal.Dispatch(new[]
                 {
-                    "Player '", StateService.ActivePlayer.Name, "' Use Card '", yourCard.SourceCard.name,
+                    "Player '", StateService.ActiveArenaPlayer.Name, "' Use Card '", yourCard.SourceCard.name,
                     "' hit ememy Card '", enemyCard.SourceCard.name, "' take damage '", yourCard.Attack.ToString(), "'"
                 }, LogType.Battle);
             }
