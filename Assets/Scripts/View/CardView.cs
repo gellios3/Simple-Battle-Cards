@@ -1,5 +1,6 @@
 ﻿using Models.Arena;
 using strange.extensions.mediation.impl;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,15 +10,15 @@ namespace View
     {
         [SerializeField] private BattleCard _card;
 
-        [SerializeField] private Text _nameText;
-        [SerializeField] private Text _descriptionText;
+        [SerializeField] private TextMeshProUGUI _nameText;
+        [SerializeField] private TextMeshProUGUI _descriptionText;
 
         [SerializeField] private Image _artworkImage;
 
-        [SerializeField] private Text _manaText;
-        [SerializeField] private Text _attackText;
-        [SerializeField] private Text _healthText;
-        [SerializeField] private Text _defenceText;
+        [SerializeField] private TextMeshProUGUI _manaText;
+        [SerializeField] private TextMeshProUGUI _attackText;
+        [SerializeField] private TextMeshProUGUI _healthText;
+        [SerializeField] private TextMeshProUGUI _defenceText;
 
         public void Init(BattleCard card)
         {

@@ -160,10 +160,9 @@ GameObject:
   - component: {fileID: 224936899883166774}
   - component: {fileID: 114645540244502716}
   - component: {fileID: 225396053072382160}
-  - component: {fileID: 114929917810121952}
   - component: {fileID: 114647278891581626}
   m_Layer: 0
-  m_Name: Treit
+  m_Name: Trate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -528,7 +527,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8e9e4a1e28c54945b15278337437d80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _trait: {fileID: 11400000, guid: f2ce777e270d950428780cc8332f3138, type: 2}
   _nameText: {fileID: 114124194761518392}
   _descriptionText: {fileID: 114648477440152154}
   _artworkImage: {fileID: 114360991876652162}
@@ -680,20 +678,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 100
---- !u!114 &114929917810121952
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1739852461464410}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c87024e51d4baa47a665ea89cc517e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isDraggable: 1
-  parentToReturn: {fileID: 0}
-  placeHolderParent: {fileID: 0}
 --- !u!212 &212078682707289690
 SpriteRenderer:
   m_ObjectHideFlags: 1
