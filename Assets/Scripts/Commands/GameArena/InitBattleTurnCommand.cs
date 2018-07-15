@@ -8,10 +8,10 @@ namespace Commands.GameArena
     public class InitBattleTurnCommand : Command
     {
         /// <summary>
-        /// Init card deck signal
+        /// Init all decks signal
         /// </summary>
         [Inject]
-        public InitAllCardDecksSignal InitAllCardDecksSignal { get; set; }
+        public InitAllDecksSignal InitAllDecksSignal { get; set; }
 
         /// <summary>
         /// Battle
@@ -47,9 +47,9 @@ namespace Commands.GameArena
 
             // init turn history
             BattleArena.InitHistory();
-           
+
             // ini card desk
-            InitAllCardDecksSignal.Dispatch();
+            InitAllDecksSignal.Dispatch();
         }
     }
 }

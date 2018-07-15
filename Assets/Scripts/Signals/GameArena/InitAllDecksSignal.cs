@@ -2,7 +2,7 @@
 
 namespace Signals.GameArena
 {
-    public class InitAllCardDecksSignal : Signal
+    public class InitAllDecksSignal : Signal
     {
         
     }

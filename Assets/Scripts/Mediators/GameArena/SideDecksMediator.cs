@@ -4,13 +4,13 @@ using View.GameArena;
 
 namespace Mediators.GameArena
 {
-    public class CardDeckMediator : TargetMediator<CardDeckView>
+    public class SideDecksMediator : TargetMediator<SideDecksView>
     {
         /// <summary>
         /// Init card deck signal
         /// </summary>
         [Inject]
-        public InitAllCardDecksSignal InitAllCardDecksSignal { get; set; }
+        public InitAllDecksSignal InitAllDecksSignal { get; set; }
 
         /// <summary>
         /// Arena
@@ -20,15 +20,17 @@ namespace Mediators.GameArena
 
         public override void OnRegister()
         {
-            InitAllCardDecksSignal.AddListener(() =>
+            InitAllDecksSignal.AddListener(() =>
             {
                 if (View.GetCurrentSide() == BattleSide.Player)
                 {
-                    View.SetDeckCount(Arena.Player.CardBattlePull.Count);
+                    View.SetCardDeckCount(Arena.Player.CardBattlePull.Count);
+                    View.SetTrateDeckCount(Arena.Player.TrateBattlePull.Count);
                 }
                 else if (View.GetCurrentSide() == BattleSide.Opponent)
                 {
-                    View.SetDeckCount(Arena.Opponent.CardBattlePull.Count);
+                    View.SetCardDeckCount(Arena.Opponent.CardBattlePull.Count);
+                    View.SetTrateDeckCount(Arena.Opponent.TrateBattlePull.Count);
                 }
             });
         }
