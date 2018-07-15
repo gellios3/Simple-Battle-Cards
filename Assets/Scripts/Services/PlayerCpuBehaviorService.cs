@@ -126,7 +126,7 @@ namespace Services
         /// <returns></returns>
         private List<BattleCard> GetEnemyActiveCards()
         {
-            return BattleArena.ActiveState == BattleState.YourTurn
+            return BattleArena.ActiveSide == BattleSide.Player
                 ? Arena.Opponent.ArenaCards
                 : Arena.Player.ArenaCards;
         }

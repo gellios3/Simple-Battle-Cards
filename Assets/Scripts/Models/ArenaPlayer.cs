@@ -78,10 +78,10 @@ namespace Models
         /// <param name="trateDeck"></param>
         public ArenaPlayer(CartDeck cartDeck, TrateDeck trateDeck)
         {
-//            Status = PlayerStatus.FistTurn;
             // generate random positions
             InitRandomPositions(_cardPositions, cartDeck.Cards.Count);
             InitRandomPositions(_tratePositions, trateDeck.Trates.Count);
+            
             var cardCount = 0;
             var trateCount = 0;
             // fill card battle pull

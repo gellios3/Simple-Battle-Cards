@@ -1,14 +1,18 @@
-﻿using Models;
-using Models.Arena;
+﻿using Models.Arena;
 using strange.extensions.command.impl;
 using Services;
-using Signals;
-using UnityEngine;
+using Signals.GameArena;
 
 namespace Commands.GameArena
 {
     public class InitBattleTurnCommand : Command
     {
+        /// <summary>
+        /// Init card deck signal
+        /// </summary>
+        [Inject]
+        public InitAllCardDecksSignal InitAllCardDecksSignal { get; set; }
+
         /// <summary>
         /// Battle
         /// </summary>
@@ -32,17 +36,20 @@ namespace Commands.GameArena
         /// </summary>
         public override void Execute()
         {
-            var player = BattleArena.ActiveState == BattleState.YourTurn
+            // Init Active player 
+            StateService.InitActivePlayer(BattleArena.ActiveSide == BattleSide.Player
                 ? Arena.Player
-                : Arena.Opponent;
+                : Arena.Opponent);
 
-            StateService.InitActivePlayer(player);
             // init active turn
             // Increase turn count
             StateService.IncreaseTurnCount();
 
             // init turn history
             BattleArena.InitHistory();
+           
+            // ini card desk
+            InitAllCardDecksSignal.Dispatch();
         }
     }
 }

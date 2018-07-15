@@ -30,12 +30,12 @@ namespace Models.Arena
         /// <summary>
         /// Active state
         /// </summary>
-        public BattleState ActiveState { get; set; }
+        public BattleSide ActiveSide { get; set; }
 
         /// <summary>
         /// Battle history
         /// </summary>
-        public readonly List<HistoryTurn> History = new List<HistoryTurn>();
+        public readonly List<HistoryTurn> History = new List<HistoryTurn>();  
 
         /// <summary>
         /// Init history
@@ -201,7 +201,7 @@ namespace Models.Arena
             );
 
             // Switch active state
-            ActiveState = ActiveState == BattleState.YourTurn ? BattleState.OpponentTurn : BattleState.YourTurn;
+            ActiveSide = ActiveSide == BattleSide.Player ? BattleSide.Opponent : BattleSide.Player;
         }
 
         /// <summary>
@@ -220,10 +220,10 @@ namespace Models.Arena
                    arenaPlayer.ArenaCards.FindAll(card => card.Status != BattleStatus.Dead).Count == 0;
         }
     }
-
-    public enum BattleState
+    
+    public enum BattleSide
     {
-        YourTurn,
-        OpponentTurn
+        Player,
+        Opponent
     }
 }

@@ -53,6 +53,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 224836513722428818}
+  - component: {fileID: 114544171803030076}
   m_Layer: 0
   m_Name: CardPull
   m_TagString: Untagged
@@ -104,6 +105,19 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114544171803030076
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1473190091094664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 676338b2bd954710ac3df15fce2b7209, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _battleSide: 1
+  _deckCounText: {fileID: 114701553181798244}
 --- !u!114 &114553766730587194
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -163,7 +177,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 10
+  m_Text: 0
 --- !u!222 &222693848716006536
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -239,7 +253,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 55}
+  m_AnchoredPosition: {x: 0, y: -54.999992}
   m_SizeDelta: {x: 0, y: -110}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224889468486912818

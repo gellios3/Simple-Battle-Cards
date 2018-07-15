@@ -44,7 +44,7 @@ namespace Commands.GameArena
             var cartDeck = Resources.Load<CartDeck>("Objects/Decks/CartDeck");
             var trateDeck = Resources.Load<TrateDeck>("Objects/Decks/TrateDeck");
             // Init batle in your turn
-            BattleArena.ActiveState = BattleState.YourTurn;
+            BattleArena.ActiveSide = BattleSide.Player;
             // init arena
             Arena.Init(cartDeck, trateDeck);
             // Init single game players

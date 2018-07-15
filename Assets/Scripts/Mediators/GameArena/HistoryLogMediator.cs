@@ -7,7 +7,7 @@ namespace Mediators.GameArena
     public class HistoryLogMediator : TargetMediator<HistoryLogView>
     {
         /// <summary>
-        /// State service
+        /// Add history log to view signal
         /// </summary>
         [Inject]
         public AddHistoryLogToViewSignal AddHistoryLogToViewSignal { get; set; }

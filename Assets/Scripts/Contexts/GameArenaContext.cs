@@ -65,22 +65,24 @@ namespace Contexts
         {
             // init Signals
             injectionBinder.Bind<AddHistoryLogToViewSignal>().ToSingleton();
-            
+            injectionBinder.Bind<InitAllCardDecksSignal>().ToSingleton();
+
             // Init comands
             commandBinder.Bind<InitNewGameSignal>().To<InitNewGameCommand>();
             commandBinder.Bind<InitBattleTurnSignal>().To<InitBattleTurnCommand>();
             commandBinder.Bind<AddHistoryLogSignal>().To<AddHistoryLogCommand>();
-            
+
             // init models
             injectionBinder.Bind<Arena>().ToSingleton();
             injectionBinder.Bind<BattleArena>().ToSingleton();
-            
+
             // Init sevises
             injectionBinder.Bind<StateService>().ToSingleton();
             injectionBinder.Bind<BattleTurnService>().ToSingleton();
-            
+
             // Init mediators
             mediationBinder.Bind<HistoryLogView>().To<HistoryLogMediator>();
+            mediationBinder.Bind<CardDeckView>().To<CardDeckMediator>();
         }
     }
 }
