@@ -1,7 +1,6 @@
 ﻿using strange.extensions.mediation.impl;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace View.GameArena
 {

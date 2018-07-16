@@ -1,12 +1,15 @@
 ﻿using Models.Arena;
 using strange.extensions.mediation.impl;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using View.DeckItems;
 
 namespace View.GameArena
 {
-    public class HandPanelView : EventView
+    public class HandPanelView : EventView, IDropHandler, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] private BattleSide _battleSide;
+        [SerializeField] private Transform _placeholderParenTransform;
 
         /// <summary>
         /// Get current Side
@@ -33,7 +36,7 @@ namespace View.GameArena
                 cardGameObject.transform.localRotation.y, 0);
             // Init Card
             var cardView = cardGameObject.GetComponent<CardView>();
-            cardView.Init(battleCard);
+            cardView.Init(battleCard, _placeholderParenTransform);
         }
 
         /// <summary>
@@ -52,7 +55,41 @@ namespace View.GameArena
                 trateGameObject.transform.localRotation.y, 0);
             // Init Trate
             var trateView = trateGameObject.GetComponent<TrateView>();
-            trateView.Init(battleTrate);
+            trateView.Init(battleTrate, _placeholderParenTransform);
+        }
+
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            if (eventData.pointerDrag == null)
+                return;
+
+            var draggableCard = eventData.pointerDrag.GetComponent<DraggableView>();
+            if (draggableCard != null)
+            {
+                draggableCard.PlaceholderParent = transform;
+            }
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            if (eventData.pointerDrag == null)
+                return;
+
+            var draggableCard = eventData.pointerDrag.GetComponent<DraggableView>();
+            if (draggableCard != null && draggableCard.PlaceholderParent == transform)
+            {
+                draggableCard.PlaceholderParent = draggableCard.ParentToReturnTo;
+            }
+        }
+
+        public void OnDrop(PointerEventData eventData)
+        {
+            var draggableCard = eventData.pointerDrag.GetComponent<DraggableView>();
+            if (draggableCard != null)
+            {
+                draggableCard.ParentToReturnTo = transform;
+            }
         }
     }
 }

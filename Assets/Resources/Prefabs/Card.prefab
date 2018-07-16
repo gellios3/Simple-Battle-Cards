@@ -967,13 +967,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14e506d91d35b3340aff345c90d3faa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nameText: {fileID: 114706457544831776}
-  _descriptionText: {fileID: 114009203599673836}
-  _artworkImage: {fileID: 114960670542510634}
-  _manaText: {fileID: 114497010910496068}
-  _attackText: {fileID: 114026447546869896}
-  _healthText: {fileID: 114334281866477962}
-  _defenceText: {fileID: 114425755076021738}
+  NameText: {fileID: 114706457544831776}
+  DescriptionText: {fileID: 114009203599673836}
+  ArtworkImage: {fileID: 114960670542510634}
+  ManaText: {fileID: 114497010910496068}
+  AttackText: {fileID: 114026447546869896}
+  HealthText: {fileID: 114334281866477962}
+  DefenceText: {fileID: 114425755076021738}
+  MainParenTransform: {fileID: 0}
+  _parentToReturnTo: {fileID: 0}
+  _placeholderParent: {fileID: 0}
 --- !u!114 &114706457544831776
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1409,7 +1412,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 234.99994, y: -56.53288}
+  m_AnchoredPosition: {x: 272.5, y: -56.53288}
   m_SizeDelta: {x: 100, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224728831069610378
