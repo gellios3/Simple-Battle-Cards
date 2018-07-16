@@ -1,84 +1,61 @@
 ﻿using Models.Arena;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace View.DeckItems
 {
-    public class CardView : DraggableView
+    public class CardView : DraggableView, IDropHandler
     {
         [SerializeField] private BattleCard _card;
 
+        public BattleCard Card
+        {
+            get { return _card; }
+            set { _card = value; }
+        }
+
+        /// <summary>
+        /// Init Card View
+        /// </summary>
+        /// <param name="card"></param>
+        /// <param name="placeholderParenTransform"></param>
         public void Init(BattleCard card, Transform placeholderParenTransform)
         {
-            _card = card;
+            Card = card;
             MainParenTransform = placeholderParenTransform;
-            NameText.text = _card.SourceCard.name;
-            DescriptionText.text = _card.SourceCard.Description;
-            ArtworkImage.sprite = _card.SourceCard.Artwork;
-            ManaText.text = _card.Mana.ToString();
-            AttackText.text = _card.Attack.ToString();
-            HealthText.text = _card.Health.ToString();
-            DefenceText.text = _card.Defence.ToString();
+            NameText.text = Card.SourceCard.name;
+            DescriptionText.text = Card.SourceCard.Description;
+            ArtworkImage.sprite = Card.SourceCard.Artwork;
+            ManaText.text = Card.Mana.ToString();
+            AttackText.text = Card.Attack.ToString();
+            HealthText.text = Card.Health.ToString();
+            DefenceText.text = Card.Defence.ToString();
         }
 
-        public override void OnBeginDrag(PointerEventData eventData)
+
+
+        /// <inheritdoc />
+        /// <summary>
+        /// On drop on card trate or Enemy Card
+        /// </summary>
+        /// <param name="eventData"></param>
+        public void OnDrop(PointerEventData eventData)
         {
-            Placeholder = new GameObject();
-            Placeholder.transform.SetParent(transform.parent);
-
-            var le = Placeholder.AddComponent<LayoutElement>();
-            le.preferredWidth = GetComponent<LayoutElement>().preferredWidth;
-            le.preferredHeight = 0;
-            le.flexibleWidth = 0;
-            le.flexibleHeight = 0;
-
-            Placeholder.transform.SetSiblingIndex(transform.GetSiblingIndex());
-
-            // Set plasholder zero height 
-            Placeholder.GetComponent<RectTransform>().sizeDelta =
-                new Vector2(GetComponent<LayoutElement>().preferredWidth, 0);
-            Placeholder.transform.localScale = new Vector3(1, 1, 1);
-
-            ParentToReturnTo = transform.parent;
-            PlaceholderParent = ParentToReturnTo;
-            transform.SetParent(MainParenTransform);
-            GetComponent<CanvasGroup>().blocksRaycasts = false;
-
-            transform.position = new Vector3(eventData.position.x, eventData.position.y, 1);
-        }
-
-        public override void OnDrag(PointerEventData eventData)
-        {
-            var pos = Camera.main.ScreenToWorldPoint(eventData.position);
-            transform.position = new Vector3(pos.x, pos.y, 1);
-            if (Placeholder.transform.parent != Placeholder)
+            var draggableTrateView = eventData.pointerDrag.GetComponent<TrateView>();
+            if (draggableTrateView != null)
             {
-                Placeholder.transform.SetParent(PlaceholderParent);
+                // @todo Call add trate to card
+                Debug.Log("On trate drop");
+                Destroy(draggableTrateView.Placeholder);
+                Destroy(eventData.pointerDrag);
             }
 
-            var newSiblingIndex = PlaceholderParent.childCount;
-            for (var i = 0; i < PlaceholderParent.childCount; i++)
+            var draggableCard = eventData.pointerDrag.GetComponent<CardView>();
+            if (draggableCard != null)
             {
-                if (!(transform.position.x < PlaceholderParent.GetChild(i).position.x)) continue;
-                newSiblingIndex = i;
-                if (Placeholder.transform.GetSiblingIndex() < newSiblingIndex)
-                {
-                    newSiblingIndex--;
-                }
-
-                break;
+                // @todo Call hit card
+                Debug.Log("On card drop");
             }
-
-            Placeholder.transform.SetSiblingIndex(newSiblingIndex);
-        }
-
-        public override void OnEndDrag(PointerEventData eventData)
-        {
-            transform.SetParent(ParentToReturnTo);
-            transform.SetSiblingIndex(Placeholder.transform.GetSiblingIndex());
-            GetComponent<CanvasGroup>().blocksRaycasts = true;
-            Destroy(Placeholder);
         }
     }
 }

@@ -1,30 +1,23 @@
 ﻿using Models.Arena;
-using strange.extensions.mediation.impl;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using View.DeckItems;
 
 namespace View.GameArena
 {
-    public class HandPanelView : EventView, IDropHandler, IPointerEnterHandler, IPointerExitHandler
+    public class HandPanelView : DroppableView
     {
-        [SerializeField] private BattleSide _battleSide;
-        [SerializeField] private Transform _placeholderParenTransform;
-
         /// <summary>
-        /// Get current Side
+        /// Placeholder parent
         /// </summary>
-        /// <returns></returns>
-        public BattleSide GetCurrentSide()
-        {
-            return _battleSide;
-        }
+        [SerializeField] private Transform _placeholderParenTransform;
 
         /// <summary>
         /// Add card to hand
         /// </summary>
         /// <param name="battleCard"></param>
-        public void AddCardToHand(BattleCard battleCard)
+        /// <param name="side"></param>
+        public void AddCardToHand(BattleCard battleCard, BattleSide side)
         {
             // Load Card
             var cardGameObject = (GameObject) Instantiate(
@@ -36,6 +29,7 @@ namespace View.GameArena
                 cardGameObject.transform.localRotation.y, 0);
             // Init Card
             var cardView = cardGameObject.GetComponent<CardView>();
+            cardView.Side = side;
             cardView.Init(battleCard, _placeholderParenTransform);
         }
 
@@ -43,7 +37,8 @@ namespace View.GameArena
         /// Add trate to hand
         /// </summary>
         /// <param name="battleTrate"></param>
-        public void AddTrateToHand(BattleTrate battleTrate)
+        /// <param name="side"></param>
+        public void AddTrateToHand(BattleTrate battleTrate, BattleSide side)
         {
             // Load Card
             var trateGameObject = (GameObject) Instantiate(
@@ -55,11 +50,15 @@ namespace View.GameArena
                 trateGameObject.transform.localRotation.y, 0);
             // Init Trate
             var trateView = trateGameObject.GetComponent<TrateView>();
+            trateView.Side = side;
             trateView.Init(battleTrate, _placeholderParenTransform);
         }
 
-
-        public void OnPointerEnter(PointerEventData eventData)
+        /// <summary>
+        /// On pointer enter
+        /// </summary>
+        /// <param name="eventData"></param>
+        public override void OnPointerEnter(PointerEventData eventData)
         {
             if (eventData.pointerDrag == null)
                 return;
@@ -71,7 +70,11 @@ namespace View.GameArena
             }
         }
 
-        public void OnPointerExit(PointerEventData eventData)
+        /// <summary>
+        /// On pointer exit
+        /// </summary>
+        /// <param name="eventData"></param>
+        public override void OnPointerExit(PointerEventData eventData)
         {
             if (eventData.pointerDrag == null)
                 return;
@@ -83,7 +86,11 @@ namespace View.GameArena
             }
         }
 
-        public void OnDrop(PointerEventData eventData)
+        /// <summary>
+        /// On Drop dragable View
+        /// </summary>
+        /// <param name="eventData"></param>
+        public override void OnDrop(PointerEventData eventData)
         {
             var draggableCard = eventData.pointerDrag.GetComponent<DraggableView>();
             if (draggableCard != null)
