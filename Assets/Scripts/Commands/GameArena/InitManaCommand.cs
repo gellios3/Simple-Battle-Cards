@@ -24,8 +24,6 @@ namespace Commands.GameArena
         public override void Execute()
         {
             var activePlayer = BattleArena.GetActivePlayer();
-            // Init mana pull
-            activePlayer.InitManaPull();
             ShowManaSignal.Dispatch(activePlayer.ManaPull);
         }
     }

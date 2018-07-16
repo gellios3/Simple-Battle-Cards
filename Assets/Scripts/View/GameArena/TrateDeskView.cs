@@ -1,14 +1,14 @@
 ﻿using Models.Arena;
 using strange.extensions.mediation.impl;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace View.GameArena
 {
     public class TrateDeskView : EventView
     {
         [SerializeField] private BattleSide _battleSide;
-        [SerializeField] private Text _trateDeckCountText;
+        [SerializeField] private TextMeshProUGUI _trateDeckCountText;
 
         public BattleSide GetCurrentSide()
         {

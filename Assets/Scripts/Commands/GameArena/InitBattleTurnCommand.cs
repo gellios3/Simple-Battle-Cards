@@ -85,6 +85,9 @@ namespace Commands.GameArena
             // Init trate deck signal
             InitTrateDeckSignal.Dispatch();
 
+            // Init mana pull
+            BattleArena.GetActivePlayer().InitManaPull();
+            
             // Init mana view
             InitManaSignal.Dispatch();
 

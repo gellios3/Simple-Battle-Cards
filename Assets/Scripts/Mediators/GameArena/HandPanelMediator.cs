@@ -31,17 +31,17 @@ namespace Mediators.GameArena
         {
             AddCardToHandViewSignal.AddListener(card =>
             {
-                if (BattleArena.ActiveSide == View.GetCurrentSide())
+                if (BattleArena.ActiveSide == View.Side)
                 {
-                    View.AddCardToHand(card);
+                    View.AddCardToHand(card, BattleArena.ActiveSide);
                 }
             });
 
             AddTrateToHandViewSignal.AddListener(trate =>
             {
-                if (BattleArena.ActiveSide == View.GetCurrentSide())
+                if (BattleArena.ActiveSide == View.Side)
                 {
-                    View.AddTrateToHand(trate);
+                    View.AddTrateToHand(trate, BattleArena.ActiveSide);
                 }
             });
         }

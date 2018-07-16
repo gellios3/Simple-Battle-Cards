@@ -1,14 +1,14 @@
 ﻿using Models.Arena;
 using strange.extensions.mediation.impl;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace View.GameArena
 {
     public class CardDeckView : EventView
     {
         [SerializeField] private BattleSide _battleSide;
-        [SerializeField] private Text _cardDeckCountText;
+        [SerializeField] private TextMeshProUGUI _cardDeckCountText;
 
         public BattleSide GetCurrentSide()
         {
@@ -19,6 +19,5 @@ namespace View.GameArena
         {
             _cardDeckCountText.text = count.ToString();
         }
-        
     }
 }
