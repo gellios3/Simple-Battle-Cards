@@ -5,19 +5,30 @@ namespace View.DeckItems
 {
     public class TrateView : DraggableView
     {
-        [SerializeField] private BattleTrate _trait;
+        [SerializeField] private BattleTrate _trate;
 
-        public void Init(BattleTrate trate, Transform placeholderParenTransform)
+        public BattleTrate Trate
         {
-            _trait = trate;
-            MainParenTransform = placeholderParenTransform;
+            get { return _trate; }
+            private set { _trate = value; }
+        }
+
+        public void Init(BattleTrate trate)
+        {
+            Trate = trate;
             DescriptionText.text = "Card Trate";
-            NameText.text = _trait.SourceTrate.name;
-            ArtworkImage.sprite = _trait.SourceTrate.Artwork;
-            ManaText.text = _trait.Mana.ToString();
-            AttackText.text = _trait.Attack.ToString();
-            HealthText.text = _trait.Health.ToString();
-            DefenceText.text = _trait.Defence.ToString();
+            NameText.text = Trate.SourceTrate.name;
+            ArtworkImage.sprite = Trate.SourceTrate.Artwork;
+            ManaText.text = Trate.Mana.ToString();
+            AttackText.text = Trate.Attack.ToString();
+            HealthText.text = Trate.Health.ToString();
+            DefenceText.text = Trate.Defence.ToString();
+        }
+
+        public void DestroyView()
+        {
+            Destroy(Placeholder);
+            Destroy(gameObject);
         }
        
     }

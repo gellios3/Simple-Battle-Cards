@@ -1,6 +1,8 @@
 ﻿using Models.Arena;
 using strange.extensions.command.impl;
 using Signals.GameArena;
+using Signals.GameArena.CardSignals;
+using Signals.GameArena.TrateSignals;
 using UnityEngine;
 
 namespace Commands.GameArena

@@ -27,7 +27,6 @@ namespace Services
             if (StateService.ActiveArenaPlayer.ArenaCards.Count >= Arena.ArenaCartCount ||
                 card.Status != BattleStatus.Wait)
             {
-                //@todo call not enough space in Arena
                 AddHistoryLogSignal.Dispatch(new[]
                 {
                     "PLAYER '", StateService.ActiveArenaPlayer.Name, "' has ERROR! Add Cart '",
@@ -38,7 +37,6 @@ namespace Services
 
             if (!StateService.ActiveArenaPlayer.LessManaPull(card.Mana))
             {
-                //@todo call not enough mana!
                 AddHistoryLogSignal.Dispatch(new[]
                 {
                     "Player '", StateService.ActiveArenaPlayer.Name, "' Has ERROR! add card '", card.SourceCard.name,
@@ -64,7 +62,27 @@ namespace Services
         /// <param name="trate"></param>
         public bool AddTrateToActiveCard(BattleCard card, BattleTrate trate)
         {
-            if (card.BattleTrates.Count >= BattleCard.MaxTratesCount) return false;
+            if (StateService.ActiveArenaPlayer.ManaPull <= 0 ||
+                StateService.ActiveArenaPlayer.ManaPull < trate.Mana)
+            {
+                AddHistoryLogSignal.Dispatch(new[]
+                {
+                    "Player '", StateService.ActiveArenaPlayer.Name, "' Has ERROR! 'Add trate' '",
+                    trate.SourceTrate.name,
+                    "' to battle card '", card.SourceCard.name, "' 'not enough mana!'"
+                }, LogType.Hand);
+                return false;
+            }
+
+            if (card.BattleTrates.Count >= BattleCard.MaxTratesCount)
+            {
+                AddHistoryLogSignal.Dispatch(new[]
+                {
+                    "PLAYER '", StateService.ActiveArenaPlayer.Name, "' has ERROR! Add Trate '",
+                    trate.SourceTrate.name, "' to cart 'not enough space'"
+                }, LogType.Hand);
+                return false;
+            }
 
             if (StateService.ActiveArenaPlayer.LessManaPull(trate.Mana))
             {
@@ -78,7 +96,6 @@ namespace Services
             }
             else
             {
-                //@todo call not enough mana!
                 AddHistoryLogSignal.Dispatch(new[]
                 {
                     "Player '", StateService.ActiveArenaPlayer.Name, "' Has ERROR! 'Add trate' '",

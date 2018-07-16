@@ -30,7 +30,8 @@ namespace View.GameArena
             // Init Card
             var cardView = cardGameObject.GetComponent<CardView>();
             cardView.Side = side;
-            cardView.Init(battleCard, _placeholderParenTransform);
+            cardView.MainParenTransform = _placeholderParenTransform;
+            cardView.Init(battleCard);
         }
 
         /// <summary>
@@ -51,7 +52,8 @@ namespace View.GameArena
             // Init Trate
             var trateView = trateGameObject.GetComponent<TrateView>();
             trateView.Side = side;
-            trateView.Init(battleTrate, _placeholderParenTransform);
+            trateView.MainParenTransform = _placeholderParenTransform;
+            trateView.Init(battleTrate);
         }
 
         /// <summary>

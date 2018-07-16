@@ -1,6 +1,6 @@
 ﻿using strange.extensions.signal.impl;
 
-namespace Signals.GameArena
+namespace Signals.GameArena.TrateSignals
 {
     public class AddTrateFromDeckToHandSignal : Signal
     {

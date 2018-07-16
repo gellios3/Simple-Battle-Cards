@@ -1,6 +1,9 @@
-﻿using Models.Arena;
+﻿using Models;
+using Models.Arena;
 using strange.extensions.command.impl;
+using Signals;
 using Signals.GameArena;
+using Signals.GameArena.CardSignals;
 using View.DeckItems;
 
 namespace Commands.GameArena
@@ -24,7 +27,13 @@ namespace Commands.GameArena
         /// </summary>
         [Inject]
         public ShowCardOnBattleArenaSignal ShowCardOnBattleArenaSignal { get; set; }
-        
+
+        /// <summary>
+        /// Add history log signal
+        /// </summary>
+        [Inject]
+        public AddHistoryLogSignal AddHistoryLogSignal { get; set; }
+
         /// <summary>
         /// Init mana signal
         /// </summary>
@@ -37,15 +46,24 @@ namespace Commands.GameArena
         /// </summary>
         public override void Execute()
         {
-            if (BattleArena.GetActivePlayer().ManaPull <= 0) return;
-
-            if (!BattleArena.ActiveBattleTurnService.AddCardToArenaFromHand(CardView.Card)) return;
-            // Activate card
-            CardView.Card.Status = BattleStatus.Active;
-            // Show card on battle arena
-            ShowCardOnBattleArenaSignal.Dispatch(CardView);
-            // Init mana view
-            InitManaSignal.Dispatch();
+            if (BattleArena.GetActivePlayer().ManaPull == 0)
+            {
+                AddHistoryLogSignal.Dispatch(new[]
+                {
+                    "Player '", BattleArena.GetActivePlayer().Name, "' Has ERROR! add card '",
+                    CardView.Card.SourceCard.name, "' to battle 'not enough mana!'"
+                }, LogType.Hand);
+            }
+            else
+            {
+                if (!BattleArena.ActiveBattleTurnService.AddCardToArenaFromHand(CardView.Card)) return;
+                // Activate card
+                CardView.Card.Status = BattleStatus.Active;
+                // Show card on battle arena
+                ShowCardOnBattleArenaSignal.Dispatch(CardView);
+                // Init mana view
+                InitManaSignal.Dispatch();
+            }
         }
     }
 }

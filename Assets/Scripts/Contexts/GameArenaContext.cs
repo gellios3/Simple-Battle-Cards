@@ -8,7 +8,10 @@ using strange.extensions.context.impl;
 using Services;
 using Signals;
 using Signals.GameArena;
+using Signals.GameArena.CardSignals;
+using Signals.GameArena.TrateSignals;
 using UnityEngine;
+using View.DeckItems;
 using View.GameArena;
 
 namespace Contexts
@@ -71,6 +74,7 @@ namespace Contexts
             injectionBinder.Bind<AddTrateToHandViewSignal>().ToSingleton();
             injectionBinder.Bind<ShowManaSignal>().ToSingleton();
             injectionBinder.Bind<ShowCardOnBattleArenaSignal>().ToSingleton();
+            injectionBinder.Bind<UpdateCardSignal>().ToSingleton();
 
             // Init comands
             commandBinder.Bind<InitNewGameSignal>().To<InitNewGameCommand>();
@@ -82,6 +86,7 @@ namespace Contexts
             commandBinder.Bind<AddCardFromDeckToHandSignal>().To<AddCardFromDeckToHandCommand>();
             commandBinder.Bind<AddTrateFromDeckToHandSignal>().To<AddTrateFromDeckToHandCommand>(); 
             commandBinder.Bind<AddCatdToBattleArenaSignal>().To<AddCatdToBattleArenaCommand>();
+            commandBinder.Bind<AddTrateToCardSignal>().To<AddTrateToCardCommand>();
 
             // init models
             injectionBinder.Bind<Arena>().ToSingleton();
@@ -97,7 +102,8 @@ namespace Contexts
             mediationBinder.Bind<TrateDeskView>().To<TrateDeskMediator>();
             mediationBinder.Bind<ManaView>().To<ManaMediator>();
             mediationBinder.Bind<HandPanelView>().To<HandPanelMediator>(); 
-            mediationBinder.Bind<BattleArenaView>().To<BattleArenaMediator>();
+            mediationBinder.Bind<BattleArenaView>().To<BattleArenaMediator>(); 
+            mediationBinder.Bind<CardView>().To<CardMediator>();
         }
     }
 }

@@ -3,6 +3,7 @@ using Models.Arena;
 using strange.extensions.command.impl;
 using Signals;
 using Signals.GameArena;
+using Signals.GameArena.TrateSignals;
 
 namespace Commands.GameArena
 {

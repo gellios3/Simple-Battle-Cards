@@ -1,5 +1,7 @@
 ﻿using Models.Arena;
 using Signals.GameArena;
+using Signals.GameArena.CardSignals;
+using Signals.GameArena.TrateSignals;
 using View.GameArena;
 
 namespace Mediators.GameArena

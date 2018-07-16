@@ -1,4 +1,5 @@
-﻿using Models.Arena;
+﻿using System;
+using Models.Arena;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -11,18 +12,19 @@ namespace View.DeckItems
         public BattleCard Card
         {
             get { return _card; }
-            set { _card = value; }
+            private set { _card = value; }
         }
+
+        public event Action<TrateView> OnAddTrateToCard;
+
 
         /// <summary>
         /// Init Card View
         /// </summary>
         /// <param name="card"></param>
-        /// <param name="placeholderParenTransform"></param>
-        public void Init(BattleCard card, Transform placeholderParenTransform)
+        public void Init(BattleCard card)
         {
             Card = card;
-            MainParenTransform = placeholderParenTransform;
             NameText.text = Card.SourceCard.name;
             DescriptionText.text = Card.SourceCard.Description;
             ArtworkImage.sprite = Card.SourceCard.Artwork;
@@ -32,6 +34,16 @@ namespace View.DeckItems
             DefenceText.text = Card.Defence.ToString();
         }
 
+        /// <inheritdoc />
+        /// <summary>
+        /// On begin drag
+        /// </summary>
+        /// <param name="eventData"></param>
+        public override void OnBeginDrag(PointerEventData eventData)
+        {
+            IsDragable = Card.Status != BattleStatus.Active;
+            base.OnBeginDrag(eventData);
+        }
 
 
         /// <inheritdoc />
@@ -41,13 +53,16 @@ namespace View.DeckItems
         /// <param name="eventData"></param>
         public void OnDrop(PointerEventData eventData)
         {
-            var draggableTrateView = eventData.pointerDrag.GetComponent<TrateView>();
-            if (draggableTrateView != null)
+            if (Card.Status == BattleStatus.Active)
             {
-                // @todo Call add trate to card
-                Debug.Log("On trate drop");
-                Destroy(draggableTrateView.Placeholder);
-                Destroy(eventData.pointerDrag);
+                var trateView = eventData.pointerDrag.GetComponent<TrateView>();
+                if (trateView != null)
+                {
+                    if (trateView.Side == Side)
+                    {
+                        OnAddTrateToCard?.Invoke(trateView);
+                    }
+                }
             }
 
             var draggableCard = eventData.pointerDrag.GetComponent<CardView>();
