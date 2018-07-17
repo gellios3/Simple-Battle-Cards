@@ -15,6 +15,9 @@ namespace View.DeckItems
             private set { _card = value; }
         }
 
+        /// <summary>
+        /// On add trate to card
+        /// </summary>
         public event Action<TrateView> OnAddTrateToCard;
 
 

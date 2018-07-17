@@ -84,9 +84,10 @@ namespace Contexts
             commandBinder.Bind<InitBattleArenaSignal>().To<InitBattleArenaCommand>();
             commandBinder.Bind<InitHandPanelSignal>().To<InitHandPanelCommand>();
             commandBinder.Bind<AddCardFromDeckToHandSignal>().To<AddCardFromDeckToHandCommand>();
-            commandBinder.Bind<AddTrateFromDeckToHandSignal>().To<AddTrateFromDeckToHandCommand>(); 
+            commandBinder.Bind<AddTrateFromDeckToHandSignal>().To<AddTrateFromDeckToHandCommand>();
             commandBinder.Bind<AddCatdToBattleArenaSignal>().To<AddCatdToBattleArenaCommand>();
             commandBinder.Bind<AddTrateToCardSignal>().To<AddTrateToCardCommand>();
+            commandBinder.Bind<EndTurnSignal>().To<EndTurnCommand>();
 
             // init models
             injectionBinder.Bind<Arena>().ToSingleton();
@@ -101,9 +102,10 @@ namespace Contexts
             mediationBinder.Bind<CardDeckView>().To<CardDeckMediator>();
             mediationBinder.Bind<TrateDeskView>().To<TrateDeskMediator>();
             mediationBinder.Bind<ManaView>().To<ManaMediator>();
-            mediationBinder.Bind<HandPanelView>().To<HandPanelMediator>(); 
-            mediationBinder.Bind<BattleArenaView>().To<BattleArenaMediator>(); 
+            mediationBinder.Bind<HandPanelView>().To<HandPanelMediator>();
+            mediationBinder.Bind<BattleArenaView>().To<BattleArenaMediator>();
             mediationBinder.Bind<CardView>().To<CardMediator>();
+            mediationBinder.Bind<EndTurnView>().To<EndTurnMediator>();
         }
     }
 }
