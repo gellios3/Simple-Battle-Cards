@@ -1,4 +1,5 @@
-﻿using strange.extensions.signal.impl;
+﻿using Models.Arena;
+using strange.extensions.signal.impl;
 using View.DeckItems;
 
 namespace Signals.GameArena.TrateSignals

@@ -13,11 +13,6 @@ namespace Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Battle player hand
-        /// </summary>
-        public List<BattleItem> BattleHand { get; set; } = new List<BattleItem>();
-
-        /// <summary>
         /// Active atack cards
         /// </summary>
         public List<BattleCard> ArenaCards { get; set; } = new List<BattleCard>();

@@ -6,7 +6,7 @@ using Signals.GameArena;
 using Signals.GameArena.CardSignals;
 using View.DeckItems;
 
-namespace Commands.GameArena
+namespace Commands.GameArena.CardCommands
 {
     public class AddCatdToBattleArenaCommand : Command
     {
@@ -46,19 +46,47 @@ namespace Commands.GameArena
         /// </summary>
         public override void Execute()
         {
-            if (BattleArena.GetActivePlayer().ManaPull == 0)
+            var activePlayer = BattleArena.GetActivePlayer();
+            if (activePlayer.ManaPull == 0)
             {
                 AddHistoryLogSignal.Dispatch(new[]
                 {
-                    "Player '", BattleArena.GetActivePlayer().Name, "' Has ERROR! add card '",
+                    "Player '", activePlayer.Name, "' Has ERROR! add card '",
                     CardView.Card.SourceCard.name, "' to battle 'not enough mana!'"
                 }, LogType.Hand);
             }
             else
             {
-                if (!BattleArena.ActiveBattleTurnService.AddCardToArenaFromHand(CardView.Card)) return;
+                if (activePlayer.ArenaCards.Count >= Arena.ArenaCartCount ||
+                    CardView.Card.Status != BattleStatus.Wait)
+                {
+                    AddHistoryLogSignal.Dispatch(new[]
+                    {
+                        "PLAYER '", activePlayer.Name, "' has ERROR! Add Cart '",
+                        CardView.Card.SourceCard.name, "' to Arena 'not enough space'"
+                    }, LogType.Hand);
+                    return;
+                }
+
+                if (!activePlayer.LessManaPull(CardView.Card.Mana))
+                {
+                    AddHistoryLogSignal.Dispatch(new[]
+                    {
+                        "Player '", activePlayer.Name, "' Has ERROR! add card '", CardView.Card.SourceCard.name,
+                        "' to battle 'not enough mana!'"
+                    }, LogType.Hand);
+                    return;
+                }
+
+                activePlayer.ArenaCards.Add(new BattleCard(CardView.Card.SourceCard));
+                // add history battle log
+                AddHistoryLogSignal.Dispatch(new[]
+                {
+                    "Player '", activePlayer.Name, "' Add card '", CardView.Card.SourceCard.name, "' to battle!"
+                }, LogType.Hand);
+
                 // Activate card
-                CardView.Card.Status = BattleStatus.Active;
+                CardView.Card.Status = BattleStatus.Sleep;
                 // Show card on battle arena
                 ShowCardOnBattleArenaSignal.Dispatch(CardView);
                 // Init mana view

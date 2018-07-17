@@ -38,39 +38,36 @@ namespace Services
         {
             // add all cards to battle arena
 
-            foreach (var battleItem in StateService.ActiveArenaPlayer.BattleHand.FindAll(item =>
-            {
-                var card = item as BattleCard;
-                return card != null;
-            }))
-            {
-                var item = (BattleCard) battleItem;
-                if (StateService.ActiveArenaPlayer.ManaPull <= 0) continue;
-                if (BattleArena.ActiveBattleTurnService.AddCardToArenaFromHand(item))
-                {
-                    item.Status = BattleStatus.Active;
-                }
-            }
+//            foreach (var battleItem in StateService.ActiveArenaPlayer.BattleHand.FindAll(item =>
+//            {
+//                var card = item as BattleCard;
+//                return card != null;
+//            }))
+//            {
+//                var item = (BattleCard) battleItem;
+//                if (StateService.ActiveArenaPlayer.ManaPull <= 0) continue;
+//                if (BattleArena.ActiveBattleTurnService.AddCardToArenaFromHand(item))
+//                {
+//                    item.Status = BattleStatus.Active;
+//                }
+//            }
 
             // add all trares to card
-            if (StateService.ActiveArenaPlayer.ArenaCards.Count > 0)
-            {
-                foreach (var battleItem in StateService.ActiveArenaPlayer.BattleHand.FindAll(item =>
-                {
-                    var trate = item as BattleTrate;
-                    return trate != null;
-                }))
-                {
-                    var trate = (BattleTrate) battleItem;
-                    if (StateService.ActiveArenaPlayer.ManaPull <= 0 || StateService.ActiveArenaPlayer.ManaPull < trate.Mana) continue;
-                    AddTrateToCard(trate);
-                }
-            }
+//            if (StateService.ActiveArenaPlayer.ArenaCards.Count > 0)
+//            {
+//                foreach (var battleItem in StateService.ActiveArenaPlayer.BattleHand.FindAll(item =>
+//                {
+//                    var trate = item as BattleTrate;
+//                    return trate != null;
+//                }))
+//                {
+//                    var trate = (BattleTrate) battleItem;
+//                    if (StateService.ActiveArenaPlayer.ManaPull <= 0 || StateService.ActiveArenaPlayer.ManaPull < trate.Mana) continue;
+//                    AddTrateToCard(trate);
+//                }
+//            }
 
-            // Remove activate trate and cards
-            StateService.ActiveArenaPlayer.BattleHand = StateService.ActiveArenaPlayer.BattleHand.FindAll(
-                item => item.Status != BattleStatus.Active
-            );
+         
 
             // Atack all emeny cards 
             var enemyCards = GetEnemyActiveCards();
@@ -83,14 +80,14 @@ namespace Services
                     {
                         if (yourCard.Status == BattleStatus.Active)
                         {
-                            BattleArena.ActiveBattleTurnService.HitEnemyCard(yourCard, enemyCard);
+//                            BattleArena.ActiveBattleTurnService.HitEnemyCard(yourCard, enemyCard);
                         }
                     }
                 }
             }
 
             // End turn
-            BattleArena.EndTurn();
+//            BattleArena.EndTurn();
         }
 
         /// <summary>

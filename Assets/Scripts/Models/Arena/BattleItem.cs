@@ -12,7 +12,7 @@
     {
         Wait,
         Active,
-        Moving,
+        Sleep,
         Dead
     }
 }

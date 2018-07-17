@@ -22,7 +22,7 @@ namespace Models.Arena
         /// <summary>
         /// Hand limit count
         /// </summary>
-        public const int CartToAddCount = 3;
+        public const int CartToAddCount = 2;
 
         /// <summary>
         /// Arena rart count

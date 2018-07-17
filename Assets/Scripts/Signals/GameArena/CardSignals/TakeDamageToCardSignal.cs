@@ -1,9 +1,9 @@
-﻿using Models.Arena;
+﻿using Models;
 using strange.extensions.signal.impl;
 
 namespace Signals.GameArena.CardSignals
 {
-    public class AddCardToHandViewSignal : Signal<BattleCard>
+    public class TakeDamageToCardSignal : Signal<DamageStruct>
     {
         
     }

@@ -20,6 +20,15 @@ namespace View.DeckItems
         /// </summary>
         public event Action<TrateView> OnAddTrateToCard;
 
+        /// <summary>
+        /// On add trate to card
+        /// </summary>
+        public event Action<CardView> OnStartDrag;
+
+        /// <summary>
+        /// On add trate to card
+        /// </summary>
+        public event Action<CardView> OnTakeDamage;
 
         /// <summary>
         /// Init Card View
@@ -28,6 +37,7 @@ namespace View.DeckItems
         public void Init(BattleCard card)
         {
             Card = card;
+            Item = card;
             NameText.text = Card.SourceCard.name;
             DescriptionText.text = Card.SourceCard.Description;
             ArtworkImage.sprite = Card.SourceCard.Artwork;
@@ -37,6 +47,13 @@ namespace View.DeckItems
             DefenceText.text = Card.Defence.ToString();
         }
 
+        
+        public void DestroyView()
+        {
+            Destroy(Placeholder);
+            Destroy(gameObject);
+        }
+        
         /// <inheritdoc />
         /// <summary>
         /// On begin drag
@@ -44,7 +61,7 @@ namespace View.DeckItems
         /// <param name="eventData"></param>
         public override void OnBeginDrag(PointerEventData eventData)
         {
-            IsDragable = Card.Status != BattleStatus.Active;
+            OnStartDrag?.Invoke(this);
             base.OnBeginDrag(eventData);
         }
 
@@ -56,7 +73,7 @@ namespace View.DeckItems
         /// <param name="eventData"></param>
         public void OnDrop(PointerEventData eventData)
         {
-            if (Card.Status == BattleStatus.Active)
+            if (Card.Status == BattleStatus.Sleep || Card.Status == BattleStatus.Active)
             {
                 var trateView = eventData.pointerDrag.GetComponent<TrateView>();
                 if (trateView != null)
@@ -71,8 +88,7 @@ namespace View.DeckItems
             var draggableCard = eventData.pointerDrag.GetComponent<CardView>();
             if (draggableCard != null)
             {
-                // @todo Call hit card
-                Debug.Log("On card drop");
+                OnTakeDamage?.Invoke(draggableCard);
             }
         }
     }

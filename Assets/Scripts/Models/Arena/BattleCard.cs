@@ -98,7 +98,8 @@ namespace Models.Arena
                 if (Defence < 0)
                 {
                     damage += Defence;
-                    Health -= Defence;
+                    Health -= damage;
+                    Defence = 0;
                 }
                 else
                 {
@@ -135,7 +136,7 @@ namespace Models.Arena
         /// </summary>
         /// <param name="trate"></param>
         public void AddTrate(BattleTrate trate)
-        {        
+        {
             Defence += trate.Defence;
             Health += trate.Health;
             Attack += trate.Attack;

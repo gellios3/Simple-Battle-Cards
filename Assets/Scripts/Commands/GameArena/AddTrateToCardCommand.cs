@@ -13,18 +13,12 @@ namespace Commands.GameArena
         [Inject] public TrateView TrateView { get; set; }
 
         [Inject] public CardView CardView { get; set; }
-        
+
         /// <summary>
         /// Init mana signal
         /// </summary>
         [Inject]
         public InitManaSignal InitManaSignal { get; set; }
-        
-        /// <summary>
-        /// Battle
-        /// </summary>
-        [Inject]
-        public UpdateCardSignal UpdateCardSignal { get; set; }
 
         /// <summary>
         /// Battle
@@ -35,11 +29,11 @@ namespace Commands.GameArena
         public override void Execute()
         {
             // add trate to active cart and return true if them added
-            if (!BattleArena.ActiveBattleTurnService.AddTrateToActiveCard(CardView.Card,  TrateView.Trate)) return;
+            if (!BattleArena.ActiveBattleTurnService.AddTrateToActiveCard(CardView.Card, TrateView.Trate)) return;
             // Init mana view
             InitManaSignal.Dispatch();
             // Show card on battle arena
-            UpdateCardSignal.Dispatch(CardView.Card);
+            CardView.Init(CardView.Card);
             TrateView.DestroyView();
         }
     }

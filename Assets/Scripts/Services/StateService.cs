@@ -45,24 +45,24 @@ namespace Services
             ActiveArenaPlayer = arenaPlayer;
         }
 
-        /// <summary>
-        /// Get state player
-        /// </summary>
-        /// <param name="arenaPlayer"></param>
-        /// <returns></returns>
-        public StatePlayer GetStatePlayer(ArenaPlayer arenaPlayer)
-        {
-            var statePlayer = new StatePlayer
-            {
-                Name = arenaPlayer.Name,
-                BattleHand = GetStateItems(arenaPlayer.BattleHand),
-                ArenaCards = GetStateCards(arenaPlayer.ArenaCards),
-                BattlePull = GetStateItems(arenaPlayer.CardBattlePull),
-                isActive = ActiveArenaPlayer.Name == arenaPlayer.Name
-            };
-
-            return statePlayer;
-        }
+//        /// <summary>
+//        /// Get state player
+//        /// </summary>
+//        /// <param name="arenaPlayer"></param>
+//        /// <returns></returns>
+//        public StatePlayer GetStatePlayer(ArenaPlayer arenaPlayer)
+//        {
+//            var statePlayer = new StatePlayer
+//            {
+//                Name = arenaPlayer.Name,
+//                BattleHand = GetStateItems(arenaPlayer.BattleHand),
+//                ArenaCards = GetStateCards(arenaPlayer.ArenaCards),
+//                BattlePull = GetStateItems(arenaPlayer.CardBattlePull),
+//                isActive = ActiveArenaPlayer.Name == arenaPlayer.Name
+//            };
+//
+//            return statePlayer;
+//        }
 
         /// <summary>
         /// Get state hand

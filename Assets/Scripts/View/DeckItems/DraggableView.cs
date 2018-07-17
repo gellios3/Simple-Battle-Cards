@@ -19,6 +19,14 @@ namespace View.DeckItems
 
         [SerializeField] private Transform _mainParenTransform;
         
+        [SerializeField] private BattleItem _item;
+        
+        public BattleItem Item
+        {
+            get { return _item; }
+            set { _item = value; }
+        }
+        
         public Transform MainParenTransform
         {
             get { return _mainParenTransform; }
@@ -51,11 +59,13 @@ namespace View.DeckItems
 
         public GameObject Placeholder { get; private set; }
 
-    
+  
 
         private LayoutElement _layoutelem;
 
-        protected bool IsDragable = true;
+        public bool IsDragable = true;
+
+        public bool IsDroppable = true;
 
         /// <inheritdoc />
         /// <summary>

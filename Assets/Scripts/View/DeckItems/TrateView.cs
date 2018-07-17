@@ -1,11 +1,18 @@
-﻿using Models.Arena;
+﻿using System;
+using Models.Arena;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace View.DeckItems
 {
     public class TrateView : DraggableView
     {
         [SerializeField] private BattleTrate _trate;
+        
+        /// <summary>
+        /// On add trate to card
+        /// </summary>
+        public event Action<TrateView> OnStartDrag;
 
         public BattleTrate Trate
         {
@@ -16,6 +23,7 @@ namespace View.DeckItems
         public void Init(BattleTrate trate)
         {
             Trate = trate;
+            Item = trate;
             DescriptionText.text = "Card Trate";
             NameText.text = Trate.SourceTrate.name;
             ArtworkImage.sprite = Trate.SourceTrate.Artwork;
@@ -29,6 +37,17 @@ namespace View.DeckItems
         {
             Destroy(Placeholder);
             Destroy(gameObject);
+        }
+        
+        /// <inheritdoc />
+        /// <summary>
+        /// On begin drag
+        /// </summary>
+        /// <param name="eventData"></param>
+        public override void OnBeginDrag(PointerEventData eventData)
+        {
+            OnStartDrag?.Invoke(this);           
+            base.OnBeginDrag(eventData);
         }
        
     }

@@ -22,7 +22,7 @@ namespace View.GameArena
         public override void OnDrop(PointerEventData eventData)
         {
             var cardView = eventData.pointerDrag.GetComponent<CardView>();
-            if (cardView == null) return;
+            if (cardView == null || cardView.Card == null) return;
             if (cardView.Card.Status == BattleStatus.Wait)
             {
                 AddCatdToBattleArenaSignal.Dispatch(cardView);

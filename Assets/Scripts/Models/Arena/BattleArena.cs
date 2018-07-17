@@ -62,60 +62,21 @@ namespace Models.Arena
             return StateService.ActiveArenaPlayer;
         }
 
-        /// <summary>
-        /// End turn
-        /// </summary>
-        public void EndTurn()
-        {
-            // Activate all cards and remove dead carts
-            foreach (var arenaCard in StateService.ActiveArenaPlayer.ArenaCards)
-            {
-                if (arenaCard.Status != BattleStatus.Moving) continue;
-                arenaCard.Status = BattleStatus.Active;
-                AddHistoryLogSignal.Dispatch(new[]
-                {
-                    "PLAYER '", StateService.ActiveArenaPlayer.Name, "' Activate Moving '", arenaCard.SourceCard.name,
-                    "' battle card!"
-                }, LogType.Battle);
-            }
-
-            // Set active all not dead areana cards 
-            foreach (var card in StateService.ActiveArenaPlayer.ArenaCards)
-            {
-                if (card.Status != BattleStatus.Wait) continue;
-                card.Status = BattleStatus.Active;
-                // 
-                AddHistoryLogSignal.Dispatch(new[]
-                {
-                    "PLAYER '", StateService.ActiveArenaPlayer.Name, "' Activate sleep '", card.SourceCard.name,
-                    "' battle card!"
-                }, LogType.Battle);
-            }
-
-            // remove all dead carts
-            StateService.ActiveArenaPlayer.ArenaCards = StateService.ActiveArenaPlayer.ArenaCards.FindAll(
-                card => card.Status == BattleStatus.Active
-            );
-
-            // Switch active state
-            ActiveSide = ActiveSide == BattleSide.Player ? BattleSide.Opponent : BattleSide.Player;
-        }
-
-        /// <summary>
-        /// Is game over
-        /// </summary>
-        /// <param name="arenaPlayer"></param>
-        /// <returns></returns>
-        public bool IsGameOver(ArenaPlayer arenaPlayer)
-        {
-            return arenaPlayer.CardBattlePull.Count == 0 &&
-                   arenaPlayer.BattleHand.FindAll(item =>
-                   {
-                       var card = item as BattleCard;
-                       return card != null;
-                   }).Count == 0 &&
-                   arenaPlayer.ArenaCards.FindAll(card => card.Status != BattleStatus.Dead).Count == 0;
-        }
+//        /// <summary>
+//        /// Is game over
+//        /// </summary>
+//        /// <param name="arenaPlayer"></param>
+//        /// <returns></returns>
+//        public bool IsGameOver(ArenaPlayer arenaPlayer)
+//        {
+//            return arenaPlayer.CardBattlePull.Count == 0 &&
+//                   arenaPlayer.BattleHand.FindAll(item =>
+//                   {
+//                       var card = item as BattleCard;
+//                       return card != null;
+//                   }).Count == 0 &&
+//                   arenaPlayer.ArenaCards.FindAll(card => card.Status != BattleStatus.Dead).Count == 0;
+//        }
     }
     
     public enum BattleSide
