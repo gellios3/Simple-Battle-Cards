@@ -1,4 +1,5 @@
 ﻿using strange.extensions.mediation.impl;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +9,7 @@ namespace View
     {
         [SerializeField] private Button _startOnlineGameBtn;
         [SerializeField] private Button _startSingleGameBtn;
-        [SerializeField] private InputField _playerName;
+        [SerializeField] private TMP_InputField _playerName;
 
         public Button GetOnlineGameBtn()
         {
@@ -20,7 +21,7 @@ namespace View
             return _startSingleGameBtn;
         }
 
-        public InputField GetPlayerName()
+        public TMP_InputField GetPlayerName()
         {
             return _playerName;
         }
