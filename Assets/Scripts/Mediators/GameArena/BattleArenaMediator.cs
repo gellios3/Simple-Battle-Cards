@@ -97,6 +97,7 @@ namespace Mediators.GameArena
             {
                 if (cardView.Card.Status == BattleStatus.Active) continue;
                 cardView.Card.Status = BattleStatus.Active;
+                cardView.ToogleStubImage(false);
                 AddHistoryLogSignal.Dispatch(new[]
                 {
                     "PLAYER '", activePlayer.Name, "' Activate '",
@@ -157,6 +158,7 @@ namespace Mediators.GameArena
             }, LogType.Hand);
             // Activate card
             battleCard.Status = BattleStatus.Sleep;
+            view.ToogleStubImage(true);
             // Show card on battle arena             
             _cardViews.Add(view);
             View.AddCardViewToArena(view);

@@ -65,7 +65,10 @@ namespace Mediators.GameArena
         /// </summary>
         public override void OnRegister()
         {
-            View.OnAddViewToHand += view => { BattleHand.Add(view); };
+            View.OnAddViewToHand += view =>
+            {
+                BattleHand.Add(view);
+            };
 
             RefreshHandSignal.AddListener(() =>
             {
