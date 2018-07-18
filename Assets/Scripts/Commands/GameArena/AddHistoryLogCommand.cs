@@ -39,6 +39,7 @@ namespace Commands.GameArena
         public override void Execute()
         {
             var stringBuilder = new StringBuilder();
+            stringBuilder.Append("  ");
             foreach (var str in CurrentLog)
             {
                 stringBuilder.Append(str);

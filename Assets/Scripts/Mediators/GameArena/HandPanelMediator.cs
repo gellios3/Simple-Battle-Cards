@@ -69,7 +69,6 @@ namespace Mediators.GameArena
 
             RefreshHandSignal.AddListener(() =>
             {
-                Debug.Log("RefreshHandSignal");
                 if (BattleArena.ActiveSide != View.Side) return;
                 BattleHand.Clear();
                 foreach (Transform child in View.transform)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Models.Arena;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -31,6 +32,11 @@ namespace View.DeckItems
         public event Action<CardView> OnTakeDamage;
 
         /// <summary>
+        /// Battle tarates
+        /// </summary>
+        public List<TrateView> TrateViews { get; } = new List<TrateView>();
+
+        /// <summary>
         /// Init Card View
         /// </summary>
         /// <param name="card"></param>
@@ -47,13 +53,32 @@ namespace View.DeckItems
             DefenceText.text = Card.Defence.ToString();
         }
 
-        
+        /// <summary>
+        /// Add trate to battle card
+        /// </summary>
+        /// <param name="trateView"></param>
+        public void AddTrate(TrateView trateView)
+        {
+            Card.Defence += trateView.Trate.Defence;
+            Card.Health += trateView.Trate.Health;
+            Card.Attack += trateView.Trate.Attack;
+            Card.CriticalChance += trateView.Trate.CriticalChance;
+            Card.CriticalHit += trateView.Trate.CriticalHit;
+            TrateViews.Add(trateView);
+            // Show card on battle arena
+            Init(Card);
+            trateView.DestroyView();
+        }
+
+        /// <summary>
+        /// Destroy мiew
+        /// </summary>
         public void DestroyView()
         {
             Destroy(Placeholder);
             Destroy(gameObject);
         }
-        
+
         /// <inheritdoc />
         /// <summary>
         /// On begin drag

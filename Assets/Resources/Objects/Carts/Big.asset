@@ -16,7 +16,7 @@ MonoBehaviour:
   Description: 
   Artwork: {fileID: 21300000, guid: af63631000a9dd140814331f29c0e571, type: 3}
   Defence: 5
-  Attack: 2
+  Attack: 5
   Health: 5
   Mana: 3
   CriticalChance: 10

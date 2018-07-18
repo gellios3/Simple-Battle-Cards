@@ -22,12 +22,6 @@ namespace Models.Arena
         public AddHistoryLogSignal AddHistoryLogSignal { get; set; }
 
         /// <summary>
-        /// Batle turn
-        /// </summary>
-        [Inject]
-        public BattleTurnService ActiveBattleTurnService { get; set; }
-
-        /// <summary>
         /// Active state
         /// </summary>
         public BattleSide ActiveSide { get; set; }

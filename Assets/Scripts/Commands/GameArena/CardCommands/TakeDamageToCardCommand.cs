@@ -31,14 +31,12 @@ namespace Commands.GameArena.CardCommands
             var sourceCard = DamageStruct.SourceCardView.Card;
             var damageCard = DamageStruct.DamageCardView.Card;
 
-            Debug.Log(sourceCard.SourceCard.name + " " + damageCard.SourceCard.name);
-
             if (sourceCard.TakeDamage(damageCard))
             {
                 AddHistoryLogSignal.Dispatch(new[]
                 {
                     "Player '", activePlayer.Name, "' Use Card '", damageCard.SourceCard.name,
-                    "' hit CRITICAL ememy Card '", sourceCard.SourceCard.name, "'"
+                    "' hit CRITICAL on '",sourceCard.CritDamage.ToString(),"' to ememy Card '", sourceCard.SourceCard.name, "' "
                 }, LogType.Battle);
             }
             else
@@ -69,8 +67,11 @@ namespace Commands.GameArena.CardCommands
             else
             {
                 damageCard.Status = BattleStatus.Sleep;
-                Debug.Log("Player card '" + damageCard.SourceCard.name + "' has '" + damageCard.Health +
-                          "' Health and '" + damageCard.Defence + "' Defence");
+                AddHistoryLogSignal.Dispatch(new[]
+                {
+                    "Player card '", damageCard.SourceCard.name, "' has '", damageCard.Health.ToString(),
+                    "' Health and '", damageCard.Defence.ToString(), "' Defence"
+                }, LogType.Battle);
                 DamageStruct.DamageCardView.Init(damageCard);
             }
 
@@ -82,8 +83,11 @@ namespace Commands.GameArena.CardCommands
             }
             else
             {
-                Debug.Log("Enemy card '" + sourceCard.SourceCard.name + "' has '" + sourceCard.Health +
-                          "' Health and '" + sourceCard.Defence + "' Defence");
+                AddHistoryLogSignal.Dispatch(new[]
+                {
+                    "Enemy card '", sourceCard.SourceCard.name, "' has '", sourceCard.Health.ToString(),
+                    "' Health and '", sourceCard.Defence.ToString(), "' Defence"
+                }, LogType.Battle);
                 DamageStruct.SourceCardView.Init(sourceCard);
             }
         }

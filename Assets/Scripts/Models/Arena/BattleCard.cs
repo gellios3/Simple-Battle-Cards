@@ -10,27 +10,27 @@ namespace Models.Arena
         /// <summary>
         /// Defence
         /// </summary>
-        public int Defence { get; private set; }
+        public int Defence { get; set; }
 
         /// <summary>
         /// Attack
         /// </summary>
-        public int Attack { get; private set; }
+        public int Attack { get; set; }
 
         /// <summary>
         /// Health
         /// </summary>
-        public int Health { get; private set; }
+        public int Health { get; set; }
 
         /// <summary>
         /// Critical chance
         /// </summary>
-        public int CriticalChance { get; private set; }
+        public int CriticalChance { get; set; }
 
         /// <summary>
         /// Critical hit
         /// </summary>
-        public float CriticalHit { get; private set; }
+        public float CriticalHit { get; set; }
 
         /// <summary>
         /// Mana
@@ -42,15 +42,13 @@ namespace Models.Arena
         /// </summary>
         public Card SourceCard { get; }
 
-        /// <summary>
-        /// Battle tarates
-        /// </summary>
-        public List<BattleTrate> BattleTrates { get; } = new List<BattleTrate>();
+        public int CritDamage;
 
         /// <summary>
         /// Max tates count
         /// </summary>
         public const int MaxTratesCount = 3;
+
 
         /// <summary>
         /// Constructor
@@ -72,21 +70,21 @@ namespace Models.Arena
         /// <summary>
         /// Card take damage and return is critial or not
         /// </summary>
-        /// <param name="damage"></param>
         /// <param name="hitCart"></param>
         /// <param name="enableCriticalDamage"></param>
         /// <returns></returns>
         public bool TakeDamage(BattleCard hitCart, bool enableCriticalDamage = true)
         {
             var damage = hitCart.Attack;
-            var isCriticalDamage = false;
+            var isCriticalDamage = true;
             if (enableCriticalDamage)
             {
                 isCriticalDamage = IsCritDamage();
-
                 if (isCriticalDamage)
                 {
+                    Debug.Log(damage * CriticalHit + " d " + damage + " ch " + CriticalHit);
                     damage = Mathf.RoundToInt(damage * CriticalHit);
+                    CritDamage = damage;
                 }
             }
 
@@ -129,20 +127,6 @@ namespace Models.Arena
         {
             var crit = Random.Range(0, 100);
             return crit <= CriticalChance;
-        }
-
-        /// <summary>
-        /// Add trate to battle card
-        /// </summary>
-        /// <param name="trate"></param>
-        public void AddTrate(BattleTrate trate)
-        {
-            Defence += trate.Defence;
-            Health += trate.Health;
-            Attack += trate.Attack;
-            CriticalChance += trate.CriticalChance;
-            CriticalHit += trate.CriticalHit;
-            BattleTrates.Add(trate);
         }
     }
 }

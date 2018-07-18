@@ -103,24 +103,24 @@ namespace Services
             return stateHand;
         }
 
-        /// <summary>
-        /// Get state Cards
-        /// </summary>
-        /// <param name="cards"></param>
-        /// <returns></returns>
-        private List<StateCard> GetStateCards(IEnumerable<BattleCard> cards)
-        {
-            return cards.Select(card => new StateCard
-                {
-                    Attack = card.Attack,
-                    Defence = card.Defence,
-                    Health = card.Health,
-                    Id = card.SourceCard.Id,
-                    BattleTrates = GetStateTrates(card.BattleTrates),
-                    isCard = true
-                })
-                .ToList();
-        }
+//        /// <summary>
+//        /// Get state Cards
+//        /// </summary>
+//        /// <param name="cards"></param>
+//        /// <returns></returns>
+//        private List<StateCard> GetStateCards(IEnumerable<BattleCard> cards)
+//        {
+//            return cards.Select(card => new StateCard
+//                {
+//                    Attack = card.Attack,
+//                    Defence = card.Defence,
+//                    Health = card.Health,
+//                    Id = card.SourceCard.Id,
+//                    BattleTrates = GetStateTrates(card.BattleTrates),
+//                    isCard = true
+//                })
+//                .ToList();
+//        }
 
         /// <summary>
         /// Get state Cards

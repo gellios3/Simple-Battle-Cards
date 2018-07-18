@@ -9,7 +9,7 @@ namespace Models
         /// Hand log
         /// </summary>
         public readonly List<string> HandLog = new List<string>();
-        
+
         /// <summary>
         /// Hand log
         /// </summary>
@@ -19,7 +19,7 @@ namespace Models
         /// Battle log
         /// </summary>
         public readonly List<string> BattleLog = new List<string>();
-        
+
         /// <summary>
         /// Battle log
         /// </summary>
