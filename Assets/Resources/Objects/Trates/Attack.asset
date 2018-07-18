@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: Attack
   m_EditorClassIdentifier: 
   Id: attack
+  Artwork: {fileID: 21300000, guid: 4daff5b838bb8034b89f3ea67ce3fca7, type: 3}
   Defence: 0
   Health: 0
   Attack: 10

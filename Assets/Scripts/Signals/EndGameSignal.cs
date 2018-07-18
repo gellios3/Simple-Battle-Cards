@@ -1,6 +1,6 @@
 ﻿using strange.extensions.signal.impl;
 
-namespace Signals.Arena
+namespace Signals
 {
     public class EndGameSignal: Signal
     {

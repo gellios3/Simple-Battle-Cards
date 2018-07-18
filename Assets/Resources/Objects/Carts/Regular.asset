@@ -14,10 +14,10 @@ MonoBehaviour:
   name: Regular
   Id: regular
   Description: Regular cart
-  Artwork: {fileID: 0}
+  Artwork: {fileID: 21300000, guid: 29514f8451767554f946f8b701520a6f, type: 3}
   Defence: 3
   Attack: 3
-  Health: 5
+  Health: 3
   Mana: 2
   CriticalChance: 10
   CriticalHit: 1.5

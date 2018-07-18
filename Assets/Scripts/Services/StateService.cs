@@ -11,7 +11,7 @@ namespace Services
         /// <summary>
         /// Active player
         /// </summary>
-        public Player ActivePlayer { get; private set; }
+        public ArenaPlayer ActiveArenaPlayer { get; private set; }
 
         /// <summary>
         /// Turn history
@@ -39,30 +39,30 @@ namespace Services
         /// <summary>
         /// Init active player
         /// </summary>
-        /// <param name="player"></param>
-        public void InitActivePlayer(Player player)
+        /// <param name="arenaPlayer"></param>
+        public void InitActivePlayer(ArenaPlayer arenaPlayer)
         {
-            ActivePlayer = player;
+            ActiveArenaPlayer = arenaPlayer;
         }
 
-        /// <summary>
-        /// Get state player
-        /// </summary>
-        /// <param name="player"></param>
-        /// <returns></returns>
-        public StatePlayer GetStatePlayer(Player player)
-        {
-            var statePlayer = new StatePlayer
-            {
-                Name = player.Name,
-                BattleHand = GetStateItems(player.BattleHand),
-                ArenaCards = GetStateCards(player.ArenaCards),
-                BattlePull = GetStateItems(player.CardBattlePull),
-                isActive = ActivePlayer.Name == player.Name
-            };
-
-            return statePlayer;
-        }
+//        /// <summary>
+//        /// Get state player
+//        /// </summary>
+//        /// <param name="arenaPlayer"></param>
+//        /// <returns></returns>
+//        public StatePlayer GetStatePlayer(ArenaPlayer arenaPlayer)
+//        {
+//            var statePlayer = new StatePlayer
+//            {
+//                Name = arenaPlayer.Name,
+//                BattleHand = GetStateItems(arenaPlayer.BattleHand),
+//                ArenaCards = GetStateCards(arenaPlayer.ArenaCards),
+//                BattlePull = GetStateItems(arenaPlayer.CardBattlePull),
+//                isActive = ActiveArenaPlayer.Name == arenaPlayer.Name
+//            };
+//
+//            return statePlayer;
+//        }
 
         /// <summary>
         /// Get state hand
@@ -103,24 +103,24 @@ namespace Services
             return stateHand;
         }
 
-        /// <summary>
-        /// Get state Cards
-        /// </summary>
-        /// <param name="cards"></param>
-        /// <returns></returns>
-        private List<StateCard> GetStateCards(IEnumerable<BattleCard> cards)
-        {
-            return cards.Select(card => new StateCard
-                {
-                    Attack = card.Attack,
-                    Defence = card.Defence,
-                    Health = card.Health,
-                    Id = card.SourceCard.Id,
-                    BattleTrates = GetStateTrates(card.BattleTrates),
-                    isCard = true
-                })
-                .ToList();
-        }
+//        /// <summary>
+//        /// Get state Cards
+//        /// </summary>
+//        /// <param name="cards"></param>
+//        /// <returns></returns>
+//        private List<StateCard> GetStateCards(IEnumerable<BattleCard> cards)
+//        {
+//            return cards.Select(card => new StateCard
+//                {
+//                    Attack = card.Attack,
+//                    Defence = card.Defence,
+//                    Health = card.Health,
+//                    Id = card.SourceCard.Id,
+//                    BattleTrates = GetStateTrates(card.BattleTrates),
+//                    isCard = true
+//                })
+//                .ToList();
+//        }
 
         /// <summary>
         /// Get state Cards

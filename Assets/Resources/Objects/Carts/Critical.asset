@@ -14,10 +14,10 @@ MonoBehaviour:
   name: Critical
   Id: critical
   Description: 
-  Artwork: {fileID: 0}
-  Defence: 0
-  Attack: 10
-  Health: 2
-  Mana: 4
+  Artwork: {fileID: 21300000, guid: aebdb2c5b4798f74e844f92acb601446, type: 3}
+  Defence: 5
+  Attack: 5
+  Health: 1
+  Mana: 3
   CriticalChance: 50
   CriticalHit: 3

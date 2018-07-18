@@ -14,10 +14,10 @@ MonoBehaviour:
   name: Epic
   Id: epic
   Description: Epic cart
-  Artwork: {fileID: 0}
+  Artwork: {fileID: 21300000, guid: 1a6fae2d7beb2f64e8349c6c1336766f, type: 3}
   Defence: 5
   Attack: 10
   Health: 10
-  Mana: 3
+  Mana: 5
   CriticalChance: 20
   CriticalHit: 2
