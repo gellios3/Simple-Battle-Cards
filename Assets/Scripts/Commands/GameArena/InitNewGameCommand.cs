@@ -53,6 +53,7 @@ namespace Commands.GameArena
                 Arena.Opponent.IsCpu = true;
                 Arena.Opponent.Name = "CPU 1";
             }
+
             // Init battle turn
             InitBattleTurnSignal.Dispatch();
         }

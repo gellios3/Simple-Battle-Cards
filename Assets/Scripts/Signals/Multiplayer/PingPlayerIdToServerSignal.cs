@@ -2,8 +2,7 @@
 
 namespace Signals.multiplayer
 {
-    public class PingPlayerIdToServerSignal: Signal
+    public class PingPlayerIdToServerSignal : Signal
     {
-        
     }
 }

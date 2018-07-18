@@ -17,7 +17,7 @@ namespace Mediators.GameArena
         /// </summary>
         [Inject]
         public InitManaSignal InitManaSignal { get; set; }
-        
+
         /// <summary>
         /// Refresh arena signal
         /// </summary>
@@ -70,7 +70,7 @@ namespace Mediators.GameArena
 
                 BattleArena.ArenaCardsCount = _cardViews.Count;
             });
-            
+
             AddCatdToBattleArenaSignal.AddListener(view =>
             {
                 if (BattleArena.ActiveSide != View.Side) return;
@@ -83,7 +83,6 @@ namespace Mediators.GameArena
             {
                 if (BattleArena.ActiveSide != View.Side) return;
                 ActivateBattleCards();
-
             });
         }
 

@@ -6,15 +6,15 @@ namespace Models.ScriptableObjects
     public class Trate : ScriptableObject
     {
         public string Id;
-        
+
         public Sprite Artwork;
-        
+
         public int Defence;
         public int Health;
-        
+
         public int Attack;
         public int Mana;
-        
+
         public int CriticalChance;
         public float CriticalHit;
     }

@@ -89,7 +89,7 @@ namespace Commands.GameArena
 
             // Init mana pull
             BattleArena.GetActivePlayer().InitManaPull();
-            
+
             // Init mana view
             InitManaSignal.Dispatch();
 

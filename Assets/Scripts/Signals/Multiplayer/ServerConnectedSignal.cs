@@ -2,8 +2,7 @@
 
 namespace Signals.multiplayer
 {
-    public class ServerConnectedSignal: Signal
+    public class ServerConnectedSignal : Signal
     {
-        
     }
 }

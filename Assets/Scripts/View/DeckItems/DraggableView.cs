@@ -18,15 +18,15 @@ namespace View.DeckItems
         [SerializeField] protected TextMeshProUGUI DefenceText;
 
         [SerializeField] private Transform _mainParenTransform;
-        
+
         [SerializeField] private BattleItem _item;
-        
+
         public BattleItem Item
         {
             get { return _item; }
             set { _item = value; }
         }
-        
+
         public Transform MainParenTransform
         {
             get { return _mainParenTransform; }
@@ -59,7 +59,6 @@ namespace View.DeckItems
 
         public GameObject Placeholder { get; private set; }
 
-  
 
         private LayoutElement _layoutelem;
 

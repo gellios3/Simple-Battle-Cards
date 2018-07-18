@@ -2,8 +2,7 @@
 
 namespace Signals
 {
-    public class EndGameSignal: Signal
+    public class EndGameSignal : Signal
     {
-        
     }
 }

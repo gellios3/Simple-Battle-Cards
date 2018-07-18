@@ -76,8 +76,8 @@ namespace Contexts
             injectionBinder.Bind<AddTrateFromDeckToHandSignal>().ToSingleton();
             injectionBinder.Bind<ShowManaSignal>().ToSingleton();
             injectionBinder.Bind<AddCatdToBattleArenaSignal>().ToSingleton();
-            injectionBinder.Bind<ActivateBattleCardsSignal>().ToSingleton(); 
-            injectionBinder.Bind<RefreshHandSignal>().ToSingleton(); 
+            injectionBinder.Bind<ActivateBattleCardsSignal>().ToSingleton();
+            injectionBinder.Bind<RefreshHandSignal>().ToSingleton();
             injectionBinder.Bind<RefreshArenaSignal>().ToSingleton();
             injectionBinder.Bind<RefreshHistoryLog>().ToSingleton();
 
@@ -107,7 +107,7 @@ namespace Contexts
             mediationBinder.Bind<ManaView>().To<ManaMediator>();
             mediationBinder.Bind<HandPanelView>().To<HandPanelMediator>();
             mediationBinder.Bind<BattleArenaView>().To<BattleArenaMediator>();
-            mediationBinder.Bind<CardView>().To<CardMediator>();  
+            mediationBinder.Bind<CardView>().To<CardMediator>();
             mediationBinder.Bind<TrateView>().To<TrateMediator>();
             mediationBinder.Bind<EndTurnView>().To<EndTurnMediator>();
         }

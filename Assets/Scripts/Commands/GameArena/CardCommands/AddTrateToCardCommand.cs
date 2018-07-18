@@ -3,10 +3,9 @@ using Models.Arena;
 using strange.extensions.command.impl;
 using Signals;
 using Signals.GameArena;
-using Signals.GameArena.CardSignals;
 using View.DeckItems;
 
-namespace Commands.GameArena
+namespace Commands.GameArena.CardCommands
 {
     public class AddTrateToCardCommand : Command
     {

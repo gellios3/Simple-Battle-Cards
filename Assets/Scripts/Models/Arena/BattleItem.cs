@@ -7,7 +7,7 @@
         /// </summary>
         public BattleStatus Status { get; set; }
     }
-    
+
     public enum BattleStatus
     {
         Wait,

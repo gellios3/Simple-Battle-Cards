@@ -12,7 +12,7 @@ namespace View.GameArena
         /// Placeholder parent
         /// </summary>
         [SerializeField] private Transform _placeholderParenTransform;
-        
+
         /// <summary>
         /// On add trate to card
         /// </summary>
@@ -90,7 +90,7 @@ namespace View.GameArena
                 return;
 
             var draggableCard = eventData.pointerDrag.GetComponent<DraggableView>();
-            if (draggableCard != null && draggableCard.IsDroppable && draggableCard.PlaceholderParent == transform )
+            if (draggableCard != null && draggableCard.IsDroppable && draggableCard.PlaceholderParent == transform)
             {
                 draggableCard.PlaceholderParent = draggableCard.ParentToReturnTo;
             }

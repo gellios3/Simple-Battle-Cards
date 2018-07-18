@@ -68,7 +68,7 @@ namespace Commands.GameArena
                 BattleArena.ActiveSide == BattleSide.Player ? BattleSide.Opponent : BattleSide.Player;
 
             RefreshHistoryLog.Dispatch();
-            
+
             if (BattleArena.IsGameOver())
             {
                 EndGameSignal.Dispatch();

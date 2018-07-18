@@ -21,7 +21,8 @@ namespace Commands
         /// <summary>
         /// Json Work Service
         /// </summary>
-        [Inject] public JsonWorkService JsonWorkService { get; set; }
+        [Inject]
+        public JsonWorkService JsonWorkService { get; set; }
 
         /// <summary>
         /// Execute event game finished
@@ -35,7 +36,7 @@ namespace Commands
                 stateHistory.Add(new StateHistoryTurn
                 {
                     BattleLog = histotyTurn.BattleLog.ToArray(),
-                    HandLog = histotyTurn.HandLog.ToArray()               
+                    HandLog = histotyTurn.HandLog.ToArray()
                 });
             }
 

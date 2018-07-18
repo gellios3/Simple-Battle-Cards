@@ -44,6 +44,7 @@ namespace Commands.GameArena
             {
                 stringBuilder.Append(str);
             }
+
             stringBuilder.Append("\n");
             StateService.ActiveHistotyTurn.AddLog(stringBuilder.ToString(), LogType);
             AddHistoryLogToViewSignal.Dispatch(stringBuilder.ToString());

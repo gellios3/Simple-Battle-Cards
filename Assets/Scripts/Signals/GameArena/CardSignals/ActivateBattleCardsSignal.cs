@@ -4,6 +4,5 @@ namespace Signals.GameArena.CardSignals
 {
     public class ActivateBattleCardsSignal : Signal
     {
-        
     }
 }

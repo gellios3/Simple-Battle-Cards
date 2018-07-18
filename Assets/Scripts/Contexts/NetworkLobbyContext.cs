@@ -32,7 +32,7 @@ namespace Contexts
         {
             return _instance.injectionBinder.GetInstance<T>();
         }
-        
+
         /// <inheritdoc />
         /// <summary>
         /// Unbind the default EventCommandBinder and rebind the SignalCommandBinder
@@ -67,26 +67,26 @@ namespace Contexts
             injectionBinder.Bind<ServerConnectedSignal>().ToSingleton().CrossContext();
             injectionBinder.Bind<DisconnectedFromServerSignal>().ToSingleton().CrossContext();
             injectionBinder.Bind<PingPlayerIdToServerSignal>().ToSingleton().CrossContext();
-            injectionBinder.Bind<GetEnemyTurnSignal>().ToSingleton().CrossContext();          
+            injectionBinder.Bind<GetEnemyTurnSignal>().ToSingleton().CrossContext();
             injectionBinder.Bind<ShowLobbyPlayersSignal>().ToSingleton();
-            
+
             // init models
 
             //Bind Services
             injectionBinder.Bind<ServerConnectorService>().ToSingleton().CrossContext();
-            
+
             // Bind Handlers
             injectionBinder.Bind<GetEnemyTurnHandler>().ToSingleton().CrossContext();
-            injectionBinder.Bind<GetLobbyPlayerHandler>().ToSingleton().CrossContext();  
-            injectionBinder.Bind<RemoveLobbyPlayerHandler>().ToSingleton().CrossContext();            
-            
+            injectionBinder.Bind<GetLobbyPlayerHandler>().ToSingleton().CrossContext();
+            injectionBinder.Bind<RemoveLobbyPlayerHandler>().ToSingleton().CrossContext();
+
             // Init comands
             commandBinder.Bind<ConnectToServerSignal>().To<ConectToServerCommand>();
             commandBinder.Bind<PingPlayerIdToServerSignal>().To<PingPlayerIdToServerCommand>();
             commandBinder.Bind<ServerConnectedSignal>().To<ServerConectedCommand>().Once();
 
             // Init mediators
-            mediationBinder.Bind<NetwokLobbyView>().To<NetworkLobbyMediator>(); 
+            mediationBinder.Bind<NetwokLobbyView>().To<NetworkLobbyMediator>();
             mediationBinder.Bind<StatusItemView>().To<StatusItemMediator>();
         }
     }
