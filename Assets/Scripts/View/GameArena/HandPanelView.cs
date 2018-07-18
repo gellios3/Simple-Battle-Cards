@@ -38,6 +38,7 @@ namespace View.GameArena
             cardView.Side = side;
             cardView.MainParenTransform = _placeholderParenTransform;
             cardView.Init(battleCard);
+            cardView.ToogleStubImage(false);
             OnAddViewToHand?.Invoke(cardView);
         }
 

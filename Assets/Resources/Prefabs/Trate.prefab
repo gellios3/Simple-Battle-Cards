@@ -974,9 +974,12 @@ MonoBehaviour:
   AttackText: {fileID: 114193993031905904}
   HealthText: {fileID: 114418508505156324}
   DefenceText: {fileID: 114791572616812436}
-  MainParenTransform: {fileID: 0}
+  _mainParenTransform: {fileID: 0}
   _parentToReturnTo: {fileID: 0}
   _placeholderParent: {fileID: 0}
+  _battleSide: 0
+  IsDragable: 1
+  IsDroppable: 1
 --- !u!114 &114661821448196166
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1505,7 +1508,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 272.5, y: -56.53288}
+  m_AnchoredPosition: {x: 272.50003, y: -56.43649}
   m_SizeDelta: {x: 100, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224970849073849984

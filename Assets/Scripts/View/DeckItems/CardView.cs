@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using Models.Arena;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace View.DeckItems
 {
     public class CardView : DraggableView, IDropHandler
     {
         [SerializeField] private BattleCard _card;
+
+        [SerializeField] protected Image StubImage;
 
         public BattleCard Card
         {
@@ -43,15 +46,24 @@ namespace View.DeckItems
         public void Init(BattleCard card)
         {
             Card = card;
-            Item = card;
             NameText.text = Card.SourceCard.name;
             DescriptionText.text = Card.SourceCard.Description;
             ArtworkImage.sprite = Card.SourceCard.Artwork;
             ManaText.text = Card.Mana.ToString();
             AttackText.text = Card.Attack.ToString();
             HealthText.text = Card.Health.ToString();
-            DefenceText.text = Card.Defence.ToString();
+            DefenceText.text = Card.Defence.ToString();           
         }
+
+        /// <summary>
+        /// Toogle stub image
+        /// </summary>
+        /// <param name="status"></param>
+        public void ToogleStubImage(bool status)
+        {
+            StubImage.gameObject.SetActive(status);
+        }
+
 
         /// <summary>
         /// Add trate to battle card

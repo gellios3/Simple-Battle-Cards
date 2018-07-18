@@ -23,7 +23,6 @@ namespace View.DeckItems
         public void Init(BattleTrate trate)
         {
             Trate = trate;
-            Item = trate;
             DescriptionText.text = "Card Trate";
             NameText.text = Trate.SourceTrate.name;
             ArtworkImage.sprite = Trate.SourceTrate.Artwork;
