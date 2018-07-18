@@ -29,12 +29,15 @@ namespace Models.Arena
         /// <summary>
         /// Battle history
         /// </summary>
-        public readonly List<HistoryTurn> History = new List<HistoryTurn>();  
-        
+        public readonly List<HistoryTurn> History = new List<HistoryTurn>();
+
         /// <summary>
         /// Count of cards adding to hand
         /// </summary>
         public int CountOfCardsAddingToHand { get; set; }
+
+        public int HandCardsCount;
+        public int ArenaCardsCount;
 
         /// <summary>
         /// Init history
@@ -56,23 +59,16 @@ namespace Models.Arena
             return StateService.ActiveArenaPlayer;
         }
 
-//        /// <summary>
-//        /// Is game over
-//        /// </summary>
-//        /// <param name="arenaPlayer"></param>
-//        /// <returns></returns>
-//        public bool IsGameOver(ArenaPlayer arenaPlayer)
-//        {
-//            return arenaPlayer.CardBattlePull.Count == 0 &&
-//                   arenaPlayer.BattleHand.FindAll(item =>
-//                   {
-//                       var card = item as BattleCard;
-//                       return card != null;
-//                   }).Count == 0 &&
-//                   arenaPlayer.ArenaCards.FindAll(card => card.Status != BattleStatus.Dead).Count == 0;
-//        }
+        /// <summary>
+        /// Is game over
+        /// </summary>
+        /// <returns></returns>
+        public bool IsGameOver()
+        {
+            return GetActivePlayer().CardBattlePull.Count == 0 && HandCardsCount == 0 && ArenaCardsCount == 0;
+        }
     }
-    
+
     public enum BattleSide
     {
         Player,

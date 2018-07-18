@@ -20,8 +20,8 @@ namespace Commands.GameArena
         /// Add history log signal
         /// </summary>
         [Inject]
-        public RefreshHandSignal RefreshHandSignal { get; set; } 
-        
+        public RefreshHandSignal RefreshHandSignal { get; set; }
+
         /// <summary>
         /// Add history log signal
         /// </summary>
@@ -41,6 +41,12 @@ namespace Commands.GameArena
         public ActivateBattleCardsSignal ActivateBattleCardsSignal { get; set; }
 
         /// <summary>
+        /// Battle
+        /// </summary>
+        [Inject]
+        public EndGameSignal EndGameSignal { get; set; }
+
+        /// <summary>
         /// Refresh history log
         /// </summary>
         [Inject]
@@ -53,15 +59,21 @@ namespace Commands.GameArena
         {
             RefreshHandSignal.Dispatch();
             RefreshArenaSignal.Dispatch();
-            
+
             // Activate battle cards 
             ActivateBattleCardsSignal.Dispatch();
 
             // Switch active state
             BattleArena.ActiveSide =
                 BattleArena.ActiveSide == BattleSide.Player ? BattleSide.Opponent : BattleSide.Player;
-            
+
             RefreshHistoryLog.Dispatch();
+            
+            if (BattleArena.IsGameOver())
+            {
+                EndGameSignal.Dispatch();
+                return;
+            }
 
             // Init battle turn
             InitBattleTurnSignal.Dispatch();

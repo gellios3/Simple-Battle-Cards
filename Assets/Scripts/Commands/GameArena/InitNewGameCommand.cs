@@ -3,7 +3,6 @@ using Models.ScriptableObjects;
 using strange.extensions.command.impl;
 using Services.GameArena;
 using Signals;
-using Signals.Arena;
 using Signals.GameArena;
 using UnityEngine;
 

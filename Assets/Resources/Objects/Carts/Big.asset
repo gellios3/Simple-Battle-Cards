@@ -20,4 +20,4 @@ MonoBehaviour:
   Health: 5
   Mana: 3
   CriticalChance: 10
-  CriticalHit: 0
+  CriticalHit: 1.5

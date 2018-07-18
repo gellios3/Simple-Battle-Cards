@@ -1,4 +1,5 @@
-﻿using Commands.GameArena;
+﻿using Commands;
+using Commands.GameArena;
 using Commands.GameArena.CardCommands;
 using Mediators.GameArena;
 using Models.Arena;
@@ -90,6 +91,7 @@ namespace Contexts
             commandBinder.Bind<AddTrateToCardSignal>().To<AddTrateToCardCommand>();
             commandBinder.Bind<EndTurnSignal>().To<EndTurnCommand>();
             commandBinder.Bind<TakeDamageToCardSignal>().To<TakeDamageToCardCommand>();
+            commandBinder.Bind<EndGameSignal>().To<GameFinishedCommand>();
 
             // init models
             injectionBinder.Bind<Arena>().ToSingleton();

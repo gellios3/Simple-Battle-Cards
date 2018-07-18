@@ -2,6 +2,7 @@
 using Models.Arena;
 using strange.extensions.command.impl;
 using Signals;
+using Signals.GameArena;
 using UniRx.Triggers;
 using UnityEngine;
 using View.DeckItems;
@@ -25,6 +26,12 @@ namespace Commands.GameArena.CardCommands
         [Inject]
         public AddHistoryLogSignal AddHistoryLogSignal { get; set; }
 
+        /// <summary>
+        /// Refresh arena signal
+        /// </summary>
+        [Inject]
+        public RefreshArenaSignal RefreshArenaSignal { get; set; }
+
         public override void Execute()
         {
             var activePlayer = BattleArena.GetActivePlayer();
@@ -36,7 +43,8 @@ namespace Commands.GameArena.CardCommands
                 AddHistoryLogSignal.Dispatch(new[]
                 {
                     "Player '", activePlayer.Name, "' Use Card '", damageCard.SourceCard.name,
-                    "' hit CRITICAL on '",sourceCard.CritDamage.ToString(),"' to ememy Card '", sourceCard.SourceCard.name, "' "
+                    "' hit CRITICAL on '", sourceCard.CritDamage.ToString(), "' to ememy Card '",
+                    sourceCard.SourceCard.name, "' "
                 }, LogType.Battle);
             }
             else
@@ -90,6 +98,8 @@ namespace Commands.GameArena.CardCommands
                 }, LogType.Battle);
                 DamageStruct.SourceCardView.Init(sourceCard);
             }
+
+            RefreshArenaSignal.Dispatch();
         }
     }
 }

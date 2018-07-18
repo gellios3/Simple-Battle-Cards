@@ -76,6 +76,12 @@ namespace Mediators.GameArena
                     var view = child.GetComponent<DraggableView>();
                     BattleHand.Add(view);
                 }
+
+                BattleArena.HandCardsCount = BattleHand.FindAll(item =>
+                {
+                    var card = item as CardView;
+                    return card != null;
+                }).Count;
             });
 
             AddTrateFromDeckToHandSignal.AddListener(() =>

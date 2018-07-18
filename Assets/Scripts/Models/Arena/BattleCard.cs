@@ -82,8 +82,7 @@ namespace Models.Arena
                 isCriticalDamage = IsCritDamage();
                 if (isCriticalDamage)
                 {
-                    Debug.Log(damage * CriticalHit + " d " + damage + " ch " + CriticalHit);
-                    damage = Mathf.RoundToInt(damage * CriticalHit);
+                    damage = (int) Mathf.Round(damage * hitCart.CriticalHit);
                     CritDamage = damage;
                 }
             }
@@ -95,8 +94,7 @@ namespace Models.Arena
                 // Is defence less 0 hit health
                 if (Defence < 0)
                 {
-                    damage += Defence;
-                    Health -= damage;
+                    damage = Mathf.Abs(Defence);
                     Defence = 0;
                 }
                 else

@@ -1,5 +1,6 @@
 ﻿using Contexts;
 using strange.extensions.context.impl;
+using UnityEngine;
 
 namespace View.Root
 {
@@ -9,6 +10,14 @@ namespace View.Root
         {
             DontDestroyOnLoad(gameObject);
             context = new MainMenuContext(this);
+        }
+        
+        private void Update()
+        {
+            if (Input.GetKey("escape"))
+            {
+                Application.Quit();
+            }
         }
     }
 }

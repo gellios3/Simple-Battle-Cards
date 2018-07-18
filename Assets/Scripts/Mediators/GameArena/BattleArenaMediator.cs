@@ -60,7 +60,6 @@ namespace Mediators.GameArena
         {
             RefreshArenaSignal.AddListener(() =>
             {
-                Debug.Log("RefreshArenaSignal");
                 if (BattleArena.ActiveSide != View.Side) return;
                 _cardViews.Clear();
                 foreach (Transform child in View.transform)
@@ -68,6 +67,8 @@ namespace Mediators.GameArena
                     var view = child.GetComponent<CardView>();
                     _cardViews.Add(view);
                 }
+
+                BattleArena.ArenaCardsCount = _cardViews.Count;
             });
             
             AddCatdToBattleArenaSignal.AddListener(view =>
