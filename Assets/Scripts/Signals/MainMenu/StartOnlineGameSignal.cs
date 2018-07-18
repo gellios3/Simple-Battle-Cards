@@ -4,6 +4,5 @@ namespace Signals.MainMenu
 {
     public class StartOnlineGameSignal : Signal<string>
     {
-        
     }
 }

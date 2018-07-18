@@ -4,6 +4,5 @@ namespace Signals.GameArena
 {
     public class InitBattleTurnSignal : Signal
     {
-        
     }
 }

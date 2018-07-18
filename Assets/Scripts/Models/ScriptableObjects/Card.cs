@@ -16,12 +16,12 @@ namespace Models.ScriptableObjects
         /// Defence
         /// </summary>
         public int Defence;
-        
+
         /// <summary>
         /// Attack
         /// </summary>
         public int Attack;
-        
+
         /// <summary>
         /// Health
         /// </summary>

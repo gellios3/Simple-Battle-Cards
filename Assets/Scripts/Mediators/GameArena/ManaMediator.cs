@@ -27,7 +27,7 @@ namespace Mediators.GameArena
             {
 //                if (BattleArena.ActiveSide == BattleSide.Player)
 //                {
-                    View.InitManaView(count);
+                View.InitManaView(count);
 //                }
             });
         }

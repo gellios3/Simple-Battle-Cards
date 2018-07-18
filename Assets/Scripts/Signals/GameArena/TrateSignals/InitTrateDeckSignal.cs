@@ -4,6 +4,5 @@ namespace Signals.GameArena.TrateSignals
 {
     public class InitTrateDeckSignal : Signal
     {
-        
     }
 }

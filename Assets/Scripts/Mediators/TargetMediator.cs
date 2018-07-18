@@ -5,7 +5,6 @@ namespace Mediators
     public class TargetMediator<T> : EventMediator
         where T : EventView
     {
-        [Inject]
-        public T View { get; set; }
+        [Inject] public T View { get; set; }
     }
 }

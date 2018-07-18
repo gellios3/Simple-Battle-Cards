@@ -4,6 +4,5 @@ namespace Signals
 {
     public class SaveLogSignal : Signal
     {
-        
     }
 }

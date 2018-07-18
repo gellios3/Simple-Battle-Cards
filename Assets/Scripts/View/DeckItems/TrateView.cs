@@ -8,7 +8,7 @@ namespace View.DeckItems
     public class TrateView : DraggableView
     {
         [SerializeField] private BattleTrate _trate;
-        
+
         /// <summary>
         /// On add trate to card
         /// </summary>
@@ -38,7 +38,7 @@ namespace View.DeckItems
             Destroy(Placeholder);
             Destroy(gameObject);
         }
-        
+
         /// <inheritdoc />
         /// <summary>
         /// On begin drag
@@ -46,9 +46,8 @@ namespace View.DeckItems
         /// <param name="eventData"></param>
         public override void OnBeginDrag(PointerEventData eventData)
         {
-            OnStartDrag?.Invoke(this);           
+            OnStartDrag?.Invoke(this);
             base.OnBeginDrag(eventData);
         }
-       
     }
 }

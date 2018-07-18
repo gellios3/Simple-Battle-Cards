@@ -5,6 +5,5 @@ namespace Signals.GameArena.CardSignals
 {
     public class TakeDamageToCardSignal : Signal<DamageStruct>
     {
-        
     }
 }

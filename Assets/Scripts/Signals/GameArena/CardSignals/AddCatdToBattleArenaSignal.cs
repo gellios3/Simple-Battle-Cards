@@ -5,6 +5,5 @@ namespace Signals.GameArena.CardSignals
 {
     public class AddCatdToBattleArenaSignal : Signal<CardView>
     {
-        
     }
 }

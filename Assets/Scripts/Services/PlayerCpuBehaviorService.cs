@@ -67,7 +67,6 @@ namespace Services
 //                }
 //            }
 
-         
 
             // Atack all emeny cards 
 //            var enemyCards = GetEnemyActiveCards();
