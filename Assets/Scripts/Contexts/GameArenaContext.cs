@@ -1,4 +1,6 @@
-﻿using Commands.GameArena;
+﻿using Commands;
+using Commands.GameArena;
+using Commands.GameArena.CardCommands;
 using Mediators.GameArena;
 using Models.Arena;
 using strange.extensions.command.api;
@@ -8,7 +10,10 @@ using strange.extensions.context.impl;
 using Services;
 using Signals;
 using Signals.GameArena;
+using Signals.GameArena.CardSignals;
+using Signals.GameArena.TrateSignals;
 using UnityEngine;
+using View.DeckItems;
 using View.GameArena;
 
 namespace Contexts
@@ -67,10 +72,14 @@ namespace Contexts
             injectionBinder.Bind<AddHistoryLogToViewSignal>().ToSingleton();
             injectionBinder.Bind<InitCardDeckSignal>().ToSingleton();
             injectionBinder.Bind<InitTrateDeckSignal>().ToSingleton();
-            injectionBinder.Bind<AddCardToHandViewSignal>().ToSingleton();
-            injectionBinder.Bind<AddTrateToHandViewSignal>().ToSingleton();
+            injectionBinder.Bind<AddCardFromDeckToHandSignal>().ToSingleton();
+            injectionBinder.Bind<AddTrateFromDeckToHandSignal>().ToSingleton();
             injectionBinder.Bind<ShowManaSignal>().ToSingleton();
-            injectionBinder.Bind<ShowCardOnBattleArenaSignal>().ToSingleton();
+            injectionBinder.Bind<AddCatdToBattleArenaSignal>().ToSingleton();
+            injectionBinder.Bind<ActivateBattleCardsSignal>().ToSingleton();
+            injectionBinder.Bind<RefreshHandSignal>().ToSingleton();
+            injectionBinder.Bind<RefreshArenaSignal>().ToSingleton();
+            injectionBinder.Bind<RefreshHistoryLog>().ToSingleton();
 
             // Init comands
             commandBinder.Bind<InitNewGameSignal>().To<InitNewGameCommand>();
@@ -79,9 +88,10 @@ namespace Contexts
             commandBinder.Bind<InitManaSignal>().To<InitManaCommand>();
             commandBinder.Bind<InitBattleArenaSignal>().To<InitBattleArenaCommand>();
             commandBinder.Bind<InitHandPanelSignal>().To<InitHandPanelCommand>();
-            commandBinder.Bind<AddCardFromDeckToHandSignal>().To<AddCardFromDeckToHandCommand>();
-            commandBinder.Bind<AddTrateFromDeckToHandSignal>().To<AddTrateFromDeckToHandCommand>(); 
-            commandBinder.Bind<AddCatdToBattleArenaSignal>().To<AddCatdToBattleArenaCommand>();
+            commandBinder.Bind<AddTrateToCardSignal>().To<AddTrateToCardCommand>();
+            commandBinder.Bind<EndTurnSignal>().To<EndTurnCommand>();
+            commandBinder.Bind<TakeDamageToCardSignal>().To<TakeDamageToCardCommand>();
+            commandBinder.Bind<EndGameSignal>().To<GameFinishedCommand>();
 
             // init models
             injectionBinder.Bind<Arena>().ToSingleton();
@@ -89,15 +99,17 @@ namespace Contexts
 
             // Init sevises
             injectionBinder.Bind<StateService>().ToSingleton();
-            injectionBinder.Bind<BattleTurnService>().ToSingleton();
 
             // Init mediators
             mediationBinder.Bind<HistoryLogView>().To<HistoryLogMediator>();
             mediationBinder.Bind<CardDeckView>().To<CardDeckMediator>();
             mediationBinder.Bind<TrateDeskView>().To<TrateDeskMediator>();
             mediationBinder.Bind<ManaView>().To<ManaMediator>();
-            mediationBinder.Bind<HandPanelView>().To<HandPanelMediator>(); 
+            mediationBinder.Bind<HandPanelView>().To<HandPanelMediator>();
             mediationBinder.Bind<BattleArenaView>().To<BattleArenaMediator>();
+            mediationBinder.Bind<CardView>().To<CardMediator>();
+            mediationBinder.Bind<TrateView>().To<TrateMediator>();
+            mediationBinder.Bind<EndTurnView>().To<EndTurnMediator>();
         }
     }
 }

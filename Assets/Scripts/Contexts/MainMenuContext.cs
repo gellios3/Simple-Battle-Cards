@@ -31,7 +31,7 @@ namespace Contexts
         {
             return _instance.injectionBinder.GetInstance<T>();
         }
-        
+
         /// <inheritdoc />
         /// <summary>
         /// Unbind the default EventCommandBinder and rebind the SignalCommandBinder
@@ -51,13 +51,13 @@ namespace Contexts
         {
             // init Signals
             injectionBinder.Bind<StartOnlineGameSignal>().ToSingleton().CrossContext();
-            
+
             // init models          
-            
+
             // Init sevises
-            injectionBinder.Bind<NetworkPlayerService>().ToSingleton().CrossContext(); 
+            injectionBinder.Bind<NetworkPlayerService>().ToSingleton().CrossContext();
             injectionBinder.Bind<GameStateService>().ToSingleton().CrossContext();
-         
+
             // Init comands
             commandBinder.Bind<StartOnlineGameSignal>().To<StartOnlineGameCommand>().Once();
 

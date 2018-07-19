@@ -1,6 +1,9 @@
-﻿using Models.Arena;
+﻿using System;
+using System.Collections.Generic;
+using Models.Arena;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace View.DeckItems
 {
@@ -8,30 +11,96 @@ namespace View.DeckItems
     {
         [SerializeField] private BattleCard _card;
 
+        [SerializeField] protected Image StubImage;
+
         public BattleCard Card
         {
             get { return _card; }
-            set { _card = value; }
+            private set { _card = value; }
         }
+
+        /// <summary>
+        /// On add trate to card
+        /// </summary>
+        public event Action<TrateView> OnAddTrateToCard;
+
+        /// <summary>
+        /// On add trate to card
+        /// </summary>
+        public event Action<CardView> OnStartDrag;
+
+        /// <summary>
+        /// On add trate to card
+        /// </summary>
+        public event Action<CardView> OnTakeDamage;
+
+        /// <summary>
+        /// Battle tarates
+        /// </summary>
+        public List<TrateView> TrateViews { get; } = new List<TrateView>();
 
         /// <summary>
         /// Init Card View
         /// </summary>
         /// <param name="card"></param>
-        /// <param name="placeholderParenTransform"></param>
-        public void Init(BattleCard card, Transform placeholderParenTransform)
+        public void Init(BattleCard card)
         {
             Card = card;
-            MainParenTransform = placeholderParenTransform;
             NameText.text = Card.SourceCard.name;
             DescriptionText.text = Card.SourceCard.Description;
             ArtworkImage.sprite = Card.SourceCard.Artwork;
             ManaText.text = Card.Mana.ToString();
             AttackText.text = Card.Attack.ToString();
             HealthText.text = Card.Health.ToString();
-            DefenceText.text = Card.Defence.ToString();
+            DefenceText.text = Card.Defence.ToString();           
         }
 
+        /// <summary>
+        /// Toogle stub image
+        /// </summary>
+        /// <param name="status"></param>
+        public void ToogleStubImage(bool status)
+        {
+            StubImage.gameObject.SetActive(status);
+        }
+
+
+        /// <summary>
+        /// Add trate to battle card
+        /// </summary>
+        /// <param name="trateView"></param>
+        public void AddTrate(TrateView trateView)
+        {
+            Card.Defence += trateView.Trate.Defence;
+            Card.Health += trateView.Trate.Health;
+            Card.Attack += trateView.Trate.Attack;
+            Card.CriticalChance += trateView.Trate.CriticalChance;
+            Card.CriticalHit += trateView.Trate.CriticalHit;
+            TrateViews.Add(trateView);
+            // Show card on battle arena
+            Init(Card);
+            trateView.DestroyView();
+        }
+
+        /// <summary>
+        /// Destroy мiew
+        /// </summary>
+        public void DestroyView()
+        {
+            Destroy(Placeholder);
+            Destroy(gameObject);
+        }
+
+        /// <inheritdoc />
+        /// <summary>
+        /// On begin drag
+        /// </summary>
+        /// <param name="eventData"></param>
+        public override void OnBeginDrag(PointerEventData eventData)
+        {
+            OnStartDrag?.Invoke(this);
+            base.OnBeginDrag(eventData);
+        }
 
 
         /// <inheritdoc />
@@ -41,20 +110,22 @@ namespace View.DeckItems
         /// <param name="eventData"></param>
         public void OnDrop(PointerEventData eventData)
         {
-            var draggableTrateView = eventData.pointerDrag.GetComponent<TrateView>();
-            if (draggableTrateView != null)
+            if (Card.Status == BattleStatus.Sleep || Card.Status == BattleStatus.Active)
             {
-                // @todo Call add trate to card
-                Debug.Log("On trate drop");
-                Destroy(draggableTrateView.Placeholder);
-                Destroy(eventData.pointerDrag);
+                var trateView = eventData.pointerDrag.GetComponent<TrateView>();
+                if (trateView != null)
+                {
+                    if (trateView.Side == Side)
+                    {
+                        OnAddTrateToCard?.Invoke(trateView);
+                    }
+                }
             }
 
             var draggableCard = eventData.pointerDrag.GetComponent<CardView>();
             if (draggableCard != null)
             {
-                // @todo Call hit card
-                Debug.Log("On card drop");
+                OnTakeDamage?.Invoke(draggableCard);
             }
         }
     }

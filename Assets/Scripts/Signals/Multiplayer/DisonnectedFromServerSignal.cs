@@ -4,6 +4,5 @@ namespace Signals.multiplayer
 {
     public class DisonnectedFromServerSignal : Signal
     {
-        
     }
 }

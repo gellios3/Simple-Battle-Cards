@@ -1,4 +1,5 @@
-﻿using Models.Arena;
+﻿using System;
+using Models.Arena;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using View.DeckItems;
@@ -11,6 +12,11 @@ namespace View.GameArena
         /// Placeholder parent
         /// </summary>
         [SerializeField] private Transform _placeholderParenTransform;
+
+        /// <summary>
+        /// On add trate to card
+        /// </summary>
+        public event Action<DraggableView> OnAddViewToHand;
 
         /// <summary>
         /// Add card to hand
@@ -30,7 +36,10 @@ namespace View.GameArena
             // Init Card
             var cardView = cardGameObject.GetComponent<CardView>();
             cardView.Side = side;
-            cardView.Init(battleCard, _placeholderParenTransform);
+            cardView.MainParenTransform = _placeholderParenTransform;
+            cardView.Init(battleCard);
+            cardView.ToogleStubImage(false);
+            OnAddViewToHand?.Invoke(cardView);
         }
 
         /// <summary>
@@ -51,7 +60,9 @@ namespace View.GameArena
             // Init Trate
             var trateView = trateGameObject.GetComponent<TrateView>();
             trateView.Side = side;
-            trateView.Init(battleTrate, _placeholderParenTransform);
+            trateView.MainParenTransform = _placeholderParenTransform;
+            trateView.Init(battleTrate);
+            OnAddViewToHand?.Invoke(trateView);
         }
 
         /// <summary>
@@ -64,7 +75,7 @@ namespace View.GameArena
                 return;
 
             var draggableCard = eventData.pointerDrag.GetComponent<DraggableView>();
-            if (draggableCard != null)
+            if (draggableCard != null && draggableCard.IsDroppable)
             {
                 draggableCard.PlaceholderParent = transform;
             }
@@ -80,7 +91,7 @@ namespace View.GameArena
                 return;
 
             var draggableCard = eventData.pointerDrag.GetComponent<DraggableView>();
-            if (draggableCard != null && draggableCard.PlaceholderParent == transform)
+            if (draggableCard != null && draggableCard.IsDroppable && draggableCard.PlaceholderParent == transform)
             {
                 draggableCard.PlaceholderParent = draggableCard.ParentToReturnTo;
             }
@@ -93,7 +104,7 @@ namespace View.GameArena
         public override void OnDrop(PointerEventData eventData)
         {
             var draggableCard = eventData.pointerDrag.GetComponent<DraggableView>();
-            if (draggableCard != null)
+            if (draggableCard != null && draggableCard.IsDroppable)
             {
                 draggableCard.ParentToReturnTo = transform;
             }

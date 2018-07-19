@@ -8,19 +8,18 @@ namespace Commands.Multiplayer
 {
     public class PingPlayerIdToServerCommand : Command
     {
-        
         /// <summary>
         /// Server connector service
         /// </summary>
         [Inject]
-        public ServerConnectorService ServerConnectorService { get; set; } 
-        
+        public ServerConnectorService ServerConnectorService { get; set; }
+
         /// <summary>
         /// Network player service
         /// </summary>
         [Inject]
-        public NetworkPlayerService NetworkPlayerService { get; set; } 
-        
+        public NetworkPlayerService NetworkPlayerService { get; set; }
+
         /// <summary>
         /// Execute conect to server
         /// </summary>

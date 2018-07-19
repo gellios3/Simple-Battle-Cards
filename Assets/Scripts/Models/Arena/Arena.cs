@@ -13,22 +13,22 @@ namespace Models.Arena
         /// Enemy player
         /// </summary>
         public ArenaPlayer Opponent { get; private set; }
-        
+
         /// <summary>
         /// Hand limit count
         /// </summary>
         public const int HandLimitCount = 6;
-        
+
         /// <summary>
         /// Hand limit count
         /// </summary>
-        public const int CartToAddCount = 3;
+        public const int CartToAddCount = 2;
 
         /// <summary>
         /// Arena rart count
         /// </summary>
         public const int ArenaCartCount = 6;
-        
+
         /// <summary>
         /// Mana pull count
         /// </summary>

@@ -3,7 +3,6 @@ using Models.ScriptableObjects;
 using strange.extensions.command.impl;
 using Services.GameArena;
 using Signals;
-using Signals.Arena;
 using Signals.GameArena;
 using UnityEngine;
 
@@ -54,6 +53,7 @@ namespace Commands.GameArena
                 Arena.Opponent.IsCpu = true;
                 Arena.Opponent.Name = "CPU 1";
             }
+
             // Init battle turn
             InitBattleTurnSignal.Dispatch();
         }

@@ -1,5 +1,5 @@
-﻿using Signals.GameArena;
-using UnityEngine;
+﻿using Models.Arena;
+using Signals.GameArena.CardSignals;
 using UnityEngine.EventSystems;
 using View.DeckItems;
 
@@ -20,7 +20,8 @@ namespace View.GameArena
         public override void OnDrop(PointerEventData eventData)
         {
             var cardView = eventData.pointerDrag.GetComponent<CardView>();
-            if (cardView != null)
+            if (cardView == null || cardView.Card == null) return;
+            if (cardView.Card.Status == BattleStatus.Wait)
             {
                 AddCatdToBattleArenaSignal.Dispatch(cardView);
             }
@@ -33,12 +34,12 @@ namespace View.GameArena
 
         public override void OnPointerEnter(PointerEventData eventData)
         {
-            Debug.Log("BattleArenaView OnPointerEnter");
+//            Debug.Log("BattleArenaView OnPointerEnter");
         }
 
         public override void OnPointerExit(PointerEventData eventData)
         {
-            Debug.Log("BattleArenaView OnPointerExit");
+//            Debug.Log("BattleArenaView OnPointerExit");
         }
     }
 }

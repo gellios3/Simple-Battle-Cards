@@ -1,24 +1,52 @@
-﻿using Models.Arena;
+﻿using System;
+using Models.Arena;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace View.DeckItems
 {
     public class TrateView : DraggableView
     {
-        [SerializeField] private BattleTrate _trait;
+        [SerializeField] private BattleTrate _trate;
 
-        public void Init(BattleTrate trate, Transform placeholderParenTransform)
+        /// <summary>
+        /// On add trate to card
+        /// </summary>
+        public event Action<TrateView> OnStartDrag;
+
+        public BattleTrate Trate
         {
-            _trait = trate;
-            MainParenTransform = placeholderParenTransform;
-            DescriptionText.text = "Card Trate";
-            NameText.text = _trait.SourceTrate.name;
-            ArtworkImage.sprite = _trait.SourceTrate.Artwork;
-            ManaText.text = _trait.Mana.ToString();
-            AttackText.text = _trait.Attack.ToString();
-            HealthText.text = _trait.Health.ToString();
-            DefenceText.text = _trait.Defence.ToString();
+            get { return _trate; }
+            private set { _trate = value; }
         }
-       
+
+        public void Init(BattleTrate trate)
+        {
+            Trate = trate;
+            DescriptionText.text = "Card Trate";
+            NameText.text = Trate.SourceTrate.name;
+            ArtworkImage.sprite = Trate.SourceTrate.Artwork;
+            ManaText.text = Trate.Mana.ToString();
+            AttackText.text = Trate.Attack.ToString();
+            HealthText.text = Trate.Health.ToString();
+            DefenceText.text = Trate.Defence.ToString();
+        }
+
+        public void DestroyView()
+        {
+            Destroy(Placeholder);
+            Destroy(gameObject);
+        }
+
+        /// <inheritdoc />
+        /// <summary>
+        /// On begin drag
+        /// </summary>
+        /// <param name="eventData"></param>
+        public override void OnBeginDrag(PointerEventData eventData)
+        {
+            OnStartDrag?.Invoke(this);
+            base.OnBeginDrag(eventData);
+        }
     }
 }

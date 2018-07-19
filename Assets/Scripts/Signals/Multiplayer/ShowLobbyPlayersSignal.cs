@@ -2,8 +2,7 @@
 
 namespace Signals.multiplayer
 {
-    public class ShowLobbyPlayersSignal: Signal
+    public class ShowLobbyPlayersSignal : Signal
     {
-        
     }
 }

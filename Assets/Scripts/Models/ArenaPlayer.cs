@@ -12,15 +12,10 @@ namespace Models
         /// </summary>
         public string Name { get; set; }
 
-        /// <summary>
-        /// Battle player hand
-        /// </summary>
-        public List<BattleItem> BattleHand { get; set; } = new List<BattleItem>();
-
-        /// <summary>
-        /// Active atack cards
-        /// </summary>
-        public List<BattleCard> ArenaCards { get; set; } = new List<BattleCard>();
+//        /// <summary>
+//        /// Active atack cards
+//        /// </summary>
+//        public List<BattleCard> ArenaCards { get; set; } = new List<BattleCard>();
 
         /// <summary>
         /// Random battle pul with cartd 
@@ -81,7 +76,7 @@ namespace Models
             // generate random positions
             InitRandomPositions(_cardPositions, cartDeck.Cards.Count);
             InitRandomPositions(_tratePositions, trateDeck.Trates.Count);
-            
+
             var cardCount = 0;
             var trateCount = 0;
             // fill card battle pull

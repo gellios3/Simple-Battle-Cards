@@ -1,6 +1,8 @@
 ﻿using Models.Arena;
 using strange.extensions.command.impl;
 using Signals.GameArena;
+using Signals.GameArena.CardSignals;
+using Signals.GameArena.TrateSignals;
 using UnityEngine;
 
 namespace Commands.GameArena
@@ -34,16 +36,24 @@ namespace Commands.GameArena
             if (BattleArena.GetActivePlayer().CardBattlePull.Count > 0)
             {
                 AddCardFromDeckToHandSignal.Dispatch();
-            }
 
-            for (var i = 1; i < BattleArena.CountOfCardsAddingToHand; i++)
-            {
-                if (Random.value > 0.5f)
+                for (var i = 1; i < BattleArena.CountOfCardsAddingToHand; i++)
                 {
-                    if (BattleArena.GetActivePlayer().CardBattlePull.Count <= 0) continue;
-                    AddCardFromDeckToHandSignal.Dispatch();
+                    if (Random.value > 0.5f)
+                    {
+                        if (BattleArena.GetActivePlayer().CardBattlePull.Count <= 0) continue;
+                        AddCardFromDeckToHandSignal.Dispatch();
+                    }
+                    else
+                    {
+                        if (BattleArena.GetActivePlayer().TrateBattlePull.Count <= 0) continue;
+                        AddTrateFromDeckToHandSignal.Dispatch();
+                    }
                 }
-                else
+            }
+            else
+            {
+                for (var i = 0; i < BattleArena.CountOfCardsAddingToHand; i++)
                 {
                     if (BattleArena.GetActivePlayer().TrateBattlePull.Count <= 0) continue;
                     AddTrateFromDeckToHandSignal.Dispatch();

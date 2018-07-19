@@ -12,5 +12,10 @@ namespace View.GameArena
         {
             _historyLog.text += str;
         }
+
+        public void RefreshLog()
+        {
+            _historyLog.text = "";
+        }
     }
 }

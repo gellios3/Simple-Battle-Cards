@@ -31,21 +31,21 @@ namespace Services
         /// </summary>
         public void SaveGameSession(string path)
         {
-            // create state history log
-            var stateData = new StateData
-            {
-                YourPlayer = StateService.GetStatePlayer(Arena.Player),
-                EnemyPlayer = StateService.GetStatePlayer(Arena.Opponent)
-            };
-
-            var json = JsonWorkService.SerializeToJson(stateData);
-            using (var fs = new FileStream(path, FileMode.Create))
-            {
-                using (var writer = new StreamWriter(fs))
-                {
-                    writer.Write(json);
-                }
-            }
+//            // create state history log
+//            var stateData = new StateData
+//            {
+//                YourPlayer = StateService.GetStatePlayer(Arena.Player),
+//                EnemyPlayer = StateService.GetStatePlayer(Arena.Opponent)
+//            };
+//
+//            var json = JsonWorkService.SerializeToJson(stateData);
+//            using (var fs = new FileStream(path, FileMode.Create))
+//            {
+//                using (var writer = new StreamWriter(fs))
+//                {
+//                    writer.Write(json);
+//                }
+//            }
         }
 
         /// <summary>

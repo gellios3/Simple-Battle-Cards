@@ -9,16 +9,21 @@ namespace View.DeckItems
 {
     public abstract class DraggableView : EventView, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
-        
         [SerializeField] protected TextMeshProUGUI NameText;
         [SerializeField] protected TextMeshProUGUI DescriptionText;
         [SerializeField] protected Image ArtworkImage;
         [SerializeField] protected TextMeshProUGUI ManaText;
         [SerializeField] protected TextMeshProUGUI AttackText;
         [SerializeField] protected TextMeshProUGUI HealthText;
-        [SerializeField] protected TextMeshProUGUI DefenceText;
-        
-        [SerializeField] protected Transform MainParenTransform;
+        [SerializeField] protected TextMeshProUGUI DefenceText;      
+
+        [SerializeField] private Transform _mainParenTransform;
+
+        public Transform MainParenTransform
+        {
+            get { return _mainParenTransform; }
+            set { _mainParenTransform = value; }
+        }
 
         [SerializeField] private Transform _parentToReturnTo;
 
@@ -35,7 +40,7 @@ namespace View.DeckItems
             get { return _placeholderParent; }
             set { _placeholderParent = value; }
         }
-        
+
         [SerializeField] private BattleSide _battleSide;
 
         public BattleSide Side
@@ -46,15 +51,21 @@ namespace View.DeckItems
 
         public GameObject Placeholder { get; private set; }
 
+
         private LayoutElement _layoutelem;
-        
+
+        public bool IsDragable = true;
+
+        public bool IsDroppable = true;
+
         /// <inheritdoc />
         /// <summary>
         /// On bigin drag
         /// </summary>
         /// <param name="eventData"></param>
-        public void OnBeginDrag(PointerEventData eventData)
+        public virtual void OnBeginDrag(PointerEventData eventData)
         {
+            if (!IsDragable) return;
             Placeholder = new GameObject();
             Placeholder.transform.SetParent(transform.parent);
 
@@ -78,7 +89,7 @@ namespace View.DeckItems
 
             transform.position = new Vector3(eventData.position.x, eventData.position.y, 1);
         }
-        
+
         /// <inheritdoc />
         /// <summary>
         /// On drag card
@@ -86,6 +97,7 @@ namespace View.DeckItems
         /// <param name="eventData"></param>
         public void OnDrag(PointerEventData eventData)
         {
+            if (!IsDragable) return;
             var pos = Camera.main.ScreenToWorldPoint(eventData.position);
             transform.position = new Vector3(pos.x, pos.y, 1);
             if (Placeholder.transform.parent != Placeholder)
@@ -108,7 +120,7 @@ namespace View.DeckItems
 
             Placeholder.transform.SetSiblingIndex(newSiblingIndex);
         }
-        
+
         /// <inheritdoc />
         /// <summary>
         /// On End drag card
@@ -116,6 +128,7 @@ namespace View.DeckItems
         /// <param name="eventData"></param>
         public void OnEndDrag(PointerEventData eventData)
         {
+            if (!IsDragable) return;
             transform.SetParent(ParentToReturnTo);
             transform.SetSiblingIndex(Placeholder.transform.GetSiblingIndex());
             GetComponent<CanvasGroup>().blocksRaycasts = true;
