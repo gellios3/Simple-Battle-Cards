@@ -41,7 +41,7 @@ namespace Mediators.GameArena
                 else
                 {
                     view.IsDroppable = false;
-                    view.IsDragable = view.Card.Status != BattleStatus.Sleep;
+                    view.IsDragable = view.Card != null ? view.Card.Status != BattleStatus.Sleep : true;
                 }
             };
 
@@ -58,6 +58,8 @@ namespace Mediators.GameArena
                     });
                 }
             };
+
+            View.OnAddToHand += view => { Debug.Log("OnAddToHand"); };
         }
     }
 }

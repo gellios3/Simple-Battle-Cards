@@ -80,6 +80,7 @@ namespace Contexts
             injectionBinder.Bind<RefreshHandSignal>().ToSingleton();
             injectionBinder.Bind<RefreshArenaSignal>().ToSingleton();
             injectionBinder.Bind<RefreshHistoryLog>().ToSingleton();
+            injectionBinder.Bind<AddCardToHandSignal>().ToSingleton();
 
             // Init comands
             commandBinder.Bind<InitNewGameSignal>().To<InitNewGameCommand>();

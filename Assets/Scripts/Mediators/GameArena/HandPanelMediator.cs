@@ -45,6 +45,12 @@ namespace Mediators.GameArena
         public AddHistoryLogSignal AddHistoryLogSignal { get; set; }
 
         /// <summary>
+        /// Add history log
+        /// </summary>
+        [Inject]
+        public AddCardToHandSignal AddCardToHandSignal { get; set; }
+
+        /// <summary>
         /// Battle player hand
         /// </summary>
         public List<DraggableView> BattleHand { get; set; } = new List<DraggableView>();
@@ -54,10 +60,7 @@ namespace Mediators.GameArena
         /// </summary>
         public override void OnRegister()
         {
-            View.OnAddViewToHand += view =>
-            {
-                BattleHand.Add(view);
-            };
+            View.OnAddViewToHand += view => { BattleHand.Add(view); };
 
             RefreshHandSignal.AddListener(() =>
             {
@@ -84,13 +87,11 @@ namespace Mediators.GameArena
                 InitTrateDeckSignal.Dispatch();
             });
 
-//            AddCardFromDeckToHandSignal.AddListener(() =>
-//            {
-//                if (BattleArena.ActiveSide != View.Side) return;
-//                AddCardToHand();
-//                // Init card desk
-//                InitCardDeckSignal.Dispatch();
-//            });
+            AddCardToHandSignal.AddListener(view =>
+            {
+                Debug.Log("AddCardToHandSignal");
+                BattleHand.Add(view);
+            });
         }
 
         /// <summary>

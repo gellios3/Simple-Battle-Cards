@@ -104,7 +104,6 @@ namespace View.DeckItems
             if (!IsDragable) return;
             var pos = Camera.main.ScreenToWorldPoint(eventData.position);
             transform.position = new Vector3(pos.x, pos.y, 1);
-            transform.position = eventData.position;
             if (Placeholder.transform.parent != Placeholder)
             {
                 Placeholder.transform.SetParent(PlaceholderParent);
