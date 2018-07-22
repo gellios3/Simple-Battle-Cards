@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿﻿using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using Models.Arena;
@@ -34,6 +34,11 @@ namespace View.DeckItems
         /// On add trate to card
         /// </summary>
         public event Action<CardView> OnTakeDamage;
+        
+        /// <summary>
+        /// On add trate to card
+        /// </summary>
+        public event Action<CardView> OnAddToHand;
 
         /// <summary>
         /// Battle tarates
@@ -65,7 +70,7 @@ namespace View.DeckItems
         {
             _waypoints[0] = ParentToReturnTo.position;
             _waypoints[1] = ParentToReturnTo.Find("Stub").transform.position;
-            var path = transform.DOPath(_waypoints, 3, PathType.CatmullRom);
+            var path = transform.DOPath(_waypoints, 2, PathType.CatmullRom);
             path.onPlay += OnStartAnimation;
             path.onComplete += OnCompleteAnimation;
         }
@@ -150,6 +155,8 @@ namespace View.DeckItems
         private void OnCompleteAnimation()
         {
             transform.SetParent(ParentToReturnTo);
+            transform.SetSiblingIndex(transform.parent.childCount - 1);
+            OnAddToHand?.Invoke(this);
         }
 
         /// <summary>

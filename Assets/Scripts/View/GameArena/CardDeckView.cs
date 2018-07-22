@@ -56,12 +56,31 @@ namespace View.GameArena
             cardView.Init(battleCard);
             cardView.ToogleStubImage(false);
             OnAddViewToDeck?.Invoke(cardView);
+            cardGameObject.SetActive(false);
+
+            if (_pull.transform.childCount == 2)
+            {
+                StartCoroutine(HandOutCard());
+            }
         }
 
-        private IEnumerator HandOutCard(CardView cardView)
+        private IEnumerator HandOutCard(int pos = 0)
         {
-            yield return new WaitForSeconds(1);
-            cardView.StartPathAnimation();
+            if (pos > 0)
+            {
+                yield return new WaitForSeconds(2);
+            }
+            else
+            {
+                yield return new WaitForSeconds(0);
+            }
+
+            if (_pull.transform.childCount == 0) yield break;
+            pos++;
+            var cardItem = _pull.transform.GetChild(0);
+            cardItem.gameObject.SetActive(true);
+            cardItem.GetComponent<CardView>().StartPathAnimation();
+            StartCoroutine(HandOutCard(pos));
         }
 
         public void SetCardDeckCount(int count)

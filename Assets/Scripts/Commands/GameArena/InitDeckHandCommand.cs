@@ -36,20 +36,21 @@ namespace Commands.GameArena
             if (BattleArena.GetActivePlayer().CardBattlePull.Count > 0)
             {
                 AddCardToHandDeckSignal.Dispatch();
+                AddCardToHandDeckSignal.Dispatch();
 
-                for (var i = 1; i < BattleArena.CountOfCardsAddingToHand; i++)
-                {
-                    if (Random.value > 0.5f)
-                    {
-                        if (BattleArena.GetActivePlayer().CardBattlePull.Count <= 0) continue;
-                        AddCardToHandDeckSignal.Dispatch();
-                    }
-                    else
-                    {
-                        if (BattleArena.GetActivePlayer().TrateBattlePull.Count <= 0) continue;
-                        AddTrateFromDeckToHandSignal.Dispatch();
-                    }
-                }
+//                for (var i = 1; i < BattleArena.CountOfCardsAddingToHand; i++)
+//                {
+//                    if (Random.value > 0.5f)
+//                    {
+//                        if (BattleArena.GetActivePlayer().CardBattlePull.Count <= 0) continue;
+//                        AddCardToHandDeckSignal.Dispatch();
+//                    }
+//                    else
+//                    {
+//                        if (BattleArena.GetActivePlayer().TrateBattlePull.Count <= 0) continue;
+//                        AddTrateFromDeckToHandSignal.Dispatch();
+//                    }
+//                }
             }
             else
             {
