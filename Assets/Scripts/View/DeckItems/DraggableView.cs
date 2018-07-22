@@ -15,7 +15,7 @@ namespace View.DeckItems
         [SerializeField] protected TextMeshProUGUI ManaText;
         [SerializeField] protected TextMeshProUGUI AttackText;
         [SerializeField] protected TextMeshProUGUI HealthText;
-        [SerializeField] protected TextMeshProUGUI DefenceText;      
+        [SerializeField] protected TextMeshProUGUI DefenceText;
 
         [SerializeField] private Transform _mainParenTransform;
 
@@ -58,6 +58,22 @@ namespace View.DeckItems
 
         public bool IsDroppable = true;
 
+        protected void CreatePlaceholder()
+        {
+            Placeholder = new GameObject();
+
+            var le = Placeholder.AddComponent<LayoutElement>();
+            le.preferredWidth = GetComponent<LayoutElement>().preferredWidth;
+            le.preferredHeight = 0;
+            le.flexibleWidth = 0;
+            le.flexibleHeight = 0;
+
+            // Set plasholder zero height 
+            Placeholder.GetComponent<RectTransform>().sizeDelta =
+                new Vector2(GetComponent<LayoutElement>().preferredWidth, 0);
+            Placeholder.transform.localScale = new Vector3(1, 1, 1);
+        }
+
         /// <inheritdoc />
         /// <summary>
         /// On bigin drag
@@ -66,21 +82,9 @@ namespace View.DeckItems
         public virtual void OnBeginDrag(PointerEventData eventData)
         {
             if (!IsDragable) return;
-            Placeholder = new GameObject();
+            CreatePlaceholder();
             Placeholder.transform.SetParent(transform.parent);
-
-            var le = Placeholder.AddComponent<LayoutElement>();
-            le.preferredWidth = GetComponent<LayoutElement>().preferredWidth;
-            le.preferredHeight = 0;
-            le.flexibleWidth = 0;
-            le.flexibleHeight = 0;
-
             Placeholder.transform.SetSiblingIndex(transform.GetSiblingIndex());
-
-            // Set plasholder zero height 
-            Placeholder.GetComponent<RectTransform>().sizeDelta =
-                new Vector2(GetComponent<LayoutElement>().preferredWidth, 0);
-            Placeholder.transform.localScale = new Vector3(1, 1, 1);
 
             ParentToReturnTo = transform.parent;
             PlaceholderParent = ParentToReturnTo;
@@ -100,6 +104,7 @@ namespace View.DeckItems
             if (!IsDragable) return;
             var pos = Camera.main.ScreenToWorldPoint(eventData.position);
             transform.position = new Vector3(pos.x, pos.y, 1);
+            transform.position = eventData.position;
             if (Placeholder.transform.parent != Placeholder)
             {
                 Placeholder.transform.SetParent(PlaceholderParent);

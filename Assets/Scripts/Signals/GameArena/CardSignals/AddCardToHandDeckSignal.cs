@@ -2,7 +2,7 @@
 
 namespace Signals.GameArena.CardSignals
 {
-    public class AddCardFromDeckToHandSignal : Signal
+    public class AddCardToHandDeckSignal : Signal
     {
     }
 }

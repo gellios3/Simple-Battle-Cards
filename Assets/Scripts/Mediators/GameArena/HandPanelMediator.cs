@@ -25,17 +25,6 @@ namespace Mediators.GameArena
         [Inject]
         public RefreshHandSignal RefreshHandSignal { get; set; }
 
-        /// <summary>
-        /// Init card deck signal
-        /// </summary>
-        [Inject]
-        public AddCardFromDeckToHandSignal AddCardFromDeckToHandSignal { get; set; }
-
-        /// <summary>
-        /// Init card deck signal
-        /// </summary>
-        [Inject]
-        public InitCardDeckSignal InitCardDeckSignal { get; set; }
 
         /// <summary>
         /// Init mana signal
@@ -95,45 +84,13 @@ namespace Mediators.GameArena
                 InitTrateDeckSignal.Dispatch();
             });
 
-            AddCardFromDeckToHandSignal.AddListener(() =>
-            {
-                if (BattleArena.ActiveSide != View.Side) return;
-                AddCardToHand();
-                // Init card desk
-                InitCardDeckSignal.Dispatch();
-            });
-        }
-
-        /// <summary>
-        /// Add trate to hand
-        /// </summary>
-        private void AddCardToHand()
-        {
-            if (BattleHand.Count < Arena.HandLimitCount)
-            {
-                var card = BattleArena.GetActivePlayer().CardBattlePull[0];
-                if (card != null)
-                {
-                    // add card to battle hand
-                    View.AddCardToHand(card, BattleArena.ActiveSide);
-
-                    AddHistoryLogSignal.Dispatch(new[]
-                    {
-                        "PLAYER '", BattleArena.GetActivePlayer().Name, "' Add '", card.SourceCard.name,
-                        "' Card to Hand"
-                    }, LogType.Hand);
-                }
-            }
-            else
-            {
-                AddHistoryLogSignal.Dispatch(new[]
-                {
-                    "PLAYER '", BattleArena.GetActivePlayer().Name, "' has add Card to Hand ERROR! "
-                }, LogType.Error);
-            }
-
-            // Decreace Card pull
-            BattleArena.GetActivePlayer().CardBattlePull.RemoveAt(0);
+//            AddCardFromDeckToHandSignal.AddListener(() =>
+//            {
+//                if (BattleArena.ActiveSide != View.Side) return;
+//                AddCardToHand();
+//                // Init card desk
+//                InitCardDeckSignal.Dispatch();
+//            });
         }
 
         /// <summary>

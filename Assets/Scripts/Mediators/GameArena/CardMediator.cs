@@ -51,7 +51,7 @@ namespace Mediators.GameArena
                     view.Side == BattleArena.ActiveSide &&
                     view.Card.Status == BattleStatus.Active)
                 {
-                    TakeDamageToCardSignal.Dispatch(new DamageStruct()
+                    TakeDamageToCardSignal.Dispatch(new DamageStruct
                     {
                         DamageCardView = view,
                         SourceCardView = View

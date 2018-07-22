@@ -16,31 +16,7 @@ namespace View.GameArena
         /// <summary>
         /// On add trate to card
         /// </summary>
-        public event Action<DraggableView> OnAddViewToHand;
-
-        /// <summary>
-        /// Add card to hand
-        /// </summary>
-        /// <param name="battleCard"></param>
-        /// <param name="side"></param>
-        public void AddCardToHand(BattleCard battleCard, BattleSide side)
-        {
-            // Load Card
-            var cardGameObject = (GameObject) Instantiate(
-                Resources.Load("Prefabs/Card", typeof(GameObject)), new Vector3(), Quaternion.identity,
-                transform
-            );
-            // Set Z was zero position
-            cardGameObject.transform.localPosition = new Vector3(cardGameObject.transform.localRotation.x,
-                cardGameObject.transform.localRotation.y, 0);
-            // Init Card
-            var cardView = cardGameObject.GetComponent<CardView>();
-            cardView.Side = side;
-            cardView.MainParenTransform = _placeholderParenTransform;
-            cardView.Init(battleCard);
-            cardView.ToogleStubImage(false);
-            OnAddViewToHand?.Invoke(cardView);
-        }
+        public event Action<DraggableView> OnAddViewToHand;        
 
         /// <summary>
         /// Add trate to hand

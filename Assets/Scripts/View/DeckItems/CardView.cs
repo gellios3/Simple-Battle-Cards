@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using Models.Arena;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -39,6 +40,8 @@ namespace View.DeckItems
         /// </summary>
         public List<TrateView> TrateViews { get; } = new List<TrateView>();
 
+        private readonly Vector3[] _waypoints = new Vector3[2];
+
         /// <summary>
         /// Init Card View
         /// </summary>
@@ -52,7 +55,19 @@ namespace View.DeckItems
             ManaText.text = Card.Mana.ToString();
             AttackText.text = Card.Attack.ToString();
             HealthText.text = Card.Health.ToString();
-            DefenceText.text = Card.Defence.ToString();           
+            DefenceText.text = Card.Defence.ToString();
+        }
+
+        /// <summary>
+        /// Start path animation
+        /// </summary>
+        public void StartPathAnimation()
+        {
+            _waypoints[0] = ParentToReturnTo.position;
+            _waypoints[1] = ParentToReturnTo.Find("Stub").transform.position;
+            var path = transform.DOPath(_waypoints, 3, PathType.CatmullRom);
+            path.onPlay += OnStartAnimation;
+            path.onComplete += OnCompleteAnimation;
         }
 
         /// <summary>
@@ -127,6 +142,22 @@ namespace View.DeckItems
             {
                 OnTakeDamage?.Invoke(draggableCard);
             }
+        }
+
+        /// <summary>
+        /// On complete animation
+        /// </summary>
+        private void OnCompleteAnimation()
+        {
+            transform.SetParent(ParentToReturnTo);
+        }
+
+        /// <summary>
+        /// On start animation
+        /// </summary>
+        private void OnStartAnimation()
+        {
+            transform.SetParent(MainParenTransform);
         }
     }
 }

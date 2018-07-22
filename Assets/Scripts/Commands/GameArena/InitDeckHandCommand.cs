@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Commands.GameArena
 {
-    public class InitHandPanelCommand : Command
+    public class InitDeckHandCommand : Command
     {
         /// <summary>
         /// Battle
@@ -19,7 +19,7 @@ namespace Commands.GameArena
         /// Add card from deck to hand signal
         /// </summary>
         [Inject]
-        public AddCardFromDeckToHandSignal AddCardFromDeckToHandSignal { get; set; }
+        public AddCardToHandDeckSignal AddCardToHandDeckSignal { get; set; }
 
         /// <summary>
         /// Add trate from deck to hand signal
@@ -35,14 +35,14 @@ namespace Commands.GameArena
             // Add card or trates to hand
             if (BattleArena.GetActivePlayer().CardBattlePull.Count > 0)
             {
-                AddCardFromDeckToHandSignal.Dispatch();
+                AddCardToHandDeckSignal.Dispatch();
 
                 for (var i = 1; i < BattleArena.CountOfCardsAddingToHand; i++)
                 {
                     if (Random.value > 0.5f)
                     {
                         if (BattleArena.GetActivePlayer().CardBattlePull.Count <= 0) continue;
-                        AddCardFromDeckToHandSignal.Dispatch();
+                        AddCardToHandDeckSignal.Dispatch();
                     }
                     else
                     {

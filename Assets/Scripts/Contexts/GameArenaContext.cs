@@ -72,7 +72,7 @@ namespace Contexts
             injectionBinder.Bind<AddHistoryLogToViewSignal>().ToSingleton();
             injectionBinder.Bind<InitCardDeckSignal>().ToSingleton();
             injectionBinder.Bind<InitTrateDeckSignal>().ToSingleton();
-            injectionBinder.Bind<AddCardFromDeckToHandSignal>().ToSingleton();
+            injectionBinder.Bind<AddCardToHandDeckSignal>().ToSingleton();
             injectionBinder.Bind<AddTrateFromDeckToHandSignal>().ToSingleton();
             injectionBinder.Bind<ShowManaSignal>().ToSingleton();
             injectionBinder.Bind<AddCatdToBattleArenaSignal>().ToSingleton();
@@ -87,7 +87,7 @@ namespace Contexts
             commandBinder.Bind<AddHistoryLogSignal>().To<AddHistoryLogCommand>();
             commandBinder.Bind<InitManaSignal>().To<InitManaCommand>();
             commandBinder.Bind<InitBattleArenaSignal>().To<InitBattleArenaCommand>();
-            commandBinder.Bind<InitHandPanelSignal>().To<InitHandPanelCommand>();
+            commandBinder.Bind<InitDeckHandSignal>().To<InitDeckHandCommand>();
             commandBinder.Bind<AddTrateToCardSignal>().To<AddTrateToCardCommand>();
             commandBinder.Bind<EndTurnSignal>().To<EndTurnCommand>();
             commandBinder.Bind<TakeDamageToCardSignal>().To<TakeDamageToCardCommand>();
