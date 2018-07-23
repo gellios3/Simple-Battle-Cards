@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-using Models;
+﻿using Models;
 using Models.Arena;
 using Signals;
 using Signals.GameArena;
 using Signals.GameArena.CardSignals;
-using View.DeckItems;
 using View.GameArena;
 
 namespace Mediators.GameArena
@@ -56,7 +54,7 @@ namespace Mediators.GameArena
         }
 
         /// <summary>
-        /// Add trate to hand
+        /// Add card to hand
         /// </summary>
         private void AddCardToHand()
         {
@@ -83,7 +81,7 @@ namespace Mediators.GameArena
                 }, LogType.Error);
             }
 
-            // Decreace Card pull
+            // Remove card from pull
             BattleArena.GetActivePlayer().CardBattlePull.RemoveAt(0);
         }
     }

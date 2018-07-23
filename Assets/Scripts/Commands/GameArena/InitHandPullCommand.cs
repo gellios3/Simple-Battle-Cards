@@ -20,7 +20,7 @@ namespace Commands.GameArena
         /// </summary>
         [Inject]
         public AddCardToHandDeckSignal AddCardToHandDeckSignal { get; set; }
-        
+
         /// <summary>
         /// Init hand signal
         /// </summary>
@@ -43,7 +43,7 @@ namespace Commands.GameArena
             {
                 // First always card
                 AddCardToHandDeckSignal.Dispatch();
-                
+
                 // Next 50/50 call call card or trate
                 for (var i = 1; i < BattleArena.CountOfCardsAddingToHand; i++)
                 {
@@ -67,7 +67,7 @@ namespace Commands.GameArena
                     AddTrateFromDeckToHandSignal.Dispatch();
                 }
             }
-            
+
             InitHandSignal.Dispatch();
         }
     }

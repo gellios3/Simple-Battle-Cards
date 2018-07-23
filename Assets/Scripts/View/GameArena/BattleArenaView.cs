@@ -20,7 +20,7 @@ namespace View.GameArena
         public override void OnDrop(PointerEventData eventData)
         {
             var cardView = eventData.pointerDrag.GetComponent<CardView>();
-            if (cardView == null || cardView.Card == null) return;
+            if (cardView == null || cardView.Card == null || cardView.PlaceholderParent != transform) return;
             if (cardView.Card.Status == BattleStatus.Wait)
             {
                 AddCatdToBattleArenaSignal.Dispatch(cardView);
@@ -29,17 +29,19 @@ namespace View.GameArena
 
         public void AddCardViewToArena(CardView cardView)
         {
+            cardView.IsDroppable = false;
             cardView.ParentToReturnTo = transform;
         }
 
         public override void OnPointerEnter(PointerEventData eventData)
         {
-//            Debug.Log("BattleArenaView OnPointerEnter");
-        }
-
-        public override void OnPointerExit(PointerEventData eventData)
-        {
-//            Debug.Log("BattleArenaView OnPointerExit");
+            if (eventData.pointerDrag == null)
+                return;
+            var draggableCard = eventData.pointerDrag.GetComponent<DraggableView>();
+            if (draggableCard.IsDroppable)
+            {
+                base.OnPointerEnter(eventData);
+            }
         }
     }
 }

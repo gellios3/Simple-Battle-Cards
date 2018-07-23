@@ -1,10 +1,11 @@
-﻿﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using Models.Arena;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using View.GameArena;
 
 namespace View.DeckItems
 {
@@ -65,7 +66,7 @@ namespace View.DeckItems
         {
             _waypoints[0] = ParentToReturnTo.position;
             _waypoints[1] = ParentToReturnTo.Find("Stub").transform.position;
-            var path = transform.DOPath(_waypoints, 2, PathType.CatmullRom);
+            var path = transform.DOPath(_waypoints, 1, PathType.CatmullRom);
             path.onPlay += OnStartAnimation;
             path.onComplete += OnCompleteAnimation;
         }
@@ -94,16 +95,8 @@ namespace View.DeckItems
             TrateViews.Add(trateView);
             // Show card on battle arena
             Init(Card);
+            
             trateView.DestroyView();
-        }
-
-        /// <summary>
-        /// Destroy мiew
-        /// </summary>
-        public void DestroyView()
-        {
-            Destroy(Placeholder);
-            Destroy(gameObject);
         }
 
         /// <inheritdoc />

@@ -69,6 +69,7 @@ namespace View.GameArena
         /// <returns></returns>
         private IEnumerator HandOutCard(int pos = 0)
         {
+            
             if (pos > 0)
             {
                 yield return new WaitForSeconds(2);
