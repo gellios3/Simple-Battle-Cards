@@ -11,12 +11,7 @@ namespace View.GameArena
         /// <summary>
         /// Placeholder parent
         /// </summary>
-        [SerializeField] private Transform _placeholderParenTransform;
-
-        /// <summary>
-        /// On add trate to card
-        /// </summary>
-        public event Action<DraggableView> OnAddViewToHand;        
+        [SerializeField] private Transform _placeholderParenTransform;  
 
         /// <summary>
         /// Add trate to hand
@@ -38,7 +33,6 @@ namespace View.GameArena
             trateView.Side = side;
             trateView.MainParenTransform = _placeholderParenTransform;
             trateView.Init(battleTrate);
-            OnAddViewToHand?.Invoke(trateView);
         }
 
         /// <summary>

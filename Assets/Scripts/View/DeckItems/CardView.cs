@@ -34,11 +34,6 @@ namespace View.DeckItems
         /// On add trate to card
         /// </summary>
         public event Action<CardView> OnTakeDamage;
-        
-        /// <summary>
-        /// On add trate to card
-        /// </summary>
-        public event Action<CardView> OnAddToHand;
 
         /// <summary>
         /// Battle tarates
@@ -156,7 +151,6 @@ namespace View.DeckItems
         {
             transform.SetParent(ParentToReturnTo);
             transform.SetSiblingIndex(transform.parent.childCount - 1);
-            OnAddToHand?.Invoke(this);
         }
 
         /// <summary>

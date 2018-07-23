@@ -2,7 +2,7 @@
 
 namespace Signals.GameArena
 {
-    public class InitDeckHandSignal : Signal
+    public class InitHandPullSignal : Signal
     {
     }
 }

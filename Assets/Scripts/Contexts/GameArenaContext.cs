@@ -80,7 +80,7 @@ namespace Contexts
             injectionBinder.Bind<RefreshHandSignal>().ToSingleton();
             injectionBinder.Bind<RefreshArenaSignal>().ToSingleton();
             injectionBinder.Bind<RefreshHistoryLog>().ToSingleton();
-            injectionBinder.Bind<AddCardToHandSignal>().ToSingleton();
+            injectionBinder.Bind<InitHandSignal>().ToSingleton();
 
             // Init comands
             commandBinder.Bind<InitNewGameSignal>().To<InitNewGameCommand>();
@@ -88,7 +88,7 @@ namespace Contexts
             commandBinder.Bind<AddHistoryLogSignal>().To<AddHistoryLogCommand>();
             commandBinder.Bind<InitManaSignal>().To<InitManaCommand>();
             commandBinder.Bind<InitBattleArenaSignal>().To<InitBattleArenaCommand>();
-            commandBinder.Bind<InitDeckHandSignal>().To<InitDeckHandCommand>();
+            commandBinder.Bind<InitHandPullSignal>().To<InitHandPullCommand>();
             commandBinder.Bind<AddTrateToCardSignal>().To<AddTrateToCardCommand>();
             commandBinder.Bind<EndTurnSignal>().To<EndTurnCommand>();
             commandBinder.Bind<TakeDamageToCardSignal>().To<TakeDamageToCardCommand>();

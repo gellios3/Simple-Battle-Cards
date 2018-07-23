@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using Models.Arena;
 using strange.extensions.mediation.impl;
 using TMPro;
@@ -12,11 +11,7 @@ namespace View.GameArena
     {
         [SerializeField] private BattleSide _side;
 
-        public BattleSide Side
-        {
-            get { return _side; }
-            set { _side = value; }
-        }
+        public BattleSide Side => _side;
 
         [SerializeField] private TextMeshProUGUI _cardDeckCountText;
         [SerializeField] private GameObject _pull;
@@ -28,10 +23,10 @@ namespace View.GameArena
         [SerializeField] private Transform _placeholderParenTransform;
 
         /// <summary>
-        /// On add trate to card
+        /// Arena
         /// </summary>
-        public event Action<CardView> OnAddViewToDeck;
-
+        [Inject]
+        public Arena Arena { get; set; }
 
         /// <summary>
         /// Add card to hand
@@ -55,15 +50,23 @@ namespace View.GameArena
             cardView.ParentToReturnTo = _handTransform;
             cardView.Init(battleCard);
             cardView.ToogleStubImage(false);
-            OnAddViewToDeck?.Invoke(cardView);
             cardGameObject.SetActive(false);
-
-            if (_pull.transform.childCount == 2)
-            {
-                StartCoroutine(HandOutCard());
-            }
+            InitCardDeckCount();
         }
 
+        /// <summary>
+        /// Add pull cards to hand
+        /// </summary>
+        public void AddPullCardsToHand()
+        {
+            StartCoroutine(HandOutCard());
+        }
+
+        /// <summary>
+        /// Hand out card animation
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <returns></returns>
         private IEnumerator HandOutCard(int pos = 0)
         {
             if (pos > 0)
@@ -83,9 +86,19 @@ namespace View.GameArena
             StartCoroutine(HandOutCard(pos));
         }
 
-        public void SetCardDeckCount(int count)
+        /// <summary>
+        /// Init deck count
+        /// </summary>
+        public void InitCardDeckCount()
         {
-            _cardDeckCountText.text = count.ToString();
+            if (Side == BattleSide.Player)
+            {
+                _cardDeckCountText.text = Arena.Player.CardBattlePull.Count.ToString();
+            }
+            else if (Side == BattleSide.Opponent)
+            {
+                _cardDeckCountText.text = Arena.Opponent.CardBattlePull.Count.ToString();
+            }
         }
     }
 }

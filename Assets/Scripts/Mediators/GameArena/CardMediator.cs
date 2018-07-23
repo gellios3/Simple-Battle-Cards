@@ -58,8 +58,6 @@ namespace Mediators.GameArena
                     });
                 }
             };
-
-            View.OnAddToHand += view => { Debug.Log("OnAddToHand"); };
         }
     }
 }

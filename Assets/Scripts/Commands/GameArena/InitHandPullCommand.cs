@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Commands.GameArena
 {
-    public class InitDeckHandCommand : Command
+    public class InitHandPullCommand : Command
     {
         /// <summary>
         /// Battle
@@ -20,6 +20,12 @@ namespace Commands.GameArena
         /// </summary>
         [Inject]
         public AddCardToHandDeckSignal AddCardToHandDeckSignal { get; set; }
+        
+        /// <summary>
+        /// Init hand signal
+        /// </summary>
+        [Inject]
+        public InitHandSignal InitHandSignal { get; set; }
 
         /// <summary>
         /// Add trate from deck to hand signal
@@ -35,22 +41,23 @@ namespace Commands.GameArena
             // Add card or trates to hand
             if (BattleArena.GetActivePlayer().CardBattlePull.Count > 0)
             {
+                // First always card
                 AddCardToHandDeckSignal.Dispatch();
-                AddCardToHandDeckSignal.Dispatch();
-
-//                for (var i = 1; i < BattleArena.CountOfCardsAddingToHand; i++)
-//                {
-//                    if (Random.value > 0.5f)
-//                    {
-//                        if (BattleArena.GetActivePlayer().CardBattlePull.Count <= 0) continue;
-//                        AddCardToHandDeckSignal.Dispatch();
-//                    }
-//                    else
-//                    {
-//                        if (BattleArena.GetActivePlayer().TrateBattlePull.Count <= 0) continue;
-//                        AddTrateFromDeckToHandSignal.Dispatch();
-//                    }
-//                }
+                
+                // Next 50/50 call call card or trate
+                for (var i = 1; i < BattleArena.CountOfCardsAddingToHand; i++)
+                {
+                    if (Random.value > 0.5f)
+                    {
+                        if (BattleArena.GetActivePlayer().CardBattlePull.Count <= 0) continue;
+                        AddCardToHandDeckSignal.Dispatch();
+                    }
+                    else
+                    {
+                        if (BattleArena.GetActivePlayer().TrateBattlePull.Count <= 0) continue;
+                        AddTrateFromDeckToHandSignal.Dispatch();
+                    }
+                }
             }
             else
             {
@@ -60,6 +67,8 @@ namespace Commands.GameArena
                     AddTrateFromDeckToHandSignal.Dispatch();
                 }
             }
+            
+            InitHandSignal.Dispatch();
         }
     }
 }

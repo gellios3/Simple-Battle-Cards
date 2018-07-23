@@ -37,7 +37,7 @@ namespace Commands.GameArena
         /// Init battle arena signal
         /// </summary>
         [Inject]
-        public InitDeckHandSignal InitDeckHandSignal { get; set; }
+        public InitHandPullSignal InitHandPullSignal { get; set; }
 
         /// <summary>
         /// Battle
@@ -94,7 +94,7 @@ namespace Commands.GameArena
             InitManaSignal.Dispatch();
 
             // Init hand panel
-            InitDeckHandSignal.Dispatch();
+            InitHandPullSignal.Dispatch();
 
             //Init battle arena
             InitBattleArenaSignal.Dispatch();

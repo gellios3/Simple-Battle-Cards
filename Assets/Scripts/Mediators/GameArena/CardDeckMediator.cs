@@ -17,11 +17,6 @@ namespace Mediators.GameArena
         [Inject]
         public InitCardDeckSignal InitCardDeckSignal { get; set; }
 
-        /// <summary>
-        /// Arena
-        /// </summary>
-        [Inject]
-        public Arena Arena { get; set; }
 
         /// <summary>
         /// Init mana signal
@@ -42,33 +37,22 @@ namespace Mediators.GameArena
         public AddHistoryLogSignal AddHistoryLogSignal { get; set; }
 
         /// <summary>
-        /// Battle player hand
+        /// Init hand signal
         /// </summary>
-        public List<CardView> CardDeck { get; set; } = new List<CardView>();
+        [Inject]
+        public InitHandSignal InitHandSignal { get; set; }
 
         public override void OnRegister()
-        {
-            View.OnAddViewToDeck += view => { CardDeck.Add(view); };
-
-            InitCardDeckSignal.AddListener(() =>
-            {
-                if (View.Side == BattleSide.Player)
-                {
-                    View.SetCardDeckCount(Arena.Player.CardBattlePull.Count);
-                }
-                else if (View.Side == BattleSide.Opponent)
-                {
-                    View.SetCardDeckCount(Arena.Opponent.CardBattlePull.Count);
-                }
-            });
+        {            
+            InitCardDeckSignal.AddListener(() => { View.InitCardDeckCount(); });
 
             AddCardToHandDeckSignal.AddListener(() =>
             {
                 if (BattleArena.ActiveSide != View.Side) return;
                 AddCardToHand();
-                // Init card desk
-                InitCardDeckSignal.Dispatch();
             });
+
+            InitHandSignal.AddListener(() => { View.AddPullCardsToHand(); });
         }
 
         /// <summary>
@@ -76,7 +60,7 @@ namespace Mediators.GameArena
         /// </summary>
         private void AddCardToHand()
         {
-            if (CardDeck.Count < Arena.HandLimitCount)
+            if (BattleArena.HandCount < Arena.HandLimitCount)
             {
                 var card = BattleArena.GetActivePlayer().CardBattlePull[0];
                 if (card != null)

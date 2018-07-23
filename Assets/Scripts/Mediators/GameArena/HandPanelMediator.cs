@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using Models.Arena;
+﻿using Models.Arena;
 using Signals;
 using Signals.GameArena;
-using Signals.GameArena.CardSignals;
 using Signals.GameArena.TrateSignals;
 using UnityEngine;
 using View.DeckItems;
@@ -44,39 +42,27 @@ namespace Mediators.GameArena
         [Inject]
         public AddHistoryLogSignal AddHistoryLogSignal { get; set; }
 
-        /// <summary>
-        /// Add history log
-        /// </summary>
-        [Inject]
-        public AddCardToHandSignal AddCardToHandSignal { get; set; }
-
-        /// <summary>
-        /// Battle player hand
-        /// </summary>
-        public List<DraggableView> BattleHand { get; set; } = new List<DraggableView>();
 
         /// <summary>
         /// On register mediator
         /// </summary>
         public override void OnRegister()
         {
-            View.OnAddViewToHand += view => { BattleHand.Add(view); };
-
             RefreshHandSignal.AddListener(() =>
             {
                 if (BattleArena.ActiveSide != View.Side) return;
-                BattleHand.Clear();
+                var count = 0;
                 foreach (Transform child in View.transform)
                 {
-                    var view = child.GetComponent<DraggableView>();
-                    BattleHand.Add(view);
+                    var view = child.GetComponent<CardView>();
+                    if (view != null)
+                    {
+                        count++;
+                    }
                 }
 
-                BattleArena.HandCardsCount = BattleHand.FindAll(item =>
-                {
-                    var card = item as CardView;
-                    return card != null;
-                }).Count;
+                BattleArena.HandCount = View.transform.childCount;
+                BattleArena.HandCardsCount = count;
             });
 
             AddTrateFromDeckToHandSignal.AddListener(() =>
@@ -86,12 +72,6 @@ namespace Mediators.GameArena
                 // Init trate deck signal
                 InitTrateDeckSignal.Dispatch();
             });
-
-            AddCardToHandSignal.AddListener(view =>
-            {
-                Debug.Log("AddCardToHandSignal");
-                BattleHand.Add(view);
-            });
         }
 
         /// <summary>
@@ -99,7 +79,7 @@ namespace Mediators.GameArena
         /// </summary>
         private void AddTrateToHand()
         {
-            if (BattleHand.Count < Arena.HandLimitCount)
+            if (BattleArena.HandCardsCount < Arena.HandLimitCount)
             {
                 var trate = BattleArena.GetActivePlayer().TrateBattlePull[0];
                 if (trate != null)
