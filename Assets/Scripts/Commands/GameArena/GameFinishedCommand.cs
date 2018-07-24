@@ -1,6 +1,8 @@
 ﻿using Models.Arena;
 using strange.extensions.command.impl;
 using Signals;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 using LogType = Models.LogType;
 
 namespace Commands
@@ -34,6 +36,8 @@ namespace Commands
                 ? Arena.Opponent
                 : Arena.Player;
             AddHistoryLogSignal.Dispatch(new[] {"\"", winPlayer.Name, "' WINS!"}, LogType.Battle);
+
+            SceneManager.LoadScene("MainMenu");
         }
     }
 }

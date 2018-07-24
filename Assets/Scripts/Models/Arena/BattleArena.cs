@@ -36,6 +36,7 @@ namespace Models.Arena
         /// </summary>
         public int CountOfCardsAddingToHand { get; set; }
 
+        public int HandCount;
         public int HandCardsCount;
         public int ArenaCardsCount;
 

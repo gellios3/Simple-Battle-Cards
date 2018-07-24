@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using View.GameArena;
 
 namespace View.DeckItems
 {
@@ -15,7 +16,7 @@ namespace View.DeckItems
         [SerializeField] protected TextMeshProUGUI ManaText;
         [SerializeField] protected TextMeshProUGUI AttackText;
         [SerializeField] protected TextMeshProUGUI HealthText;
-        [SerializeField] protected TextMeshProUGUI DefenceText;      
+        [SerializeField] protected TextMeshProUGUI DefenceText;
 
         [SerializeField] private Transform _mainParenTransform;
 
@@ -49,9 +50,6 @@ namespace View.DeckItems
             set { _battleSide = value; }
         }
 
-        public GameObject Placeholder { get; private set; }
-
-
         private LayoutElement _layoutelem;
 
         public bool IsDragable = true;
@@ -66,24 +64,13 @@ namespace View.DeckItems
         public virtual void OnBeginDrag(PointerEventData eventData)
         {
             if (!IsDragable) return;
-            Placeholder = new GameObject();
-            Placeholder.transform.SetParent(transform.parent);
-
-            var le = Placeholder.AddComponent<LayoutElement>();
-            le.preferredWidth = GetComponent<LayoutElement>().preferredWidth;
-            le.preferredHeight = 0;
-            le.flexibleWidth = 0;
-            le.flexibleHeight = 0;
-
-            Placeholder.transform.SetSiblingIndex(transform.GetSiblingIndex());
-
-            // Set plasholder zero height 
-            Placeholder.GetComponent<RectTransform>().sizeDelta =
-                new Vector2(GetComponent<LayoutElement>().preferredWidth, 0);
-            Placeholder.transform.localScale = new Vector3(1, 1, 1);
-
             ParentToReturnTo = transform.parent;
             PlaceholderParent = ParentToReturnTo;
+            var dropableView = PlaceholderParent.GetComponent<DroppableView>();
+            var width = GetComponent<LayoutElement>().preferredWidth;
+            dropableView.CreateStub(width);
+            dropableView.Stub.SetSiblingIndex(transform.GetSiblingIndex());
+
             transform.SetParent(MainParenTransform);
             GetComponent<CanvasGroup>().blocksRaycasts = false;
 
@@ -97,20 +84,21 @@ namespace View.DeckItems
         /// <param name="eventData"></param>
         public void OnDrag(PointerEventData eventData)
         {
-            if (!IsDragable) return;
+            if (!IsDragable)
+                return;
             var pos = Camera.main.ScreenToWorldPoint(eventData.position);
             transform.position = new Vector3(pos.x, pos.y, 1);
-            if (Placeholder.transform.parent != Placeholder)
-            {
-                Placeholder.transform.SetParent(PlaceholderParent);
-            }
+            var dropableView = PlaceholderParent.GetComponent<DroppableView>();
+            if (dropableView.Stub == null)
+                return;
 
             var newSiblingIndex = PlaceholderParent.childCount;
             for (var i = 0; i < PlaceholderParent.childCount; i++)
             {
-                if (!(transform.position.x < PlaceholderParent.GetChild(i).position.x)) continue;
+                if (!(transform.position.x < PlaceholderParent.GetChild(i).position.x))
+                    continue;
                 newSiblingIndex = i;
-                if (Placeholder.transform.GetSiblingIndex() < newSiblingIndex)
+                if (dropableView.Stub.GetSiblingIndex() < newSiblingIndex)
                 {
                     newSiblingIndex--;
                 }
@@ -118,7 +106,7 @@ namespace View.DeckItems
                 break;
             }
 
-            Placeholder.transform.SetSiblingIndex(newSiblingIndex);
+            dropableView.Stub.SetSiblingIndex(newSiblingIndex);
         }
 
         /// <inheritdoc />
@@ -128,11 +116,27 @@ namespace View.DeckItems
         /// <param name="eventData"></param>
         public void OnEndDrag(PointerEventData eventData)
         {
-            if (!IsDragable) return;
+            if (!IsDragable)
+                return;
             transform.SetParent(ParentToReturnTo);
-            transform.SetSiblingIndex(Placeholder.transform.GetSiblingIndex());
+            var dropableView = PlaceholderParent.GetComponent<DroppableView>();
+            if (dropableView.Stub != null)
+            {
+                transform.SetSiblingIndex(dropableView.Stub.GetSiblingIndex());
+            }
+
             GetComponent<CanvasGroup>().blocksRaycasts = true;
-            Destroy(Placeholder);
+            dropableView.DestroyStub();
+        }
+
+
+        /// <summary>
+        /// Destroy мiew
+        /// </summary>
+        public void DestroyView()
+        {
+            PlaceholderParent.GetComponent<DroppableView>().DestroyStub();
+            Destroy(gameObject);
         }
     }
 }

@@ -12,11 +12,6 @@ namespace Models
         /// </summary>
         public string Name { get; set; }
 
-//        /// <summary>
-//        /// Active atack cards
-//        /// </summary>
-//        public List<BattleCard> ArenaCards { get; set; } = new List<BattleCard>();
-
         /// <summary>
         /// Random battle pul with cartd 
         /// </summary>

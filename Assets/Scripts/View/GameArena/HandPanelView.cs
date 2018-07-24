@@ -1,5 +1,4 @@
-﻿using System;
-using Models.Arena;
+﻿using Models.Arena;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using View.DeckItems;
@@ -12,35 +11,6 @@ namespace View.GameArena
         /// Placeholder parent
         /// </summary>
         [SerializeField] private Transform _placeholderParenTransform;
-
-        /// <summary>
-        /// On add trate to card
-        /// </summary>
-        public event Action<DraggableView> OnAddViewToHand;
-
-        /// <summary>
-        /// Add card to hand
-        /// </summary>
-        /// <param name="battleCard"></param>
-        /// <param name="side"></param>
-        public void AddCardToHand(BattleCard battleCard, BattleSide side)
-        {
-            // Load Card
-            var cardGameObject = (GameObject) Instantiate(
-                Resources.Load("Prefabs/Card", typeof(GameObject)), new Vector3(), Quaternion.identity,
-                transform
-            );
-            // Set Z was zero position
-            cardGameObject.transform.localPosition = new Vector3(cardGameObject.transform.localRotation.x,
-                cardGameObject.transform.localRotation.y, 0);
-            // Init Card
-            var cardView = cardGameObject.GetComponent<CardView>();
-            cardView.Side = side;
-            cardView.MainParenTransform = _placeholderParenTransform;
-            cardView.Init(battleCard);
-            cardView.ToogleStubImage(false);
-            OnAddViewToHand?.Invoke(cardView);
-        }
 
         /// <summary>
         /// Add trate to hand
@@ -59,42 +29,10 @@ namespace View.GameArena
                 trateGameObject.transform.localRotation.y, 0);
             // Init Trate
             var trateView = trateGameObject.GetComponent<TrateView>();
+            trateView.IsDroppable = false;
             trateView.Side = side;
             trateView.MainParenTransform = _placeholderParenTransform;
             trateView.Init(battleTrate);
-            OnAddViewToHand?.Invoke(trateView);
-        }
-
-        /// <summary>
-        /// On pointer enter
-        /// </summary>
-        /// <param name="eventData"></param>
-        public override void OnPointerEnter(PointerEventData eventData)
-        {
-            if (eventData.pointerDrag == null)
-                return;
-
-            var draggableCard = eventData.pointerDrag.GetComponent<DraggableView>();
-            if (draggableCard != null && draggableCard.IsDroppable)
-            {
-                draggableCard.PlaceholderParent = transform;
-            }
-        }
-
-        /// <summary>
-        /// On pointer exit
-        /// </summary>
-        /// <param name="eventData"></param>
-        public override void OnPointerExit(PointerEventData eventData)
-        {
-            if (eventData.pointerDrag == null)
-                return;
-
-            var draggableCard = eventData.pointerDrag.GetComponent<DraggableView>();
-            if (draggableCard != null && draggableCard.IsDroppable && draggableCard.PlaceholderParent == transform)
-            {
-                draggableCard.PlaceholderParent = draggableCard.ParentToReturnTo;
-            }
         }
 
         /// <summary>
@@ -104,9 +42,31 @@ namespace View.GameArena
         public override void OnDrop(PointerEventData eventData)
         {
             var draggableCard = eventData.pointerDrag.GetComponent<DraggableView>();
-            if (draggableCard != null && draggableCard.IsDroppable)
+            if (draggableCard != null && draggableCard.IsDroppable && draggableCard.PlaceholderParent == transform)
             {
                 draggableCard.ParentToReturnTo = transform;
+            }
+        }
+
+        /// <inheritdoc />
+        /// <summary>
+        /// On poiter enter
+        /// </summary>
+        /// <param name="eventData"></param>
+        public override void OnPointerEnter(PointerEventData eventData)
+        {
+            if (eventData.pointerDrag == null)
+                return;
+            var draggableCard = eventData.pointerDrag.GetComponent<DraggableView>();
+
+            if (draggableCard as CardView)
+            {
+                if (!draggableCard.IsDroppable) return;
+                base.OnPointerEnter(eventData);
+            }
+            else if (draggableCard as TrateView)
+            {
+                base.OnPointerEnter(eventData);
             }
         }
     }

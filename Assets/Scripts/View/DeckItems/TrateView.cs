@@ -32,12 +32,6 @@ namespace View.DeckItems
             DefenceText.text = Trate.Defence.ToString();
         }
 
-        public void DestroyView()
-        {
-            Destroy(Placeholder);
-            Destroy(gameObject);
-        }
-
         /// <inheritdoc />
         /// <summary>
         /// On begin drag

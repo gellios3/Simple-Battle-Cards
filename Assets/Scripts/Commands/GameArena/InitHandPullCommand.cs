@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Commands.GameArena
 {
-    public class InitHandPanelCommand : Command
+    public class InitHandPullCommand : Command
     {
         /// <summary>
         /// Battle
@@ -19,7 +19,13 @@ namespace Commands.GameArena
         /// Add card from deck to hand signal
         /// </summary>
         [Inject]
-        public AddCardFromDeckToHandSignal AddCardFromDeckToHandSignal { get; set; }
+        public AddCardToHandDeckSignal AddCardToHandDeckSignal { get; set; }
+
+        /// <summary>
+        /// Init hand signal
+        /// </summary>
+        [Inject]
+        public InitHandSignal InitHandSignal { get; set; }
 
         /// <summary>
         /// Add trate from deck to hand signal
@@ -35,14 +41,16 @@ namespace Commands.GameArena
             // Add card or trates to hand
             if (BattleArena.GetActivePlayer().CardBattlePull.Count > 0)
             {
-                AddCardFromDeckToHandSignal.Dispatch();
+                // First always card
+                AddCardToHandDeckSignal.Dispatch();
 
+                // Next 50/50 call call card or trate
                 for (var i = 1; i < BattleArena.CountOfCardsAddingToHand; i++)
                 {
                     if (Random.value > 0.5f)
                     {
                         if (BattleArena.GetActivePlayer().CardBattlePull.Count <= 0) continue;
-                        AddCardFromDeckToHandSignal.Dispatch();
+                        AddCardToHandDeckSignal.Dispatch();
                     }
                     else
                     {
@@ -59,6 +67,8 @@ namespace Commands.GameArena
                     AddTrateFromDeckToHandSignal.Dispatch();
                 }
             }
+
+            InitHandSignal.Dispatch();
         }
     }
 }
