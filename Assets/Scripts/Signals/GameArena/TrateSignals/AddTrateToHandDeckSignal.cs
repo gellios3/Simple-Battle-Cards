@@ -2,7 +2,7 @@
 
 namespace Signals.GameArena.TrateSignals
 {
-    public class AddTrateFromDeckToHandSignal : Signal
+    public class AddTrateToHandDeckSignal : Signal
     {
     }
 }

@@ -38,11 +38,11 @@ namespace Mediators.GameArena
         /// Init hand signal
         /// </summary>
         [Inject]
-        public InitHandSignal InitHandSignal { get; set; }
+        public InitCardHandSignal InitCardHandSignal { get; set; }
 
         public override void OnRegister()
         {            
-            InitCardDeckSignal.AddListener(() => { View.InitCardDeckCount(); });
+            InitCardDeckSignal.AddListener(() => { View.InitDeckCount(); });
 
             AddCardToHandDeckSignal.AddListener(() =>
             {
@@ -50,7 +50,7 @@ namespace Mediators.GameArena
                 AddCardToHand();
             });
 
-            InitHandSignal.AddListener(() => { View.AddPullCardsToHand(); });
+            InitCardHandSignal.AddListener(() => { View.AddPullCardsToHand(); });
         }
 
         /// <summary>

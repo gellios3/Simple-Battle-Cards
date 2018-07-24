@@ -2,7 +2,7 @@
 
 namespace Signals.GameArena
 {
-    public class InitHandSignal : Signal
+    public class InitTrateHandSignal : Signal
     {
     }
 }

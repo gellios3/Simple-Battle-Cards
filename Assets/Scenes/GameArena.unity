@@ -489,7 +489,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -27.5, y: 0}
+  m_AnchoredPosition: {x: -27.50003, y: 0}
   m_SizeDelta: {x: -255, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &361788719
@@ -870,7 +870,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _battleSide: 0
   _stub: {fileID: 0}
-  _placeholderParenTransform: {fileID: 1926770336}
 --- !u!1 &556526721
 GameObject:
   m_ObjectHideFlags: 0
@@ -2548,7 +2547,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _battleSide: 1
   _stub: {fileID: 0}
-  _placeholderParenTransform: {fileID: 1926770336}
 --- !u!1 &2004734394
 GameObject:
   m_ObjectHideFlags: 0
@@ -2876,6 +2874,21 @@ PrefabInstance:
       propertyPath: _battleSide
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114858503518348678, guid: 8825046c17be6af40966ce33e8ab8f4f,
+        type: 3}
+      propertyPath: _side
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114858503518348678, guid: 8825046c17be6af40966ce33e8ab8f4f,
+        type: 3}
+      propertyPath: _handTransform
+      value: 
+      objectReference: {fileID: 1949843424}
+    - target: {fileID: 114858503518348678, guid: 8825046c17be6af40966ce33e8ab8f4f,
+        type: 3}
+      propertyPath: _placeholderParenTransform
+      value: 
+      objectReference: {fileID: 1926770336}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8825046c17be6af40966ce33e8ab8f4f, type: 3}
 --- !u!1001 &1283609587
@@ -2984,6 +2997,16 @@ PrefabInstance:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114858503518348678, guid: 8825046c17be6af40966ce33e8ab8f4f,
+        type: 3}
+      propertyPath: _handTransform
+      value: 
+      objectReference: {fileID: 474698019}
+    - target: {fileID: 114858503518348678, guid: 8825046c17be6af40966ce33e8ab8f4f,
+        type: 3}
+      propertyPath: _placeholderParenTransform
+      value: 
+      objectReference: {fileID: 1926770336}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8825046c17be6af40966ce33e8ab8f4f, type: 3}
 --- !u!1001 &1604019420

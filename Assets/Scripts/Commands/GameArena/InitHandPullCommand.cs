@@ -25,13 +25,13 @@ namespace Commands.GameArena
         /// Init hand signal
         /// </summary>
         [Inject]
-        public InitHandSignal InitHandSignal { get; set; }
+        public InitCardHandSignal InitCardHandSignal { get; set; }
 
         /// <summary>
         /// Add trate from deck to hand signal
         /// </summary>
         [Inject]
-        public AddTrateFromDeckToHandSignal AddTrateFromDeckToHandSignal { get; set; }
+        public AddTrateToHandDeckSignal AddTrateToHandDeckSignal { get; set; }
 
         /// <summary>
         /// Execute event init hand
@@ -55,7 +55,7 @@ namespace Commands.GameArena
                     else
                     {
                         if (BattleArena.GetActivePlayer().TrateBattlePull.Count <= 0) continue;
-                        AddTrateFromDeckToHandSignal.Dispatch();
+                        AddTrateToHandDeckSignal.Dispatch();
                     }
                 }
             }
@@ -64,11 +64,11 @@ namespace Commands.GameArena
                 for (var i = 0; i < BattleArena.CountOfCardsAddingToHand; i++)
                 {
                     if (BattleArena.GetActivePlayer().TrateBattlePull.Count <= 0) continue;
-                    AddTrateFromDeckToHandSignal.Dispatch();
+                    AddTrateToHandDeckSignal.Dispatch();
                 }
             }
 
-            InitHandSignal.Dispatch();
+            InitCardHandSignal.Dispatch();
         }
     }
 }

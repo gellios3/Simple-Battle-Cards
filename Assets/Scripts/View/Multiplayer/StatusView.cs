@@ -13,7 +13,7 @@ namespace View.Multiplayer
 
         [SerializeField] private Text _offlineText;
         [SerializeField] private Text _onlineText;
-
+        
         [SerializeField] private Status _currentStatus = Status.Offline;
 
         public void SetStatusOnline()

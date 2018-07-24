@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using Models.Arena;
 using strange.extensions.mediation.impl;
+using Signals.GameArena;
 using TMPro;
 using UnityEngine;
 using View.DeckItems;
@@ -29,6 +30,12 @@ namespace View.GameArena
         public Arena Arena { get; set; }
 
         /// <summary>
+        /// Init card deck signal
+        /// </summary>
+        [Inject]
+        public InitTrateHandSignal InitTrateHandSignal { get; set; }
+
+        /// <summary>
         /// Add card to hand
         /// </summary>
         /// <param name="battleCard"></param>
@@ -52,7 +59,7 @@ namespace View.GameArena
             cardView.ToogleStubImage(false);
             cardView.CreatePlaceholder(100);
             cardGameObject.SetActive(false);
-            InitCardDeckCount();
+            InitDeckCount();
         }
 
         /// <summary>
@@ -70,16 +77,14 @@ namespace View.GameArena
         /// <returns></returns>
         private IEnumerator HandOutCard(int pos = 0)
         {
-            if (pos > 0)
+            yield return new WaitForSeconds(0);
+
+            if (_pull.transform.childCount == 0)
             {
-                yield return new WaitForSeconds(2);
-            }
-            else
-            {
-                yield return new WaitForSeconds(0);
+                InitTrateHandSignal.Dispatch();
+                yield break;
             }
 
-            if (_pull.transform.childCount == 0) yield break;
             pos++;
             var cardItem = _pull.transform.GetChild(0);
             var cardView = cardItem.GetComponent<CardView>();
@@ -91,7 +96,7 @@ namespace View.GameArena
         /// <summary>
         /// Init deck count
         /// </summary>
-        public void InitCardDeckCount()
+        public void InitDeckCount()
         {
             if (Side == BattleSide.Player)
             {
