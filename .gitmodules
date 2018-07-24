@@ -1,0 +1,3 @@
+[submodule "Assets/StrangeIoC"]
+	path = Assets/StrangeIoC
+	url = https://github.com/strangeioc/strangeioc.git
