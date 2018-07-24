@@ -2,6 +2,7 @@
 using strange.extensions.mediation.impl;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using View.DeckItems;
 
 namespace View.GameArena
@@ -35,7 +36,8 @@ namespace View.GameArena
 
             if (draggableCard == null || draggableCard.Side != Side)
                 return;
-            DestroyStub();
+            var width = draggableCard.GetComponent<LayoutElement>().preferredWidth;
+            CreateStub(width);
             draggableCard.PlaceholderParent = transform;
         }
 
@@ -63,6 +65,7 @@ namespace View.GameArena
         /// <param name="width"></param>
         public void CreateStub(float width)
         {
+            if (Stub != null) return;
             var stub = new GameObject {name = "Stub1"};
 
             var rectTransform = stub.AddComponent<RectTransform>();

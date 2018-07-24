@@ -22,5 +22,11 @@ namespace View.Root
                 Destroy(root);
             }
         }
+
+        protected override void OnDestroy()
+        {
+            if (Context.firstContext != null)
+                base.OnDestroy();
+        }
     }
 }

@@ -48,17 +48,21 @@ namespace View.GameArena
             }
         }
 
+        /// <inheritdoc />
+        /// <summary>
+        /// On poiter enter
+        /// </summary>
+        /// <param name="eventData"></param>
         public override void OnPointerEnter(PointerEventData eventData)
         {
             if (eventData.pointerDrag == null)
                 return;
             var draggableCard = eventData.pointerDrag.GetComponent<DraggableView>();
+
             if (draggableCard as CardView)
             {
-                if (draggableCard.IsDroppable)
-                {
-                    base.OnPointerEnter(eventData);
-                }
+                if (!draggableCard.IsDroppable) return;
+                base.OnPointerEnter(eventData);
             }
             else if (draggableCard as TrateView)
             {

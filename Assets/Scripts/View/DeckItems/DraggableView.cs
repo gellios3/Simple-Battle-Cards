@@ -90,10 +90,7 @@ namespace View.DeckItems
             transform.position = new Vector3(pos.x, pos.y, 1);
             var dropableView = PlaceholderParent.GetComponent<DroppableView>();
             if (dropableView.Stub == null)
-            {
-                var width = GetComponent<LayoutElement>().preferredWidth;
-                dropableView.CreateStub(width);
-            }
+                return;
 
             var newSiblingIndex = PlaceholderParent.childCount;
             for (var i = 0; i < PlaceholderParent.childCount; i++)
@@ -123,12 +120,16 @@ namespace View.DeckItems
                 return;
             transform.SetParent(ParentToReturnTo);
             var dropableView = PlaceholderParent.GetComponent<DroppableView>();
-            transform.SetSiblingIndex(dropableView.Stub.GetSiblingIndex());
+            if (dropableView.Stub != null)
+            {
+                transform.SetSiblingIndex(dropableView.Stub.GetSiblingIndex());
+            }
+
             GetComponent<CanvasGroup>().blocksRaycasts = true;
             dropableView.DestroyStub();
         }
-        
-        
+
+
         /// <summary>
         /// Destroy мiew
         /// </summary>
