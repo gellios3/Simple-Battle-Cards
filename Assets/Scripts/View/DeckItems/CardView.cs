@@ -64,9 +64,10 @@ namespace View.DeckItems
         /// </summary>
         public void StartPathAnimation()
         {
-            _waypoints[0] = ParentToReturnTo.position;
-            _waypoints[1] = ParentToReturnTo.Find("Stub").transform.position;
-            var path = transform.DOPath(_waypoints, 1, PathType.CatmullRom);
+            _waypoints[0] = PlaceholderParent.position;
+            _waypoints[1] = Placeholder.position;
+            var path = transform.DOPath(_waypoints, 1, PathType.CatmullRom, PathMode.TopDown2D)
+                .SetOptions(false, AxisConstraint.Z);
             path.onPlay += OnStartAnimation;
             path.onComplete += OnCompleteAnimation;
         }
@@ -95,7 +96,6 @@ namespace View.DeckItems
             TrateViews.Add(trateView);
             // Show card on battle arena
             Init(Card);
-            
             trateView.DestroyView();
         }
 
@@ -142,8 +142,10 @@ namespace View.DeckItems
         /// </summary>
         private void OnCompleteAnimation()
         {
-            transform.SetParent(ParentToReturnTo);
-            transform.SetSiblingIndex(transform.parent.childCount - 1);
+            transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+            transform.SetParent(PlaceholderParent);
+            transform.SetSiblingIndex(Placeholder.GetSiblingIndex());
+            Destroy(Placeholder.gameObject);
         }
 
         /// <summary>

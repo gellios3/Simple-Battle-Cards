@@ -47,9 +47,10 @@ namespace View.GameArena
             var cardView = cardGameObject.GetComponent<CardView>();
             cardView.Side = side;
             cardView.MainParenTransform = _placeholderParenTransform;
-            cardView.ParentToReturnTo = _handTransform;
+            cardView.PlaceholderParent = _handTransform;
             cardView.Init(battleCard);
             cardView.ToogleStubImage(false);
+            cardView.CreatePlaceholder(100);
             cardGameObject.SetActive(false);
             InitCardDeckCount();
         }
@@ -69,7 +70,6 @@ namespace View.GameArena
         /// <returns></returns>
         private IEnumerator HandOutCard(int pos = 0)
         {
-            
             if (pos > 0)
             {
                 yield return new WaitForSeconds(2);
@@ -82,8 +82,9 @@ namespace View.GameArena
             if (_pull.transform.childCount == 0) yield break;
             pos++;
             var cardItem = _pull.transform.GetChild(0);
+            var cardView = cardItem.GetComponent<CardView>();
             cardItem.gameObject.SetActive(true);
-            cardItem.GetComponent<CardView>().StartPathAnimation();
+            cardView.StartPathAnimation();
             StartCoroutine(HandOutCard(pos));
         }
 

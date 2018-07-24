@@ -18,6 +18,14 @@ namespace View.DeckItems
         [SerializeField] protected TextMeshProUGUI HealthText;
         [SerializeField] protected TextMeshProUGUI DefenceText;
 
+        [SerializeField] private Transform _placeholder;
+
+        public Transform Placeholder
+        {
+            get { return _placeholder; }
+            set { _placeholder = value; }
+        }
+
         [SerializeField] private Transform _mainParenTransform;
 
         public Transform MainParenTransform
@@ -55,6 +63,30 @@ namespace View.DeckItems
         public bool IsDragable = true;
 
         public bool IsDroppable = true;
+
+        /// <summary>
+        /// Create Stub
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="stubName"></param>
+        public void CreatePlaceholder(float width, string stubName = "placeholder")
+        {
+            if (Placeholder != null) return;
+            var placeholderGo = new GameObject {name = stubName};
+
+            var rectTransform = placeholderGo.AddComponent<RectTransform>();
+            rectTransform.localScale = Vector3.one;
+            rectTransform.sizeDelta = new Vector2(width, 0);
+
+            var le = placeholderGo.AddComponent<LayoutElement>();
+            le.preferredWidth = width;
+            le.preferredHeight = 0;
+            le.flexibleWidth = 0;
+            le.flexibleHeight = 0;
+
+            Placeholder = placeholderGo.transform;
+            Placeholder.SetParent(_placeholderParent);
+        }
 
         /// <inheritdoc />
         /// <summary>

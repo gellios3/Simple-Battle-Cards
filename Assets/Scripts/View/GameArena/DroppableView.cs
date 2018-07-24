@@ -63,14 +63,21 @@ namespace View.GameArena
         /// Create Stub
         /// </summary>
         /// <param name="width"></param>
-        public void CreateStub(float width)
+        /// <param name="stubName"></param>
+        public void CreateStub(float width, string stubName = "Stub")
         {
             if (Stub != null) return;
-            var stub = new GameObject {name = "Stub1"};
+            var stub = new GameObject {name = stubName};
 
             var rectTransform = stub.AddComponent<RectTransform>();
-            rectTransform.localScale = new Vector3(1, 1, 1);
+            rectTransform.localScale = Vector3.one;
             rectTransform.sizeDelta = new Vector2(width, 0);
+
+            var le = stub.AddComponent<LayoutElement>();
+            le.preferredWidth = width;
+            le.preferredHeight = 0;
+            le.flexibleWidth = 0;
+            le.flexibleHeight = 0;
 
             Stub = stub.transform;
             Stub.SetParent(transform);
