@@ -5,6 +5,7 @@ using Models.Arena;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using View.AbstractViews;
 using View.GameArena;
 
 namespace View.DeckItems
@@ -17,7 +18,7 @@ namespace View.DeckItems
 
         public BattleCard Card
         {
-            get { return _card; }
+            get { return _card ?? (_card = new BattleCard()); }
             private set { _card = value; }
         }
 
@@ -41,8 +42,6 @@ namespace View.DeckItems
         /// </summary>
         public List<TrateView> TrateViews { get; } = new List<TrateView>();
 
-        private readonly Vector3[] _waypoints = new Vector3[2];
-
         /// <summary>
         /// Init Card View
         /// </summary>
@@ -57,46 +56,6 @@ namespace View.DeckItems
             AttackText.text = Card.Attack.ToString();
             HealthText.text = Card.Health.ToString();
             DefenceText.text = Card.Defence.ToString();
-        }
-
-        /// <summary>
-        /// Start path animation
-        /// </summary>
-        public void StartPathAnimation()
-        {
-            _waypoints[0] = PlaceholderParent.position;
-            _waypoints[1] = Placeholder.position;
-            var path = transform.DOPath(_waypoints, 1, PathType.CatmullRom, PathMode.TopDown2D)
-                .SetOptions(false, AxisConstraint.Z);
-            path.onPlay += OnStartAnimation;
-            path.onComplete += OnCompleteAnimation;
-        }
-
-        /// <summary>
-        /// Toogle stub image
-        /// </summary>
-        /// <param name="status"></param>
-        public void ToogleStubImage(bool status)
-        {
-            StubImage.gameObject.SetActive(status);
-        }
-
-
-        /// <summary>
-        /// Add trate to battle card
-        /// </summary>
-        /// <param name="trateView"></param>
-        public void AddTrate(TrateView trateView)
-        {
-            Card.Defence += trateView.Trate.Defence;
-            Card.Health += trateView.Trate.Health;
-            Card.Attack += trateView.Trate.Attack;
-            Card.CriticalChance += trateView.Trate.CriticalChance;
-            Card.CriticalHit += trateView.Trate.CriticalHit;
-            TrateViews.Add(trateView);
-            // Show card on battle arena
-            Init(Card);
-            trateView.DestroyView();
         }
 
         /// <inheritdoc />
@@ -137,23 +96,32 @@ namespace View.DeckItems
             }
         }
 
-        /// <summary>
-        /// On complete animation
-        /// </summary>
-        private void OnCompleteAnimation()
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y, 0);
-            transform.SetParent(PlaceholderParent);
-            transform.SetSiblingIndex(Placeholder.GetSiblingIndex());
-            Destroy(Placeholder.gameObject);
-        }
 
         /// <summary>
-        /// On start animation
+        /// Toogle stub image
         /// </summary>
-        private void OnStartAnimation()
+        /// <param name="status"></param>
+        public void ToogleStubImage(bool status)
         {
-            transform.SetParent(MainParenTransform);
+            StubImage.gameObject.SetActive(status);
+        }
+
+
+        /// <summary>
+        /// Add trate to battle card
+        /// </summary>
+        /// <param name="trateView"></param>
+        public void AddTrate(TrateView trateView)
+        {
+            Card.Defence += trateView.Trate.Defence;
+            Card.Health += trateView.Trate.Health;
+            Card.Attack += trateView.Trate.Attack;
+            Card.CriticalChance += trateView.Trate.CriticalChance;
+            Card.CriticalHit += trateView.Trate.CriticalHit;
+            TrateViews.Add(trateView);
+            // Show card on battle arena
+            Init(Card);
+            trateView.DestroyView();
         }
     }
 }

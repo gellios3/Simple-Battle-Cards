@@ -65,7 +65,7 @@ namespace View.GameArena
             trateView.MainParenTransform = _placeholderParenTransform;
             trateView.PlaceholderParent = _handTransform;
             trateView.Init(battleTrate);
-            trateView.CreatePlaceholder(100);
+            trateView.CreatePlaceholder();
             trateGameObject.SetActive(false);
             InitDeckCount();
         }

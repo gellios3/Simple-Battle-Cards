@@ -3,14 +3,13 @@ using DG.Tweening;
 using Models.Arena;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using View.AbstractViews;
 
 namespace View.DeckItems
 {
     public class TrateView : DraggableView
     {
         [SerializeField] private BattleTrate _trate;
-        
-        private readonly Vector3[] _waypoints = new Vector3[2];
 
         /// <summary>
         /// On add trate to card
@@ -46,37 +45,5 @@ namespace View.DeckItems
             base.OnBeginDrag(eventData);
         }
         
-        
-        /// <summary>
-        /// Start path animation
-        /// </summary>
-        public void StartPathAnimation()
-        {
-            _waypoints[0] = PlaceholderParent.position;
-            _waypoints[1] = Placeholder.position;
-            var path = transform.DOPath(_waypoints, 1, PathType.CatmullRom, PathMode.TopDown2D)
-                .SetOptions(false, AxisConstraint.Z);
-            path.onPlay += OnStartPathAnimation;
-            path.onComplete += OnCompletePathAnimation;
-        }
-        
-        /// <summary>
-        /// On complete animation
-        /// </summary>
-        private void OnCompletePathAnimation()
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y, 0);
-            transform.SetParent(PlaceholderParent);
-            transform.SetSiblingIndex(Placeholder.GetSiblingIndex());
-            Destroy(Placeholder.gameObject);
-        }
-
-        /// <summary>
-        /// On start animation
-        /// </summary>
-        private void OnStartPathAnimation()
-        {
-            transform.SetParent(MainParenTransform);
-        }
     }
 }

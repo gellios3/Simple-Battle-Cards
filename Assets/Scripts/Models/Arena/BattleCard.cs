@@ -54,16 +54,20 @@ namespace Models.Arena
         /// Constructor
         /// </summary>
         /// <param name="card"></param>
-        public BattleCard(Card card)
+        public BattleCard(Card card = null)
         {
             // init scriptable card to battle card
-            SourceCard = card;
-            Defence = card.Defence;
-            Attack = card.Attack;
-            Health = card.Health;
-            CriticalChance = card.CriticalChance;
-            CriticalHit = card.CriticalHit;
-            Mana = card.Mana;
+            if (card != null)
+            {
+                SourceCard = card;
+                Defence = card.Defence;
+                Attack = card.Attack;
+                Health = card.Health;
+                CriticalChance = card.CriticalChance;
+                CriticalHit = card.CriticalHit;
+                Mana = card.Mana;
+            }
+
             Status = BattleStatus.Wait;
         }
 

@@ -57,7 +57,7 @@ namespace View.GameArena
             cardView.PlaceholderParent = _handTransform;
             cardView.Init(battleCard);
             cardView.ToogleStubImage(false);
-            cardView.CreatePlaceholder(100);
+            cardView.CreatePlaceholder();
             cardGameObject.SetActive(false);
             InitDeckCount();
         }
