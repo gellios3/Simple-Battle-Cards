@@ -103,7 +103,7 @@ namespace View.AbstractViews
                 return;
 
             HasDragable = true;
-            transform.DOScale(1, 0.5f);
+            transform.DOScale(1, 0.3f);
 
             PlaceholderParent = ParentToReturnTo;
 
@@ -160,7 +160,6 @@ namespace View.AbstractViews
             }
 
             GetComponent<CanvasGroup>().blocksRaycasts = true;
-            HasDragable = false;
         }
 
         /// <inheritdoc />
@@ -179,15 +178,15 @@ namespace View.AbstractViews
 
             CreatePlaceholder();
             transform.SetParent(MainParenTransform);
-            transform.DOScale(1.5f, 0.5f).onComplete += () =>
+            transform.DOScale(1.5f, 0.3f).onComplete += () =>
             {
                 if (Side == BattleSide.Player)
                 {
-                    transform.DOMoveY(transform.position.y + 0.4f, 0.5f);
+                    transform.DOMoveY(transform.position.y + 0.4f, 0.3f);
                 }
                 else
                 {
-                    transform.DOMoveY(transform.position.y - 0.4f, 0.5f);
+                    transform.DOMoveY(transform.position.y - 0.4f, 0.3f);
                 }
 
                 HasZoom = true;
@@ -207,14 +206,14 @@ namespace View.AbstractViews
 
             if (Side == BattleSide.Player)
             {
-                transform.DOMoveY(transform.position.y - 0.4f, 0.5f);
+                transform.DOMoveY(transform.position.y - 0.4f, 0.3f);
             }
             else
             {
-                transform.DOMoveY(transform.position.y + 0.4f, 0.5f);
+                transform.DOMoveY(transform.position.y + 0.4f, 0.3f);
             }
 
-            transform.DOScale(1, 0.5f).onComplete += () =>
+            transform.DOScale(1, 0.3f).onComplete += () =>
             {
                 HasZoom = false;
                 transform.SetParent(ParentToReturnTo);
@@ -245,29 +244,19 @@ namespace View.AbstractViews
             var waypoints = new[] {PlaceholderParent.position, Placeholder.position};
             var path = transform.DOPath(waypoints, 1, PathType.CatmullRom, PathMode.TopDown2D)
                 .SetOptions(false, AxisConstraint.Z);
-            path.onPlay += OnStartAnimation;
-            path.onComplete += OnCompleteAnimation;
-        }
-
-        /// <summary>
-        /// On complete animation
-        /// </summary>
-        private void OnCompleteAnimation()
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y, 0);
-            transform.SetParent(PlaceholderParent);
-            transform.SetSiblingIndex(Placeholder.GetSiblingIndex());
-            HasDragable = false;
-            Destroy(Placeholder.gameObject);
-        }
-
-        /// <summary>
-        /// On start animation
-        /// </summary>
-        private void OnStartAnimation()
-        {
-            HasDragable = true;
-            transform.SetParent(MainParenTransform);
+            path.onPlay += () =>
+            {
+                HasDragable = true;
+                transform.SetParent(MainParenTransform);
+            };
+            path.onComplete += () =>
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+                transform.SetParent(PlaceholderParent);
+                transform.SetSiblingIndex(Placeholder.GetSiblingIndex());
+                HasDragable = false;
+                Destroy(Placeholder.gameObject);
+            };
         }
     }
 }

@@ -65,6 +65,7 @@ namespace Mediators.GameArena
                 foreach (Transform child in View.transform)
                 {
                     var view = child.GetComponent<CardView>();
+                    view.HasDragable = false;
                     _cardViews.Add(view);
                 }
 
