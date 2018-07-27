@@ -30,6 +30,7 @@ namespace View.GameItems
         [SerializeField] protected TextMeshProUGUI AttackText;
         [SerializeField] protected TextMeshProUGUI HealthText;
         [SerializeField] protected TextMeshProUGUI DefenceText;
+        [SerializeField] protected Button AttackBtn;
         [SerializeField] protected Image ArtworkImage;
 
         /// <summary>
@@ -46,12 +47,18 @@ namespace View.GameItems
         /// Battle tarates
         /// </summary>
         public List<TrateView> TrateViews { get; } = new List<TrateView>();
-        
+
+
 //        private void Update()
 //        {
 //            var mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 //            Debug.DrawLine(transform.position, mouseWorldPos, Color.red);
 //        }
+
+        private void Start()
+        {
+            AttackBtn.onClick.AddListener(() => { Debug.Log("On click"); });
+        }
 
         /// <summary>
         /// Init Card View

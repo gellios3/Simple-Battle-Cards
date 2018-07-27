@@ -44,9 +44,14 @@ namespace View.GameArena
             );
             var cardUnitView = cardGameObject.GetComponent<BattleUnitView>();
             cardUnitView.Init(card);
+            cardUnitView.Side = Side;
             return cardUnitView;
         }
 
+        /// <summary>
+        /// On pointer enter
+        /// </summary>
+        /// <param name="eventData"></param>
         public override void OnPointerEnter(PointerEventData eventData)
         {
             if (eventData.pointerDrag == null)
