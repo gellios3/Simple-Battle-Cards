@@ -1,11 +1,10 @@
 ﻿using System;
-using DG.Tweening;
 using Models.Arena;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using View.AbstractViews;
 
-namespace View.DeckItems
+namespace View.GameItems
 {
     public class TrateView : DraggableView
     {
@@ -44,6 +43,5 @@ namespace View.DeckItems
             OnStartDrag?.Invoke(this);
             base.OnBeginDrag(eventData);
         }
-        
     }
 }

@@ -3,7 +3,7 @@ using Models.Arena;
 using strange.extensions.mediation.impl;
 using TMPro;
 using UnityEngine;
-using View.DeckItems;
+using View.GameItems;
 
 namespace View.GameArena
 {
@@ -60,7 +60,7 @@ namespace View.GameArena
                 trateGameObject.transform.localRotation.y, 0);
             // Init Trate
             var trateView = trateGameObject.GetComponent<TrateView>();
-            trateView.IsDroppable = false;
+            trateView.CanDroppable = false;
             trateView.Side = side;
             trateView.MainParenTransform = _placeholderParenTransform;
             trateView.PlaceholderParent = _handTransform;

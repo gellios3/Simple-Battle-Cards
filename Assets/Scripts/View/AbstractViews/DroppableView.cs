@@ -2,8 +2,6 @@
 using strange.extensions.mediation.impl;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using View.DeckItems;
 
 namespace View.AbstractViews
 {

@@ -5,7 +5,6 @@ using Signals;
 using Signals.GameArena;
 using UniRx.Triggers;
 using UnityEngine;
-using View.DeckItems;
 using LogType = Models.LogType;
 
 namespace Commands.GameArena.CardCommands

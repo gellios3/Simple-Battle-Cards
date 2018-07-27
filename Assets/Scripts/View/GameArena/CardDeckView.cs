@@ -4,7 +4,7 @@ using strange.extensions.mediation.impl;
 using Signals.GameArena;
 using TMPro;
 using UnityEngine;
-using View.DeckItems;
+using View.GameItems;
 
 namespace View.GameArena
 {
@@ -56,7 +56,6 @@ namespace View.GameArena
             cardView.MainParenTransform = _placeholderParenTransform;
             cardView.PlaceholderParent = _handTransform;
             cardView.Init(battleCard);
-            cardView.ToogleStubImage(false);
             cardView.CreatePlaceholder();
             cardGameObject.SetActive(false);
             InitDeckCount();

@@ -1,5 +1,5 @@
 ﻿using Models.Arena;
-using View.DeckItems;
+using View.GameItems;
 
 namespace Mediators.GameArena
 {
@@ -13,7 +13,7 @@ namespace Mediators.GameArena
 
         public override void OnRegister()
         {
-            View.OnStartDrag += view => { view.IsDragable = view.Side == BattleArena.ActiveSide; };
+            View.OnStartDrag += view => { view.CanDraggable = view.Side == BattleArena.ActiveSide; };
         }
     }
 }

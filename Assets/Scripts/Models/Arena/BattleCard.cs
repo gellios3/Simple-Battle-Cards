@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Models.ScriptableObjects;
+﻿using Models.ScriptableObjects;
 using UnityEngine;
 using Random = UnityEngine.Random;
 

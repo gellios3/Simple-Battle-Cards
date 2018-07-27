@@ -1,6 +1,6 @@
 ﻿using UnityEngine.EventSystems;
 using View.AbstractViews;
-using View.DeckItems;
+using View.GameItems;
 
 namespace View.GameArena
 {
@@ -14,7 +14,7 @@ namespace View.GameArena
         public override void OnDrop(PointerEventData eventData)
         {
             var draggableCard = eventData.pointerDrag.GetComponent<DraggableView>();
-            if (draggableCard != null && draggableCard.IsDroppable && draggableCard.PlaceholderParent == transform)
+            if (draggableCard != null && draggableCard.CanDroppable && draggableCard.PlaceholderParent == transform)
             {
                 draggableCard.ParentToReturnTo = transform;
             }
@@ -33,7 +33,7 @@ namespace View.GameArena
 
             if (draggableCard as CardView)
             {
-                if (!draggableCard.IsDroppable) return;
+                if (!draggableCard.CanDroppable) return;
                 base.OnPointerEnter(eventData);
             }
             else if (draggableCard as TrateView)

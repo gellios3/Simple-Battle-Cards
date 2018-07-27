@@ -59,10 +59,11 @@ namespace View.AbstractViews
             set { _battleSide = value; }
         }
 
-        public bool IsDragable = true;
-        public bool HasDragable;
+        public bool CanDraggable = true;
+        public bool CanDroppable = true;
+
+        public bool HasDraggable;
         public bool HasZoom;
-        public bool IsDroppable = true;
 
         /// <summary>
         /// Create Stub
@@ -99,10 +100,10 @@ namespace View.AbstractViews
         /// <param name="eventData"></param>
         public virtual void OnBeginDrag(PointerEventData eventData)
         {
-            if (!IsDragable)
+            if (!CanDraggable)
                 return;
 
-            HasDragable = true;
+            HasDraggable = true;
             transform.DOScale(1, 0.3f);
 
             PlaceholderParent = ParentToReturnTo;
@@ -119,7 +120,7 @@ namespace View.AbstractViews
         /// <param name="eventData"></param>
         public void OnDrag(PointerEventData eventData)
         {
-            if (!IsDragable)
+            if (!CanDraggable)
                 return;
             var pos = Camera.main.ScreenToWorldPoint(eventData.position);
             transform.position = new Vector3(pos.x, pos.y, 1);
@@ -150,7 +151,7 @@ namespace View.AbstractViews
         /// <param name="eventData"></param>
         public void OnEndDrag(PointerEventData eventData)
         {
-            if (!IsDragable)
+            if (!CanDraggable)
                 return;
             transform.SetParent(ParentToReturnTo);
             if (Placeholder != null)
@@ -170,10 +171,9 @@ namespace View.AbstractViews
         public virtual void OnPointerEnter(PointerEventData eventData)
         {
             var draggableView = eventData.pointerDrag;
-            if (Placeholder != null || draggableView != null || HasDragable)
+            if (Placeholder != null || draggableView != null || HasDraggable)
                 return;
 
-            Debug.Log("OnPointerEnter");
             ParentToReturnTo = transform.parent;
 
             CreatePlaceholder();
@@ -200,9 +200,8 @@ namespace View.AbstractViews
         /// <param name="eventData"></param>
         public virtual void OnPointerExit(PointerEventData eventData)
         {
-            if (HasDragable || !HasZoom)
+            if (HasDraggable || !HasZoom)
                 return;
-            Debug.Log("OnPointerExit");
 
             if (Side == BattleSide.Player)
             {
@@ -246,7 +245,7 @@ namespace View.AbstractViews
                 .SetOptions(false, AxisConstraint.Z);
             path.onPlay += () =>
             {
-                HasDragable = true;
+                HasDraggable = true;
                 transform.SetParent(MainParenTransform);
             };
             path.onComplete += () =>
@@ -254,7 +253,7 @@ namespace View.AbstractViews
                 transform.position = new Vector3(transform.position.x, transform.position.y, 0);
                 transform.SetParent(PlaceholderParent);
                 transform.SetSiblingIndex(Placeholder.GetSiblingIndex());
-                HasDragable = false;
+                HasDraggable = false;
                 Destroy(Placeholder.gameObject);
             };
         }

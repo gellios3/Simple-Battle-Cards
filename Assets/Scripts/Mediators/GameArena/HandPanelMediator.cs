@@ -3,8 +3,8 @@ using Signals;
 using Signals.GameArena;
 using Signals.GameArena.TrateSignals;
 using UnityEngine;
-using View.DeckItems;
 using View.GameArena;
+using View.GameItems;
 using LogType = Models.LogType;
 
 namespace Mediators.GameArena

@@ -4,8 +4,8 @@ using Signals;
 using Signals.GameArena;
 using Signals.GameArena.CardSignals;
 using UnityEngine;
-using View.DeckItems;
 using View.GameArena;
+using View.GameItems;
 using LogType = Models.LogType;
 
 namespace Mediators.GameArena
@@ -23,12 +23,6 @@ namespace Mediators.GameArena
         /// </summary>
         [Inject]
         public RefreshArenaSignal RefreshArenaSignal { get; set; }
-
-        /// <summary>
-        /// Show card on battle arena signal
-        /// </summary>
-        [Inject]
-        public AddCatdToBattleArenaSignal AddCatdToBattleArenaSignal { get; set; }
 
         /// <summary>
         /// Init mana signal
@@ -51,33 +45,26 @@ namespace Mediators.GameArena
         /// <summary>
         /// Card Views
         /// </summary>
-        private List<CardView> _cardViews = new List<CardView>();
+        private List<BattleUnitView> _cardUnitViews = new List<BattleUnitView>();
 
         /// <summary>
         /// On regisre mediator
         /// </summary>
         public override void OnRegister()
         {
+            View.OnAddCatdToBattleArena += AddCardToBattleArena;
+
             RefreshArenaSignal.AddListener(() =>
             {
                 if (BattleArena.ActiveSide != View.Side) return;
-                _cardViews.Clear();
+                _cardUnitViews.Clear();
                 foreach (Transform child in View.transform)
                 {
-                    var view = child.GetComponent<CardView>();
-                    view.HasDragable = false;
-                    _cardViews.Add(view);
+                    var view = child.GetComponent<BattleUnitView>();
+                    _cardUnitViews.Add(view);
                 }
 
-                BattleArena.ArenaCardsCount = _cardViews.Count;
-            });
-
-            AddCatdToBattleArenaSignal.AddListener(view =>
-            {
-                if (BattleArena.ActiveSide != View.Side) return;
-                AddCardToBattleArena(view);
-                // Init mana view
-                InitManaSignal.Dispatch();
+                BattleArena.ArenaCardsCount = _cardUnitViews.Count;
             });
 
             ActivateBattleCardsSignal.AddListener(() =>
@@ -94,11 +81,10 @@ namespace Mediators.GameArena
         {
             var activePlayer = BattleArena.GetActivePlayer();
             // Set active all not dead areana cards 
-            foreach (var cardView in _cardViews)
+            foreach (var cardView in _cardUnitViews)
             {
                 if (cardView.Card.Status == BattleStatus.Active) continue;
                 cardView.Card.Status = BattleStatus.Active;
-                cardView.ToogleStubImage(false);
                 AddHistoryLogSignal.Dispatch(new[]
                 {
                     "PLAYER '", activePlayer.Name, "' Activate '",
@@ -108,7 +94,7 @@ namespace Mediators.GameArena
             }
 
             // remove all dead carts
-            _cardViews = _cardViews.FindAll(
+            _cardUnitViews = _cardUnitViews.FindAll(
                 view => view.Card.Status == BattleStatus.Active
             );
         }
@@ -131,7 +117,7 @@ namespace Mediators.GameArena
             }
 
             var battleCard = view.Card;
-            if (_cardViews.Count >= Arena.ArenaCartCount ||
+            if (_cardUnitViews.Count >= Arena.ArenaCartCount ||
                 battleCard.Status != BattleStatus.Wait)
             {
                 AddHistoryLogSignal.Dispatch(new[]
@@ -157,12 +143,14 @@ namespace Mediators.GameArena
             {
                 "Player '", activePlayer.Name, "' Add card '", battleCard.SourceCard.name, "' to battle!"
             }, LogType.Hand);
-            // Activate card
-            battleCard.Status = BattleStatus.Sleep;
-            view.ToogleStubImage(true);
-            // Show card on battle arena             
-            _cardViews.Add(view);
-            View.AddCardViewToArena(view);
+            // Create card unit on battle arena             
+            var unitView = View.CreateCardUnit(battleCard);
+            unitView.Card.Status = BattleStatus.Sleep;
+            _cardUnitViews.Add(unitView);
+            // remove card from hand
+            view.DestroyView();
+            // Init mana view
+            InitManaSignal.Dispatch();
         }
     }
 }

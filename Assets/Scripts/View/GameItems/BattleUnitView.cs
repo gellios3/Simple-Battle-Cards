@@ -1,26 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
-using DG.Tweening;
 using Models.Arena;
+using strange.extensions.mediation.impl;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using View.AbstractViews;
-using View.GameArena;
 
-namespace View.DeckItems
+namespace View.GameItems
 {
-    public class CardView : DraggableView, IDropHandler
+    public class BattleUnitView : EventView, IDropHandler
     {
         [SerializeField] private BattleCard _card;
 
-        [SerializeField] protected Image StubImage;
-
         public BattleCard Card
         {
-            get { return _card ?? (_card = new BattleCard()); }
+            get { return _card; }
             private set { _card = value; }
         }
+
+        [SerializeField] private BattleSide _battleSide;
+
+        public BattleSide Side
+        {
+            get { return _battleSide; }
+            set { _battleSide = value; }
+        }
+
+        [SerializeField] protected TextMeshProUGUI AttackText;
+        [SerializeField] protected TextMeshProUGUI HealthText;
+        [SerializeField] protected TextMeshProUGUI DefenceText;
+        [SerializeField] protected Image ArtworkImage;
 
         /// <summary>
         /// On add trate to card
@@ -30,17 +40,18 @@ namespace View.DeckItems
         /// <summary>
         /// On add trate to card
         /// </summary>
-        public event Action<CardView> OnStartDrag;
-
-        /// <summary>
-        /// On add trate to card
-        /// </summary>
-        public event Action<CardView> OnTakeDamage;
+        public event Action<BattleUnitView> OnTakeDamage;
 
         /// <summary>
         /// Battle tarates
         /// </summary>
         public List<TrateView> TrateViews { get; } = new List<TrateView>();
+        
+//        private void Update()
+//        {
+//            var mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+//            Debug.DrawLine(transform.position, mouseWorldPos, Color.red);
+//        }
 
         /// <summary>
         /// Init Card View
@@ -49,26 +60,11 @@ namespace View.DeckItems
         public void Init(BattleCard card)
         {
             Card = card;
-            NameText.text = Card.SourceCard.name;
-            DescriptionText.text = Card.SourceCard.Description;
             ArtworkImage.sprite = Card.SourceCard.Artwork;
-            ManaText.text = Card.Mana.ToString();
             AttackText.text = Card.Attack.ToString();
             HealthText.text = Card.Health.ToString();
             DefenceText.text = Card.Defence.ToString();
         }
-
-        /// <inheritdoc />
-        /// <summary>
-        /// On begin drag
-        /// </summary>
-        /// <param name="eventData"></param>
-        public override void OnBeginDrag(PointerEventData eventData)
-        {
-            OnStartDrag?.Invoke(this);
-            base.OnBeginDrag(eventData);
-        }
-
 
         /// <inheritdoc />
         /// <summary>
@@ -89,21 +85,11 @@ namespace View.DeckItems
                 }
             }
 
-            var draggableCard = eventData.pointerDrag.GetComponent<CardView>();
+            var draggableCard = eventData.pointerDrag.GetComponent<BattleUnitView>();
             if (draggableCard != null)
             {
                 OnTakeDamage?.Invoke(draggableCard);
             }
-        }
-
-
-        /// <summary>
-        /// Toogle stub image
-        /// </summary>
-        /// <param name="status"></param>
-        public void ToogleStubImage(bool status)
-        {
-            StubImage.gameObject.SetActive(status);
         }
 
 
@@ -122,6 +108,14 @@ namespace View.DeckItems
             // Show card on battle arena
             Init(Card);
             trateView.DestroyView();
+        }
+
+        /// <summary>
+        /// Destroy мiew
+        /// </summary>
+        public void DestroyView()
+        {
+            Destroy(gameObject);
         }
     }
 }

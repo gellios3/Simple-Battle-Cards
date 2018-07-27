@@ -13,8 +13,8 @@ using Signals.GameArena;
 using Signals.GameArena.CardSignals;
 using Signals.GameArena.TrateSignals;
 using UnityEngine;
-using View.DeckItems;
 using View.GameArena;
+using View.GameItems;
 
 namespace Contexts
 {
@@ -75,7 +75,6 @@ namespace Contexts
             injectionBinder.Bind<AddCardToHandDeckSignal>().ToSingleton();
             injectionBinder.Bind<AddTrateToHandDeckSignal>().ToSingleton();
             injectionBinder.Bind<ShowManaSignal>().ToSingleton();
-            injectionBinder.Bind<AddCatdToBattleArenaSignal>().ToSingleton();
             injectionBinder.Bind<ActivateBattleCardsSignal>().ToSingleton();
             injectionBinder.Bind<RefreshHandSignal>().ToSingleton();
             injectionBinder.Bind<RefreshArenaSignal>().ToSingleton();
@@ -112,6 +111,7 @@ namespace Contexts
             mediationBinder.Bind<CardView>().To<CardMediator>();
             mediationBinder.Bind<TrateView>().To<TrateMediator>();
             mediationBinder.Bind<EndTurnView>().To<EndTurnMediator>();
+            mediationBinder.Bind<BattleUnitView>().To<BattleUnitMediator>();
         }
     }
 }

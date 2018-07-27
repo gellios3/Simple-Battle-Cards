@@ -1,18 +1,18 @@
-﻿using Models.Arena;
-using Signals.GameArena.CardSignals;
+﻿using System;
+using Models.Arena;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using View.AbstractViews;
-using View.DeckItems;
+using View.GameItems;
 
 namespace View.GameArena
 {
     public class BattleArenaView : DroppableView
     {
         /// <summary>
-        /// Init card deck signal
+        /// On add trate to card
         /// </summary>
-        [Inject]
-        public AddCatdToBattleArenaSignal AddCatdToBattleArenaSignal { get; set; }
+        public event Action<CardView> OnAddCatdToBattleArena;
 
         /// <summary>
         /// On Drop draggable Item
@@ -24,14 +24,27 @@ namespace View.GameArena
             if (cardView == null || cardView.Card == null || cardView.PlaceholderParent != transform) return;
             if (cardView.Card.Status == BattleStatus.Wait)
             {
-                AddCatdToBattleArenaSignal.Dispatch(cardView);
+                OnAddCatdToBattleArena?.Invoke(cardView);
             }
         }
 
-        public void AddCardViewToArena(CardView cardView)
+        /// <summary>
+        /// Add card unit to arena
+        /// </summary>
+        /// <param name="card"></param>
+        /// <returns></returns>
+        public BattleUnitView CreateCardUnit(BattleCard card)
         {
-            cardView.IsDroppable = false;
-            cardView.ParentToReturnTo = transform;
+            // Load Card
+            var cardGameObject = (GameObject) Instantiate(
+                Resources.Load("Prefabs/BattleCardUnit", typeof(GameObject)),
+                new Vector3(),
+                Quaternion.identity,
+                transform
+            );
+            var cardUnitView = cardGameObject.GetComponent<BattleUnitView>();
+            cardUnitView.Init(card);
+            return cardUnitView;
         }
 
         public override void OnPointerEnter(PointerEventData eventData)
@@ -39,7 +52,7 @@ namespace View.GameArena
             if (eventData.pointerDrag == null)
                 return;
             var draggableCard = eventData.pointerDrag.GetComponent<DraggableView>();
-            if (draggableCard.IsDroppable)
+            if (draggableCard.CanDroppable)
             {
                 base.OnPointerEnter(eventData);
             }
