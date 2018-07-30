@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using Models;
 using Models.Arena;
 using strange.extensions.mediation.impl;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using View.GameArena;
 
 namespace View.GameItems
 {
@@ -27,11 +29,19 @@ namespace View.GameItems
             set { _battleSide = value; }
         }
 
-        [SerializeField] protected TextMeshProUGUI AttackText;
-        [SerializeField] protected TextMeshProUGUI HealthText;
-        [SerializeField] protected TextMeshProUGUI DefenceText;
-        [SerializeField] protected Button AttackBtn;
-        [SerializeField] protected Image ArtworkImage;
+        [SerializeField] private TextMeshProUGUI _attackText;
+        [SerializeField] private TextMeshProUGUI _healthText;
+        [SerializeField] private TextMeshProUGUI _defenceText;
+        [SerializeField] private Button _attackBtn;
+        [SerializeField] private Image _artworkImage;
+
+        [SerializeField] private bool _hasAttack;
+
+        public bool HasAttack
+        {
+            get { return _hasAttack; }
+            set { _hasAttack = value; }
+        }
 
         /// <summary>
         /// On add trate to card
@@ -44,20 +54,40 @@ namespace View.GameItems
         public event Action<BattleUnitView> OnTakeDamage;
 
         /// <summary>
+        /// On add trate to card
+        /// </summary>
+        public event Action OnInitAttack;
+
+        /// <summary>
+        /// On add trate to card
+        /// </summary>
+        public event Action<PositionStruct> OnDrawAttackLine;
+
+        /// <summary>
         /// Battle tarates
         /// </summary>
         public List<TrateView> TrateViews { get; } = new List<TrateView>();
 
-
-//        private void Update()
-//        {
-//            var mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-//            Debug.DrawLine(transform.position, mouseWorldPos, Color.red);
-//        }
-
-        private void Start()
+        /// <inheritdoc />
+        /// <summary>
+        /// On Start
+        /// </summary>
+        protected override void Start()
         {
-            AttackBtn.onClick.AddListener(() => { Debug.Log("On click"); });
+            _attackBtn.onClick.AddListener(() => { OnInitAttack?.Invoke(); });
+        }
+
+        /// <summary>
+        /// On update
+        /// </summary>
+        private void Update()
+        {
+            if (!HasAttack || !HasMouseMoved()) return;
+            OnDrawAttackLine?.Invoke(new PositionStruct
+            {
+                StartPos = transform.position,
+                EndPos = Camera.main.ScreenToWorldPoint(Input.mousePosition)
+            });
         }
 
         /// <summary>
@@ -67,10 +97,10 @@ namespace View.GameItems
         public void Init(BattleCard card)
         {
             Card = card;
-            ArtworkImage.sprite = Card.SourceCard.Artwork;
-            AttackText.text = Card.Attack.ToString();
-            HealthText.text = Card.Health.ToString();
-            DefenceText.text = Card.Defence.ToString();
+            _artworkImage.sprite = Card.SourceCard.Artwork;
+            _attackText.text = Card.Attack.ToString();
+            _healthText.text = Card.Health.ToString();
+            _defenceText.text = Card.Defence.ToString();
         }
 
         /// <inheritdoc />
@@ -99,6 +129,21 @@ namespace View.GameItems
             }
         }
 
+        /// <summary>
+        /// Deactivate attack
+        /// </summary>
+        public void DeactivateAttack()
+        {
+            _attackBtn.interactable = false;
+        }
+
+        /// <summary>
+        /// Activate attack
+        /// </summary>
+        public void ActivateAttack()
+        {
+            _attackBtn.interactable = true;
+        }
 
         /// <summary>
         /// Add trate to battle card
@@ -123,6 +168,12 @@ namespace View.GameItems
         public void DestroyView()
         {
             Destroy(gameObject);
+        }
+
+        private bool HasMouseMoved()
+        {
+            //I feel dirty even doing this 
+            return Math.Abs(Input.GetAxis("Mouse X")) > 0 || Math.Abs(Input.GetAxis("Mouse Y")) > 0;
         }
     }
 }

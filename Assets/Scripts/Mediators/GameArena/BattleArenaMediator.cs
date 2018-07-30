@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Models.Arena;
 using Signals;
 using Signals.GameArena;
@@ -97,6 +98,7 @@ namespace Mediators.GameArena
             _cardUnitViews = _cardUnitViews.FindAll(
                 view => view.Card.Status == BattleStatus.Active
             );
+            _cardUnitViews.ForEach(view => view.ActivateAttack());
         }
 
         /// <summary>
@@ -145,7 +147,7 @@ namespace Mediators.GameArena
             }, LogType.Hand);
             // Create card unit on battle arena             
             var unitView = View.CreateCardUnit(battleCard);
-            unitView.Card.Status = BattleStatus.Sleep;
+
             _cardUnitViews.Add(unitView);
             // remove card from hand
             view.DestroyView();

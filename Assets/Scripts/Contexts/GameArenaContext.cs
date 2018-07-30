@@ -81,6 +81,8 @@ namespace Contexts
             injectionBinder.Bind<RefreshHistoryLog>().ToSingleton();
             injectionBinder.Bind<InitCardHandSignal>().ToSingleton();
             injectionBinder.Bind<InitTrateHandSignal>().ToSingleton();
+            injectionBinder.Bind<InitAttackLineSignal>().ToSingleton();
+            injectionBinder.Bind<SetAttackLinePosSignal>().ToSingleton();
 
             // Init comands
             commandBinder.Bind<InitNewGameSignal>().To<InitNewGameCommand>();
@@ -112,6 +114,7 @@ namespace Contexts
             mediationBinder.Bind<TrateView>().To<TrateMediator>();
             mediationBinder.Bind<EndTurnView>().To<EndTurnMediator>();
             mediationBinder.Bind<BattleUnitView>().To<BattleUnitMediator>();
+            mediationBinder.Bind<AttackLineView>().To<AttackLineMediator>();
         }
     }
 }

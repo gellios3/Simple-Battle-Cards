@@ -1,5 +1,6 @@
 ﻿using Models;
 using Models.Arena;
+using Signals.GameArena;
 using Signals.GameArena.CardSignals;
 using Signals.GameArena.TrateSignals;
 using UnityEngine;
@@ -22,6 +23,19 @@ namespace Mediators.GameArena
         public TakeDamageToCardSignal TakeDamageToCardSignal { get; set; }
 
         /// <summary>
+        /// Battle
+        /// </summary>
+        [Inject]
+        public InitAttackLineSignal InitAttackLineSignal { get; set; }
+
+        /// <summary>
+        /// Battle
+        /// </summary>
+        [Inject]
+        public SetAttackLinePosSignal SetAttackLinePosSignal { get; set; }
+
+
+        /// <summary>
         /// Init mana signal
         /// </summary>
         [Inject]
@@ -34,6 +48,16 @@ namespace Mediators.GameArena
         public override void OnRegister()
         {
             View.OnAddTrateToCard += view => { AddTrateToCardSignal.Dispatch(View, view); };
+
+            View.OnDrawAttackLine += posStruct => { SetAttackLinePosSignal.Dispatch(posStruct); };
+
+            View.OnInitAttack += () =>
+            {
+                if (View.Side != BattleArena.ActiveSide)
+                    return;
+                InitAttackLineSignal.Dispatch(!View.HasAttack);
+            };
+
             View.OnTakeDamage += view =>
             {
                 if (View.Card.Status != BattleStatus.Wait &&
@@ -47,6 +71,13 @@ namespace Mediators.GameArena
                     });
                 }
             };
+
+            InitAttackLineSignal.AddListener(hasAttack =>
+            {
+                if (View.Side != BattleArena.ActiveSide)
+                    return;
+                View.HasAttack = hasAttack;
+            });
         }
     }
 }

@@ -590,11 +590,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _battleSide: 0
-  AttackText: {fileID: 7226898029868256042}
-  HealthText: {fileID: 295243536160380664}
-  DefenceText: {fileID: 8428661161596409039}
-  AttackBtn: {fileID: 3010842126826561878}
-  ArtworkImage: {fileID: 6676133390019331728}
+  _attackText: {fileID: 7226898029868256042}
+  _healthText: {fileID: 295243536160380664}
+  _defenceText: {fileID: 8428661161596409039}
+  _attackBtn: {fileID: 3010842126826561878}
+  _artworkImage: {fileID: 6676133390019331728}
 --- !u!1 &5471124558240913221
 GameObject:
   m_ObjectHideFlags: 0
@@ -1104,7 +1104,7 @@ GameObject:
   - component: {fileID: 2284102491506002099}
   - component: {fileID: 3010842126826561878}
   m_Layer: 0
-  m_Name: Button
+  m_Name: AttackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

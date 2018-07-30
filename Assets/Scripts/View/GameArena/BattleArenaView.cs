@@ -45,6 +45,8 @@ namespace View.GameArena
             var cardUnitView = cardGameObject.GetComponent<BattleUnitView>();
             cardUnitView.Init(card);
             cardUnitView.Side = Side;
+            cardUnitView.Card.Status = BattleStatus.Sleep;
+            cardUnitView.DeactivateAttack();
             return cardUnitView;
         }
 
