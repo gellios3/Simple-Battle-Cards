@@ -55,7 +55,10 @@ namespace Mediators.GameArena
             {
                 if (View.Side != BattleArena.ActiveSide)
                     return;
-                InitAttackLineSignal.Dispatch(!View.HasAttack);
+                var tempHasAttack = !View.HasAttack;
+                View.HasAttack = tempHasAttack;
+                BattleArena.AttackUnit = tempHasAttack ? View : null;
+                InitAttackLineSignal.Dispatch(tempHasAttack);
             };
 
             View.OnTakeDamage += view =>
@@ -71,13 +74,6 @@ namespace Mediators.GameArena
                     });
                 }
             };
-
-            InitAttackLineSignal.AddListener(hasAttack =>
-            {
-                if (View.Side != BattleArena.ActiveSide)
-                    return;
-                View.HasAttack = hasAttack;
-            });
         }
     }
 }

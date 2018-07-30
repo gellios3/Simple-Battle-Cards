@@ -11,7 +11,7 @@ using View.GameArena;
 
 namespace View.GameItems
 {
-    public class BattleUnitView : EventView, IDropHandler
+    public class BattleUnitView : EventView, IDropHandler, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] private BattleCard _card;
 
@@ -34,6 +34,7 @@ namespace View.GameItems
         [SerializeField] private TextMeshProUGUI _defenceText;
         [SerializeField] private Button _attackBtn;
         [SerializeField] private Image _artworkImage;
+
 
         [SerializeField] private bool _hasAttack;
 
@@ -127,6 +128,20 @@ namespace View.GameItems
             {
                 OnTakeDamage?.Invoke(draggableCard);
             }
+        }
+
+        /// <summary>
+        /// On pointer enter
+        /// </summary>
+        /// <param name="eventData"></param>
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            Debug.Log("OnPointerEnter");
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            Debug.Log("OnPointerExit");
         }
 
         /// <summary>
