@@ -91,10 +91,10 @@ namespace View.GameArena
             // toogle line and head image active
             _line.gameObject.SetActive(isActive);
             _headImage.gameObject.SetActive(isActive);
-            // remove active attack unit if deactivate
-            if (!isActive)
+            // set has attack status
+            if (BattleArena.AttackUnit != null)
             {
-                BattleArena.AttackUnit = null;
+                BattleArena.AttackUnit.HasAttack = isActive;
             }
         }
     }

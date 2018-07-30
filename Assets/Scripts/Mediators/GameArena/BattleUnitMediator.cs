@@ -3,7 +3,6 @@ using Models.Arena;
 using Signals.GameArena;
 using Signals.GameArena.CardSignals;
 using Signals.GameArena.TrateSignals;
-using UnityEngine;
 using View.GameItems;
 
 namespace Mediators.GameArena
