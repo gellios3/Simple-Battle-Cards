@@ -11,7 +11,7 @@ using View.GameArena;
 
 namespace View.GameItems
 {
-    public class BattleUnitView : EventView, IDropHandler, IPointerEnterHandler, IPointerExitHandler
+    public class BattleUnitView : EventView, IDropHandler
     {
         [SerializeField] private BattleCard _card;
 
@@ -32,7 +32,10 @@ namespace View.GameItems
         [SerializeField] private TextMeshProUGUI _attackText;
         [SerializeField] private TextMeshProUGUI _healthText;
         [SerializeField] private TextMeshProUGUI _defenceText;
-        [SerializeField] private Button _attackBtn;
+        [SerializeField] private AttackButtonView _attackBtnView;
+
+        public AttackButtonView AttackBtnView => _attackBtnView;
+
         [SerializeField] private Image _artworkImage;
 
 
@@ -52,31 +55,12 @@ namespace View.GameItems
         /// <summary>
         /// On add trate to card
         /// </summary>
-        public event Action<BattleUnitView> OnTakeDamage;
-
-        /// <summary>
-        /// On add trate to card
-        /// </summary>
-        public event Action OnInitAttack;
-
-        /// <summary>
-        /// On add trate to card
-        /// </summary>
         public event Action<PositionStruct> OnDrawAttackLine;
 
         /// <summary>
         /// Battle tarates
         /// </summary>
         public List<TrateView> TrateViews { get; } = new List<TrateView>();
-
-        /// <inheritdoc />
-        /// <summary>
-        /// On Start
-        /// </summary>
-        protected override void Start()
-        {
-            _attackBtn.onClick.AddListener(() => { OnInitAttack?.Invoke(); });
-        }
 
         /// <summary>
         /// On update
@@ -122,42 +106,6 @@ namespace View.GameItems
                     }
                 }
             }
-
-            var draggableCard = eventData.pointerDrag.GetComponent<BattleUnitView>();
-            if (draggableCard != null)
-            {
-                OnTakeDamage?.Invoke(draggableCard);
-            }
-        }
-
-        /// <summary>
-        /// On pointer enter
-        /// </summary>
-        /// <param name="eventData"></param>
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            Debug.Log("OnPointerEnter");
-        }
-
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            Debug.Log("OnPointerExit");
-        }
-
-        /// <summary>
-        /// Deactivate attack
-        /// </summary>
-        public void DeactivateAttack()
-        {
-            _attackBtn.interactable = false;
-        }
-
-        /// <summary>
-        /// Activate attack
-        /// </summary>
-        public void ActivateAttack()
-        {
-            _attackBtn.interactable = true;
         }
 
         /// <summary>

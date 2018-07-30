@@ -38,7 +38,7 @@ namespace View.GameArena
             // Load Card
             var cardGameObject = (GameObject) Instantiate(
                 Resources.Load("Prefabs/BattleCardUnit", typeof(GameObject)),
-                new Vector3(),
+                Vector3.zero,
                 Quaternion.identity,
                 transform
             );
@@ -46,7 +46,7 @@ namespace View.GameArena
             cardUnitView.Init(card);
             cardUnitView.Side = Side;
             cardUnitView.Card.Status = BattleStatus.Sleep;
-            cardUnitView.DeactivateAttack();
+            cardUnitView.AttackBtnView.DeactivateAttack();
             return cardUnitView;
         }
 

@@ -31,6 +31,12 @@ namespace Commands.GameArena.CardCommands
         [Inject]
         public RefreshArenaSignal RefreshArenaSignal { get; set; }
 
+        /// <summary>
+        /// Battle
+        /// </summary>
+        [Inject]
+        public InitAttackLineSignal InitAttackLineSignal { get; set; }
+
         public override void Execute()
         {
             var activePlayer = BattleArena.GetActivePlayer();
@@ -98,6 +104,10 @@ namespace Commands.GameArena.CardCommands
                 DamageStruct.SourceCardView.Init(sourceCard);
             }
 
+            DamageStruct.DamageCardView.HasAttack = false;
+            BattleArena.AttackUnit.AttackBtnView.DeactivateAttack();
+            BattleArena.AttackUnit = null;
+            InitAttackLineSignal.Dispatch(false);
             RefreshArenaSignal.Dispatch();
         }
     }

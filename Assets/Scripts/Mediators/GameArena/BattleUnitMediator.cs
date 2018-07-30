@@ -3,6 +3,7 @@ using Models.Arena;
 using Signals.GameArena;
 using Signals.GameArena.CardSignals;
 using Signals.GameArena.TrateSignals;
+using UnityEngine;
 using View.GameItems;
 
 namespace Mediators.GameArena
@@ -50,28 +51,36 @@ namespace Mediators.GameArena
 
             View.OnDrawAttackLine += posStruct => { SetAttackLinePosSignal.Dispatch(posStruct); };
 
-            View.OnInitAttack += () =>
+            View.AttackBtnView.OnInitTakeDamage += hasEnterDamage =>
+            {
+                if (View.Side == BattleArena.ActiveSide || BattleArena.AttackUnit == null)
+                    return;
+                View.AttackBtnView.HasEnterOponentUnit = hasEnterDamage;
+            };
+
+            View.AttackBtnView.OnTakeDamage += () =>
+            {
+                if (BattleArena.AttackUnit == null ||
+                    View.Card.Status == BattleStatus.Wait ||
+                    BattleArena.AttackUnit.Side != BattleArena.ActiveSide ||
+                    BattleArena.AttackUnit.Card.Status != BattleStatus.Active)
+                    return;
+                TakeDamageToCardSignal.Dispatch(new DamageStruct
+                {
+                    DamageCardView = BattleArena.AttackUnit,
+                    SourceCardView = View
+                });
+            };
+
+            View.AttackBtnView.OnInitAttack += () =>
             {
                 if (View.Side != BattleArena.ActiveSide)
                     return;
+
                 var tempHasAttack = !View.HasAttack;
                 View.HasAttack = tempHasAttack;
                 BattleArena.AttackUnit = tempHasAttack ? View : null;
                 InitAttackLineSignal.Dispatch(tempHasAttack);
-            };
-
-            View.OnTakeDamage += view =>
-            {
-                if (View.Card.Status != BattleStatus.Wait &&
-                    view.Side == BattleArena.ActiveSide &&
-                    view.Card.Status == BattleStatus.Active)
-                {
-                    TakeDamageToCardSignal.Dispatch(new DamageStruct
-                    {
-                        DamageCardView = view,
-                        SourceCardView = View
-                    });
-                }
             };
         }
     }

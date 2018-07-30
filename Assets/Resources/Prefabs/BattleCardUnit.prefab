@@ -513,6 +513,7 @@ GameObject:
   - component: {fileID: 7050356919408397127}
   - component: {fileID: 5931707478220615617}
   - component: {fileID: 351609618945230101}
+  - component: {fileID: 610686648911644677}
   m_Layer: 5
   m_Name: BattleCardUnit
   m_TagString: Untagged
@@ -593,8 +594,18 @@ MonoBehaviour:
   _attackText: {fileID: 7226898029868256042}
   _healthText: {fileID: 295243536160380664}
   _defenceText: {fileID: 8428661161596409039}
-  _attackBtn: {fileID: 3010842126826561878}
+  _attackBtnView: {fileID: 206427573319798375}
   _artworkImage: {fileID: 6676133390019331728}
+  _hasAttack: 0
+  _hasTakeDamage: 0
+--- !u!222 &610686648911644677
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3194926623434545804}
+  m_CullTransparentMesh: 1
 --- !u!1 &5471124558240913221
 GameObject:
   m_ObjectHideFlags: 0
@@ -1103,6 +1114,7 @@ GameObject:
   - component: {fileID: 1752886644028286345}
   - component: {fileID: 2284102491506002099}
   - component: {fileID: 3010842126826561878}
+  - component: {fileID: 206427573319798375}
   m_Layer: 0
   m_Name: AttackButton
   m_TagString: Untagged
@@ -1118,7 +1130,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9016619170524631370}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 10.000157}
+  m_LocalPosition: {x: 0, y: 0, z: 100}
   m_LocalScale: {x: 1.000054, y: 1.000054, z: 1.000054}
   m_Children: []
   m_Father: {fileID: 7338176846713214172}
@@ -1136,7 +1148,7 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9016619170524631370}
-  m_CullTransparentMesh: 0
+  m_CullTransparentMesh: 1
 --- !u!114 &2284102491506002099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1207,3 +1219,16 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &206427573319798375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9016619170524631370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9963720622eaab942aba9c1259a179bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attackBtn: {fileID: 3010842126826561878}
