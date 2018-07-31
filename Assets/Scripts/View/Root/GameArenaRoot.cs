@@ -22,6 +22,14 @@ namespace View.Root
                 Destroy(root);
             }
         }
+        
+        private void Update()
+        {
+            if (Input.GetKey("escape"))
+            {
+                Application.Quit();
+            }
+        }
 
         protected override void OnDestroy()
         {

@@ -3,7 +3,8 @@ using Models.Arena;
 using strange.extensions.command.impl;
 using Signals;
 using Signals.GameArena;
-using View.DeckItems;
+using View.GameArena;
+using View.GameItems;
 
 namespace Commands.GameArena.CardCommands
 {
@@ -11,7 +12,7 @@ namespace Commands.GameArena.CardCommands
     {
         [Inject] public TrateView TrateView { get; set; }
 
-        [Inject] public CardView CardView { get; set; }
+        [Inject] public BattleUnitView BattleUnitView { get; set; }
 
         /// <summary>
         /// Init mana signal
@@ -34,7 +35,7 @@ namespace Commands.GameArena.CardCommands
         public override void Execute()
         {
             var trate = TrateView.Trate;
-            var card = CardView.Card;
+            var card = BattleUnitView.Card;
             var activePlayer = BattleArena.GetActivePlayer();
             if (activePlayer.ManaPull <= 0 ||
                 activePlayer.ManaPull < trate.Mana)
@@ -48,7 +49,7 @@ namespace Commands.GameArena.CardCommands
                 return;
             }
 
-            if (CardView.TrateViews.Count >= BattleCard.MaxTratesCount)
+            if (BattleUnitView.TrateViews.Count >= BattleCard.MaxTratesCount)
             {
                 AddHistoryLogSignal.Dispatch(new[]
                 {
@@ -60,7 +61,7 @@ namespace Commands.GameArena.CardCommands
 
             if (activePlayer.LessManaPull(trate.Mana))
             {
-                CardView.AddTrate(TrateView);
+                BattleUnitView.AddTrate(TrateView);
                 // add history battle log
                 AddHistoryLogSignal.Dispatch(new[]
                 {

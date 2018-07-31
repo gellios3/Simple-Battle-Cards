@@ -1,11 +1,12 @@
-﻿using View.DeckItems;
+﻿using View.GameArena;
+using View.GameItems;
 
 namespace Models
 {
     public struct DamageStruct
     {
-        public CardView SourceCardView { get; set; }
+        public BattleUnitView SourceCardView { get; set; }
 
-        public CardView DamageCardView { get; set; }
+        public BattleUnitView DamageCardView { get; set; }
     }
 }

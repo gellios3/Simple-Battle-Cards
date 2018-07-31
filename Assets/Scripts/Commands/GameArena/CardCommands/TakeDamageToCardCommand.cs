@@ -5,7 +5,6 @@ using Signals;
 using Signals.GameArena;
 using UniRx.Triggers;
 using UnityEngine;
-using View.DeckItems;
 using LogType = Models.LogType;
 
 namespace Commands.GameArena.CardCommands
@@ -31,6 +30,12 @@ namespace Commands.GameArena.CardCommands
         /// </summary>
         [Inject]
         public RefreshArenaSignal RefreshArenaSignal { get; set; }
+
+        /// <summary>
+        /// Battle
+        /// </summary>
+        [Inject]
+        public InitAttackLineSignal InitAttackLineSignal { get; set; }
 
         public override void Execute()
         {
@@ -99,6 +104,10 @@ namespace Commands.GameArena.CardCommands
                 DamageStruct.SourceCardView.Init(sourceCard);
             }
 
+            DamageStruct.DamageCardView.HasAttack = false;
+            BattleArena.AttackUnit.AttackBtnView.DeactivateAttack();
+            BattleArena.AttackUnit = null;
+            InitAttackLineSignal.Dispatch(false);
             RefreshArenaSignal.Dispatch();
         }
     }

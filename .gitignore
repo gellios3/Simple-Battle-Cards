@@ -35,12 +35,9 @@ sysinfo.txt
 *.apk
 *.unitypackage
 /.idea
-/Assets/StrangeIoC
 /Assets/Plugins
-/Assets/StrangeIoC.meta
 /ProjectSettings/ProjectVersion.txt
 /GameData
 /Assets/Demigiant
-/Assets/StrangeIoC
 /Assets/Plugins
 /Assets/TextMesh Pro

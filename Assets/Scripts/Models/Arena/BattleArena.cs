@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Services;
 using Signals;
+using View.GameItems;
 using Random = UnityEngine.Random;
 
 namespace Models.Arena
@@ -25,6 +26,11 @@ namespace Models.Arena
         /// Active state
         /// </summary>
         public BattleSide ActiveSide { get; set; }
+
+        /// <summary>
+        /// Attack card
+        /// </summary>
+        public BattleUnitView AttackUnit { get; set; }
 
         /// <summary>
         /// Battle history
