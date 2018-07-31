@@ -52,6 +52,12 @@ namespace Commands.GameArena
         public StateService StateService { get; set; }
 
         /// <summary>
+        /// Show turn popup signal
+        /// </summary>
+        [Inject]
+        public ShowTurnPopupSignal ShowTurnPopupSignal { get; set; }
+
+        /// <summary>
         /// Arena
         /// </summary>
         [Inject]
@@ -98,6 +104,9 @@ namespace Commands.GameArena
 
             //Init battle arena
             InitBattleArenaSignal.Dispatch();
+
+            // show new turn popup
+            ShowTurnPopupSignal.Dispatch();
         }
     }
 }

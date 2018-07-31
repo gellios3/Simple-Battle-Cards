@@ -9,7 +9,7 @@ namespace Mediators.GameArena
 
         public override void OnRegister()
         {
-            View.EndTurnButton.onClick.AddListener(() => { EndTurnSignal.Dispatch(); });
+//            View.EndTurnButton.onClick.AddListener(() => {  });
         }
     }
 }
