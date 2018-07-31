@@ -53,7 +53,7 @@ namespace Mediators.GameArena
                     foreach (Transform child in View.transform)
                     {
                         var view = child.GetComponent<DraggableView>();
-                        if (manaCount >= view.Mana)
+                        if (view != null && manaCount >= view.Mana)
                         {
                             hasCard = true;
                         }
