@@ -84,6 +84,7 @@ namespace Contexts
             injectionBinder.Bind<InitAttackLineSignal>().ToSingleton();
             injectionBinder.Bind<SetAttackLinePosSignal>().ToSingleton();
             injectionBinder.Bind<ShowTurnPopupSignal>().ToSingleton();
+            injectionBinder.Bind<ShowEndTurnButtonSignal>().ToSingleton();
 
             // Init comands
             commandBinder.Bind<InitNewGameSignal>().To<InitNewGameCommand>();
