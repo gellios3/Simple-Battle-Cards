@@ -2,6 +2,7 @@
 using Commands.GameArena;
 using Commands.GameArena.CardCommands;
 using Mediators.GameArena;
+using Mediators.GameItems;
 using Models.Arena;
 using strange.extensions.command.api;
 using strange.extensions.command.impl;
@@ -84,6 +85,7 @@ namespace Contexts
             injectionBinder.Bind<InitAttackLineSignal>().ToSingleton();
             injectionBinder.Bind<SetAttackLinePosSignal>().ToSingleton();
             injectionBinder.Bind<ShowTurnPopupSignal>().ToSingleton();
+            injectionBinder.Bind<ShowEndTurnButtonSignal>().ToSingleton();
 
             // Init comands
             commandBinder.Bind<InitNewGameSignal>().To<InitNewGameCommand>();

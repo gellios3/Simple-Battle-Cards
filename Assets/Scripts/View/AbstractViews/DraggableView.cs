@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using System;
+using DG.Tweening;
 using Models.Arena;
 using strange.extensions.mediation.impl;
 using TMPro;
@@ -20,6 +21,9 @@ namespace View.AbstractViews
         [SerializeField] protected TextMeshProUGUI DefenceText;
 
         [SerializeField] private Transform _placeholder;
+
+
+        public int Mana => Convert.ToInt32(ManaText.text);
 
         public Transform Placeholder
         {
@@ -58,6 +62,7 @@ namespace View.AbstractViews
             get { return _battleSide; }
             set { _battleSide = value; }
         }
+
 
         public bool CanDraggable = true;
         public bool CanDroppable = true;

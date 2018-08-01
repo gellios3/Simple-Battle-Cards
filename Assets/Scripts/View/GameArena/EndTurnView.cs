@@ -15,20 +15,26 @@ namespace View.GameArena
 
         protected override void Start()
         {
-            transform.DOLocalMoveX(310, 1, true);
-            _expandButton.transform.parent.transform.DOLocalMoveX(-85, 1, true);
+            HideEndTurnButton();
 
             _endTurnButton.onClick.AddListener(() =>
             {
-                transform.DOLocalMoveX(310, 1, true).onComplete += () => { EndTurnSignal.Dispatch(); };
-                _expandButton.transform.parent.transform.DOLocalMoveX(-85, 1, true);
+                HideEndTurnButton().onComplete += () => { EndTurnSignal.Dispatch(); };
             });
 
-            _expandButton.onClick.AddListener(() =>
-            {
-                transform.DOLocalMoveX(185, 1, true);
-                _expandButton.transform.parent.transform.DOLocalMoveX(-37.5f, 1, true);
-            });
+            _expandButton.onClick.AddListener(ShowEndTurnButton);
+        }
+
+        public void ShowEndTurnButton()
+        {
+            transform.DOLocalMoveX(185, 1, true);
+            _expandButton.transform.parent.transform.DOLocalMoveX(-37.5f, 1, true);
+        }
+
+        private Tweener HideEndTurnButton()
+        {
+            _expandButton.transform.parent.transform.DOLocalMoveX(-85, 1, true);
+            return transform.DOLocalMoveX(310, 1, true);
         }
     }
 }

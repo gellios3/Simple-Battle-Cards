@@ -1,7 +1,7 @@
 ﻿using Models.Arena;
 using View.GameItems;
 
-namespace Mediators.GameArena
+namespace Mediators.GameItems
 {
     public class CardMediator : TargetMediator<CardView>
     {
