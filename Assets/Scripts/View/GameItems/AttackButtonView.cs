@@ -26,7 +26,7 @@ namespace View.GameItems
         /// On add trate to card
         /// </summary>
         public event Action OnInitAttack;
-        
+
         /// <summary>
         /// On add trate to card
         /// </summary>
@@ -40,6 +40,7 @@ namespace View.GameItems
         {
             _attackBtn.onClick.AddListener(() =>
             {
+                Debug.Log("_attackBtn.onClick " + HasEnterOponentUnit);
                 if (HasEnterOponentUnit)
                 {
                     OnTakeDamage?.Invoke();
