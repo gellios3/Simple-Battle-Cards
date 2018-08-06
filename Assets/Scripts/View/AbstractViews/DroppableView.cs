@@ -21,14 +21,15 @@ namespace View.AbstractViews
         /// <param name="eventData"></param>
         public virtual void OnPointerEnter(PointerEventData eventData)
         {
-            if (eventData.pointerDrag == null)
-                return;
-            var draggableCard = eventData.pointerDrag.GetComponent<DraggableView>();
-
-            if (draggableCard == null || draggableCard.Side != Side)
-                return;
-            draggableCard.CreatePlaceholder();
-            draggableCard.PlaceholderParent = transform;
+            Debug.Log("DroppableView OnPointerEnter");
+//            if (eventData.pointerDrag == null)
+//                return;
+//            var draggableCard = eventData.pointerDrag.GetComponent<HandItemView>();
+//
+//            if (draggableCard == null || draggableCard.Side != Side)
+//                return;
+//            draggableCard.CreatePlaceholder();
+//            draggableCard.PlaceholderParent = transform;
         }
 
         /// <inheritdoc />
@@ -41,7 +42,7 @@ namespace View.AbstractViews
             if (eventData.pointerDrag == null)
                 return;
 
-            var draggableCard = eventData.pointerDrag.GetComponent<DraggableView>();
+            var draggableCard = eventData.pointerDrag.GetComponent<HandItemView>();
 
             if (draggableCard == null || draggableCard.PlaceholderParent != transform)
                 return;

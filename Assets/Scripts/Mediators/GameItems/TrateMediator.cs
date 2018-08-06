@@ -13,7 +13,7 @@ namespace Mediators.GameItems
 
         public override void OnRegister()
         {
-            View.OnStartDrag += view => { view.CanDraggable = view.Side == BattleArena.ActiveSide; };
+//            View.OnStartDrag += view => { view.CanDraggable = view.Side == BattleArena.ActiveSide; };
         }
     }
 }

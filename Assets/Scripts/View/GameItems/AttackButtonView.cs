@@ -13,7 +13,7 @@ namespace View.GameItems
 
         public bool HasEnterOponentUnit
         {
-            get { return _hasEnterOponentUnit; }
+            private get { return _hasEnterOponentUnit; }
             set { _hasEnterOponentUnit = value; }
         }
 
@@ -40,7 +40,6 @@ namespace View.GameItems
         {
             _attackBtn.onClick.AddListener(() =>
             {
-                Debug.Log("_attackBtn.onClick " + HasEnterOponentUnit);
                 if (HasEnterOponentUnit)
                 {
                     OnTakeDamage?.Invoke();
@@ -52,6 +51,7 @@ namespace View.GameItems
             });
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// On pointer enter
         /// </summary>
@@ -61,6 +61,7 @@ namespace View.GameItems
             OnInitTakeDamage?.Invoke(true);
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// On poiter enter
         /// </summary>

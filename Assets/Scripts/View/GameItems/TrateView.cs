@@ -1,19 +1,20 @@
 ﻿using System;
 using Models.Arena;
+using strange.extensions.mediation.impl;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using View.AbstractViews;
 
 namespace View.GameItems
 {
-    public class TrateView : DraggableView
+    public class TrateView : HandItemView
     {
         [SerializeField] private BattleTrate _trate;
 
         /// <summary>
         /// On add trate to card
         /// </summary>
-        public event Action<TrateView> OnStartDrag;
+//        public event Action<TrateView> OnStartDrag;
 
         public BattleTrate Trate
         {
@@ -33,15 +34,15 @@ namespace View.GameItems
             DefenceText.text = Trate.Defence.ToString();
         }
 
-        /// <inheritdoc />
-        /// <summary>
-        /// On begin drag
-        /// </summary>
-        /// <param name="eventData"></param>
-        public override void OnBeginDrag(PointerEventData eventData)
-        {
-            OnStartDrag?.Invoke(this);
-            base.OnBeginDrag(eventData);
-        }
+//        /// <inheritdoc />
+//        /// <summary>
+//        /// On begin drag
+//        /// </summary>
+//        /// <param name="eventData"></param>
+//        public override void OnBeginDrag(PointerEventData eventData)
+//        {
+//            OnStartDrag?.Invoke(this);
+//            base.OnBeginDrag(eventData);
+//        }
     }
 }
