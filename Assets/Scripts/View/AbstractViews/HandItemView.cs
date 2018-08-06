@@ -18,11 +18,11 @@ namespace View.AbstractViews
         [SerializeField] protected TextMeshProUGUI AttackText;
         [SerializeField] protected TextMeshProUGUI HealthText;
         [SerializeField] protected TextMeshProUGUI DefenceText;
-        
+
         public int Mana => Convert.ToInt32(ManaText.text);
-        
+
         [SerializeField] private BattleSide _battleSide;
-        
+
         [SerializeField] private Transform _parentToReturnTo;
 
         public Transform ParentToReturnTo
@@ -30,7 +30,7 @@ namespace View.AbstractViews
             get { return _parentToReturnTo; }
             set { _parentToReturnTo = value; }
         }
-        
+
         [SerializeField] private Transform _placeholderParent;
 
         public Transform PlaceholderParent
@@ -50,22 +50,23 @@ namespace View.AbstractViews
         public Transform Placeholder
         {
             get { return _placeholder; }
-            protected set { _placeholder = value; }
+            private set { _placeholder = value; }
         }
-        
+
         [SerializeField] private Transform _mainParenTransform;
 
         public Transform MainParenTransform
         {
-            get { return _mainParenTransform; }
+            private get { return _mainParenTransform; }
             set { _mainParenTransform = value; }
         }
-        
-        public bool HasDraggable;
-        public bool HasZoom;
-        
-        
-        
+
+        protected bool HasDraggable;
+        private bool _hasZoom;
+
+        private const float AnimationDelay = 0.2f;
+        private const float MoveoOffset = 0.4f;
+
         /// <summary>
         /// Create Stub
         /// </summary>
@@ -93,7 +94,7 @@ namespace View.AbstractViews
 
             Placeholder = placeholderGo.transform;
         }
-        
+
         /// <summary>
         /// Start path animation
         /// </summary>
@@ -116,7 +117,7 @@ namespace View.AbstractViews
                 Destroy(Placeholder.gameObject);
             };
         }
-        
+
         /// <inheritdoc />
         /// <summary>
         /// On pointer enter
@@ -132,18 +133,18 @@ namespace View.AbstractViews
 
             CreatePlaceholder();
             transform.SetParent(MainParenTransform);
-            transform.DOScale(1.5f, 0.3f).onComplete += () =>
+            transform.DOScale(1.5f, AnimationDelay).onComplete += () =>
             {
                 if (Side == BattleSide.Player)
                 {
-                    transform.DOMoveY(transform.position.y + 0.4f, 0.3f);
+                    transform.DOMoveY(transform.position.y + MoveoOffset, AnimationDelay);
                 }
                 else
                 {
-                    transform.DOMoveY(transform.position.y - 0.4f, 0.3f);
+                    transform.DOMoveY(transform.position.y - MoveoOffset, AnimationDelay);
                 }
 
-                HasZoom = true;
+                _hasZoom = true;
             };
         }
 
@@ -154,21 +155,21 @@ namespace View.AbstractViews
         /// <param name="eventData"></param>
         public virtual void OnPointerExit(PointerEventData eventData)
         {
-            if (HasDraggable || !HasZoom)
+            if (HasDraggable || !_hasZoom)
                 return;
 
             if (Side == BattleSide.Player)
             {
-                transform.DOMoveY(transform.position.y - 0.4f, 0.3f);
+                transform.DOMoveY(transform.position.y - MoveoOffset, AnimationDelay);
             }
             else
             {
-                transform.DOMoveY(transform.position.y + 0.4f, 0.3f);
+                transform.DOMoveY(transform.position.y + MoveoOffset, AnimationDelay);
             }
 
-            transform.DOScale(1, 0.3f).onComplete += () =>
+            transform.DOScale(1, AnimationDelay).onComplete += () =>
             {
-                HasZoom = false;
+                _hasZoom = false;
                 transform.SetParent(ParentToReturnTo);
                 if (Placeholder == null) return;
                 transform.SetSiblingIndex(Placeholder.GetSiblingIndex());

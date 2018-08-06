@@ -56,14 +56,13 @@ namespace View.GameArena
         /// <param name="eventData"></param>
         public override void OnPointerEnter(PointerEventData eventData)
         {
-            Debug.Log("BattleArenaView OnPointerEnter");
-//            if (eventData.pointerDrag == null)
-//                return;
-//            var draggableCard = eventData.pointerDrag.GetComponent<DraggableView>();
-//            if (draggableCard.CanDroppable)
-//            {
-//                base.OnPointerEnter(eventData);
-//            }
+            if (eventData.pointerDrag == null)
+                return;
+            var draggableCard = eventData.pointerDrag.GetComponent<DraggableView>();
+            if (draggableCard.CanDroppable)
+            {
+                base.OnPointerEnter(eventData);
+            }
         }
     }
 }
