@@ -45,7 +45,7 @@ namespace View.GameArena
                 // rotate cursor
                 _headImage.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
                 // check attack line area
-                if (!(angle < 0) || !BattleArena.AttackUnit.HasAttack)
+                if (!(angle < 0) || BattleArena.AttackUnit == null || !BattleArena.AttackUnit.HasAttack)
                     return;
                 InitAttackLineSignal.Dispatch(false);
             }
@@ -56,7 +56,7 @@ namespace View.GameArena
                 // rotate cursor
                 _headImage.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
                 // check attack line area
-                if (!(angle > 0) || !BattleArena.AttackUnit.HasAttack)
+                if (!(angle > 0) || BattleArena.AttackUnit == null || !BattleArena.AttackUnit.HasAttack)
                     return;
                 InitAttackLineSignal.Dispatch(false);
             }

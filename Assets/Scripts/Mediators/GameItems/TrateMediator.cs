@@ -18,7 +18,7 @@ namespace Mediators.GameItems
         /// </summary>
         [Inject]
         public InitAttackLineSignal InitAttackLineSignal { get; set; }
-        
+
         /// <summary>
         /// Battle
         /// </summary>
@@ -31,9 +31,11 @@ namespace Mediators.GameItems
             {
                 var tempHasApplyed = !View.HasApplyed;
                 View.HasApplyed = tempHasApplyed;
+                BattleArena.ApplyTrate = tempHasApplyed ? View : null;
+                Debug.Log("OnInitApply " + tempHasApplyed);
                 InitAttackLineSignal.Dispatch(tempHasApplyed);
             };
-            
+
             View.OnDrawAttackLine += posStruct => { SetAttackLinePosSignal.Dispatch(posStruct); };
 //            View.OnStartDrag += view => { view.CanDraggable = view.Side == BattleArena.ActiveSide; };
         }

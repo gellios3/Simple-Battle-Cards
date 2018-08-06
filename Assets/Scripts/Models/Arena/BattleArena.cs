@@ -31,6 +31,11 @@ namespace Models.Arena
         /// Attack card
         /// </summary>
         public BattleUnitView AttackUnit { get; set; }
+        
+        /// <summary>
+        /// Attack card
+        /// </summary>
+        public TrateView ApplyTrate { get; set; }
 
         /// <summary>
         /// Battle history

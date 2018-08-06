@@ -11,7 +11,7 @@ using View.GameArena;
 
 namespace View.GameItems
 {
-    public class BattleUnitView : EventView, IDropHandler
+    public class BattleUnitView : EventView
     {
         [SerializeField] private BattleCard _card;
 
@@ -50,11 +50,6 @@ namespace View.GameItems
         /// <summary>
         /// On add trate to card
         /// </summary>
-        public event Action<TrateView> OnAddTrateToCard;
-
-        /// <summary>
-        /// On add trate to card
-        /// </summary>
         public event Action<PositionStruct> OnDrawAttackLine;
 
         /// <summary>
@@ -86,24 +81,6 @@ namespace View.GameItems
             _attackText.text = Card.Attack.ToString();
             _healthText.text = Card.Health.ToString();
             _defenceText.text = Card.Defence.ToString();
-        }
-
-        /// <inheritdoc />
-        /// <summary>
-        /// On drop on card trate or Enemy Card
-        /// </summary>
-        /// <param name="eventData"></param>
-        public void OnDrop(PointerEventData eventData)
-        {
-            if (Card.Status != BattleStatus.Sleep && Card.Status != BattleStatus.Active)
-                return;
-            var trateView = eventData.pointerDrag.GetComponent<TrateView>();
-            if (trateView == null)
-                return;
-            if (trateView.Side == Side)
-            {
-                OnAddTrateToCard?.Invoke(trateView);
-            }
         }
 
         /// <summary>

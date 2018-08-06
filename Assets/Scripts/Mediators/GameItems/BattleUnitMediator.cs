@@ -47,21 +47,36 @@ namespace Mediators.GameItems
         /// </summary>
         public override void OnRegister()
         {
-            View.OnAddTrateToCard += view => { AddTrateToCardSignal.Dispatch(View, view); };
-
             View.OnDrawAttackLine += posStruct => { SetAttackLinePosSignal.Dispatch(posStruct); };
 
             View.AttackBtnView.OnClickBattleItem += () =>
             {
                 if (BattleArena.AttackUnit == null)
                 {
-                    OnInitAttack();
+                    if (BattleArena.ApplyTrate == null)
+                    {
+                        OnInitAttack();
+                    }
+                    else
+                    {
+                        OnApplyTrate();
+                    }
                 }
                 else
                 {
                     OnTakeDamage();
                 }
             };
+        }
+
+        /// <summary>
+        /// On apply trate
+        /// </summary>
+        private void OnApplyTrate()
+        {
+            if (View.Card.Status != BattleStatus.Sleep && View.Card.Status != BattleStatus.Active)
+                return;
+            AddTrateToCardSignal.Dispatch(View, BattleArena.ApplyTrate);
         }
 
         /// <summary>
