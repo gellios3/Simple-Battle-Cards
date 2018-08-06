@@ -75,7 +75,11 @@ namespace Mediators.GameItems
         private void OnApplyTrate()
         {
             if (View.Card.Status != BattleStatus.Sleep && View.Card.Status != BattleStatus.Active)
+            {
+                BattleArena.ApplyTrate = null;
                 return;
+            }
+
             AddTrateToCardSignal.Dispatch(View, BattleArena.ApplyTrate);
         }
 
@@ -84,8 +88,11 @@ namespace Mediators.GameItems
         /// </summary>
         private void OnInitAttack()
         {
-            if (View.Side != BattleArena.ActiveSide)
+            if (View.Side != BattleArena.ActiveSide || !View.AttackBtnView.HasActive)
+            {
+                BattleArena.AttackUnit = null;
                 return;
+            }
 
             var tempHasAttack = !View.HasAttack;
             View.HasAttack = tempHasAttack;
@@ -99,9 +106,15 @@ namespace Mediators.GameItems
         private void OnTakeDamage()
         {
             if (View.Card.Status == BattleStatus.Wait ||
+                View.Side == BattleArena.ActiveSide ||
                 BattleArena.AttackUnit.Side != BattleArena.ActiveSide ||
                 BattleArena.AttackUnit.Card.Status != BattleStatus.Active)
+            {
+                BattleArena.AttackUnit = null;
                 return;
+            }
+
+
             // Call tack damage signal
             TakeDamageToCardSignal.Dispatch(new DamageStruct
             {

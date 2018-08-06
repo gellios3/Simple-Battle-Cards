@@ -33,7 +33,6 @@ namespace Mediators.GameItems
 
         private void InitApplyTrate()
         {
-            Debug.Log("InitApplyTrate");
             if (View.Side != BattleArena.ActiveSide)
                 return;
             var tempHasApplyed = !View.HasApplyed;

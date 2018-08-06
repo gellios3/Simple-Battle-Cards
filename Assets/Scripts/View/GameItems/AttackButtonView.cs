@@ -10,10 +10,18 @@ namespace View.GameItems
     {
         [SerializeField] private Button _attackBtn;
 
+        [SerializeField] private bool _hasActive;
+
         /// <summary>
         /// On add trate to card
         /// </summary>
         public event Action OnClickBattleItem;
+
+        public bool HasActive
+        {
+            get { return _hasActive; }
+            set { _hasActive = value; }
+        }
 
         /// <inheritdoc />
         /// <summary>
@@ -29,7 +37,7 @@ namespace View.GameItems
         /// </summary>
         public void DeactivateAttack()
         {
-            _attackBtn.interactable = false;
+            HasActive = false;
         }
 
         /// <summary>
@@ -37,7 +45,7 @@ namespace View.GameItems
         /// </summary>
         public void ActivateAttack()
         {
-            _attackBtn.interactable = true;
+            HasActive = true;
         }
     }
 }

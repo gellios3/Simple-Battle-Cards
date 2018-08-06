@@ -7,10 +7,10 @@ using View.AbstractViews;
 
 namespace View.GameItems
 {
-    public class CardView : DraggableView
+    public class CardView : DraggableView, IPointerClickHandler
     {
         [SerializeField] private BattleCard _card;
-        [SerializeField] private Button _button;
+ 
 
         public BattleCard Card
         {
@@ -22,11 +22,6 @@ namespace View.GameItems
         /// On add trate to card
         /// </summary>
         public event Action<CardView> OnStartDrag;
-        
-        protected override void Start()
-        {
-            _button.onClick.AddListener(ZoomOutAnimation);
-        }
 
         /// <summary>
         /// Init Card View
@@ -54,6 +49,10 @@ namespace View.GameItems
             OnStartDrag?.Invoke(this);
             base.OnBeginDrag(eventData);
         }
-    
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            ZoomOutAnimation();
+        }
     }
 }
