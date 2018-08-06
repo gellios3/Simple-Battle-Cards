@@ -27,17 +27,19 @@ namespace Mediators.GameItems
 
         public override void OnRegister()
         {
-            View.OnInitApply += () =>
-            {
-                var tempHasApplyed = !View.HasApplyed;
-                View.HasApplyed = tempHasApplyed;
-                BattleArena.ApplyTrate = tempHasApplyed ? View : null;
-                Debug.Log("OnInitApply " + tempHasApplyed);
-                InitAttackLineSignal.Dispatch(tempHasApplyed);
-            };
-
+            View.OnInitApply += InitApplyTrate;
             View.OnDrawAttackLine += posStruct => { SetAttackLinePosSignal.Dispatch(posStruct); };
-//            View.OnStartDrag += view => { view.CanDraggable = view.Side == BattleArena.ActiveSide; };
+        }
+
+        private void InitApplyTrate()
+        {
+            Debug.Log("InitApplyTrate");
+            if (View.Side != BattleArena.ActiveSide)
+                return;
+            var tempHasApplyed = !View.HasApplyed;
+            View.HasApplyed = tempHasApplyed;
+            BattleArena.ApplyTrate = tempHasApplyed ? View : null;
+            InitAttackLineSignal.Dispatch(tempHasApplyed);
         }
     }
 }

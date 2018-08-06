@@ -62,7 +62,7 @@ namespace View.AbstractViews
         }
 
         protected bool HasDraggable;
-        private bool _hasZoom;
+        protected bool _hasZoom;
 
         private const float AnimationDelay = 0.2f;
         private const float MoveoOffset = 0.4f;

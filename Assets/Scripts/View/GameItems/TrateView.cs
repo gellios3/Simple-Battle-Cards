@@ -2,15 +2,14 @@
 using Models;
 using Models.Arena;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using View.AbstractViews;
 
 namespace View.GameItems
 {
-    public class TrateView : HandItemView
+    public class TrateView : HandItemView, IPointerDownHandler
     {
         [SerializeField] private BattleTrate _trate;
-        [SerializeField] private Button _button;
 
         public bool HasApplyed;
 
@@ -18,7 +17,7 @@ namespace View.GameItems
         /// On add trate to card
         /// </summary>
         public event Action OnInitApply;
-        
+
         /// <summary>
         /// On add trate to card
         /// </summary>
@@ -30,25 +29,13 @@ namespace View.GameItems
             private set { _trate = value; }
         }
 
-        /// <inheritdoc />
-        /// <summary>
-        /// On Start view
-        /// </summary>
-        protected override void Start()
-        {
-            _button.onClick.AddListener(() =>
-            {
-                OnInitApply?.Invoke();
-                ZoomOutAnimation();
-            });
-        }
-        
         /// <summary>
         /// On update
         /// </summary>
         private void Update()
         {
-            if (!HasApplyed || !HasMouseMoved()) return;
+            if (!HasApplyed || !HasMouseMoved())
+                return;
             OnDrawAttackLine?.Invoke(new PositionStruct
             {
                 StartPos = transform.position,
@@ -56,6 +43,10 @@ namespace View.GameItems
             });
         }
 
+        /// <summary>
+        /// Init
+        /// </summary>
+        /// <param name="trate"></param>
         public void Init(BattleTrate trate)
         {
             Trate = trate;
@@ -67,15 +58,25 @@ namespace View.GameItems
             HealthText.text = Trate.Health.ToString();
             DefenceText.text = Trate.Defence.ToString();
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
         private bool HasMouseMoved()
         {
-            //I feel dirty even doing this 
             return Math.Abs(Input.GetAxis("Mouse X")) > 0 || Math.Abs(Input.GetAxis("Mouse Y")) > 0;
+        }
+
+        /// <inheritdoc />
+        /// <summary>
+        /// On poiter down
+        /// </summary>
+        /// <param name="eventData"></param>
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            OnInitApply?.Invoke();
+            ZoomOutAnimation();
         }
     }
 }
