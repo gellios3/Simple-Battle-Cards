@@ -95,16 +95,14 @@ namespace View.GameItems
         /// <param name="eventData"></param>
         public void OnDrop(PointerEventData eventData)
         {
-            if (Card.Status == BattleStatus.Sleep || Card.Status == BattleStatus.Active)
+            if (Card.Status != BattleStatus.Sleep && Card.Status != BattleStatus.Active)
+                return;
+            var trateView = eventData.pointerDrag.GetComponent<TrateView>();
+            if (trateView == null)
+                return;
+            if (trateView.Side == Side)
             {
-                var trateView = eventData.pointerDrag.GetComponent<TrateView>();
-                if (trateView != null)
-                {
-                    if (trateView.Side == Side)
-                    {
-                        OnAddTrateToCard?.Invoke(trateView);
-                    }
-                }
+                OnAddTrateToCard?.Invoke(trateView);
             }
         }
 
@@ -133,6 +131,10 @@ namespace View.GameItems
             Destroy(gameObject);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         private bool HasMouseMoved()
         {
             //I feel dirty even doing this 

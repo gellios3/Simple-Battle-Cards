@@ -133,19 +133,7 @@ namespace View.AbstractViews
 
             CreatePlaceholder();
             transform.SetParent(MainParenTransform);
-            transform.DOScale(1.5f, AnimationDelay).onComplete += () =>
-            {
-                if (Side == BattleSide.Player)
-                {
-                    transform.DOMoveY(transform.position.y + MoveoOffset, AnimationDelay);
-                }
-                else
-                {
-                    transform.DOMoveY(transform.position.y - MoveoOffset, AnimationDelay);
-                }
-
-                _hasZoom = true;
-            };
+            ZoomInAnimation();
         }
 
         /// <inheritdoc />
@@ -158,6 +146,28 @@ namespace View.AbstractViews
             if (HasDraggable || !_hasZoom)
                 return;
 
+            ZoomOutAnimation();
+        }
+
+        /// <summary>
+        /// Destroy мiew
+        /// </summary>
+        public void DestroyView()
+        {
+            Destroy(gameObject);
+            if (Placeholder != null)
+            {
+                Destroy(Placeholder.gameObject);
+            }
+        }
+
+        /// <summary>
+        /// Zoom out animation
+        /// </summary>
+        protected void ZoomOutAnimation()
+        {
+            if (!_hasZoom)
+                return;
             if (Side == BattleSide.Player)
             {
                 transform.DOMoveY(transform.position.y - MoveoOffset, AnimationDelay);
@@ -178,15 +188,23 @@ namespace View.AbstractViews
         }
 
         /// <summary>
-        /// Destroy мiew
+        /// Zoom in animation
         /// </summary>
-        public void DestroyView()
+        private void ZoomInAnimation()
         {
-            Destroy(gameObject);
-            if (Placeholder != null)
+            transform.DOScale(1.5f, AnimationDelay).onComplete += () =>
             {
-                Destroy(Placeholder.gameObject);
-            }
+                if (Side == BattleSide.Player)
+                {
+                    transform.DOMoveY(transform.position.y + MoveoOffset, AnimationDelay);
+                }
+                else
+                {
+                    transform.DOMoveY(transform.position.y - MoveoOffset, AnimationDelay);
+                }
+
+                _hasZoom = true;
+            };
         }
     }
 }

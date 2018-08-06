@@ -1,8 +1,8 @@
 ﻿using System;
+using Models;
 using Models.Arena;
-using strange.extensions.mediation.impl;
 using UnityEngine;
-using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using View.AbstractViews;
 
 namespace View.GameItems
@@ -10,16 +10,50 @@ namespace View.GameItems
     public class TrateView : HandItemView
     {
         [SerializeField] private BattleTrate _trate;
+        [SerializeField] private Button _button;
+
+        public bool HasApplyed;
 
         /// <summary>
         /// On add trate to card
         /// </summary>
-//        public event Action<TrateView> OnStartDrag;
+        public event Action OnInitApply;
+        
+        /// <summary>
+        /// On add trate to card
+        /// </summary>
+        public event Action<PositionStruct> OnDrawAttackLine;
 
         public BattleTrate Trate
         {
             get { return _trate; }
             private set { _trate = value; }
+        }
+
+        /// <inheritdoc />
+        /// <summary>
+        /// On Start view
+        /// </summary>
+        protected override void Start()
+        {
+            _button.onClick.AddListener(() =>
+            {
+                OnInitApply?.Invoke();
+                ZoomOutAnimation();
+            });
+        }
+        
+        /// <summary>
+        /// On update
+        /// </summary>
+        private void Update()
+        {
+            if (!HasApplyed || !HasMouseMoved()) return;
+            OnDrawAttackLine?.Invoke(new PositionStruct
+            {
+                StartPos = transform.position,
+                EndPos = Camera.main.ScreenToWorldPoint(Input.mousePosition)
+            });
         }
 
         public void Init(BattleTrate trate)
@@ -33,16 +67,15 @@ namespace View.GameItems
             HealthText.text = Trate.Health.ToString();
             DefenceText.text = Trate.Defence.ToString();
         }
-
-//        /// <inheritdoc />
-//        /// <summary>
-//        /// On begin drag
-//        /// </summary>
-//        /// <param name="eventData"></param>
-//        public override void OnBeginDrag(PointerEventData eventData)
-//        {
-//            OnStartDrag?.Invoke(this);
-//            base.OnBeginDrag(eventData);
-//        }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private bool HasMouseMoved()
+        {
+            //I feel dirty even doing this 
+            return Math.Abs(Input.GetAxis("Mouse X")) > 0 || Math.Abs(Input.GetAxis("Mouse Y")) > 0;
+        }
     }
 }

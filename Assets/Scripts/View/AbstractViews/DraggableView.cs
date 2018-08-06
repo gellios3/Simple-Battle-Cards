@@ -6,9 +6,9 @@ namespace View.AbstractViews
 {
     public abstract class DraggableView : HandItemView, IBeginDragHandler, IDragHandler, IEndDragHandler        
     {
+        public bool CanDraggable { private get; set; } = true;
 
-        public bool CanDraggable = true;
-        public bool CanDroppable = true;
+        public bool CanDroppable { get; } = true;
 
         /// <inheritdoc />
         /// <summary>
@@ -43,7 +43,6 @@ namespace View.AbstractViews
             transform.position = new Vector3(pos.x, pos.y, 1);
             if (Placeholder == null)
                 return;
-
             var newSiblingIndex = PlaceholderParent.childCount;
             for (var i = 0; i < PlaceholderParent.childCount; i++)
             {
@@ -54,7 +53,6 @@ namespace View.AbstractViews
                 {
                     newSiblingIndex--;
                 }
-
                 break;
             }
 

@@ -2,6 +2,7 @@
 using Models.Arena;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using View.AbstractViews;
 
 namespace View.GameItems
@@ -9,6 +10,7 @@ namespace View.GameItems
     public class CardView : DraggableView
     {
         [SerializeField] private BattleCard _card;
+        [SerializeField] private Button _button;
 
         public BattleCard Card
         {
@@ -20,6 +22,11 @@ namespace View.GameItems
         /// On add trate to card
         /// </summary>
         public event Action<CardView> OnStartDrag;
+        
+        protected override void Start()
+        {
+            _button.onClick.AddListener(ZoomOutAnimation);
+        }
 
         /// <summary>
         /// Init Card View

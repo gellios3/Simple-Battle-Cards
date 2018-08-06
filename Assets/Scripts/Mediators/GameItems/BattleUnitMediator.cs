@@ -3,6 +3,7 @@ using Models.Arena;
 using Signals.GameArena;
 using Signals.GameArena.CardSignals;
 using Signals.GameArena.TrateSignals;
+using UnityEngine;
 using View.GameItems;
 
 namespace Mediators.GameItems
@@ -50,20 +51,17 @@ namespace Mediators.GameItems
 
             View.OnDrawAttackLine += posStruct => { SetAttackLinePosSignal.Dispatch(posStruct); };
 
-            View.AttackBtnView.OnInitTakeDamage += OnInitTakeDamage;
-            View.AttackBtnView.OnTakeDamage += OnTakeDamage;
-            View.AttackBtnView.OnInitAttack += OnInitAttack;
-        }
-
-        /// <summary>
-        /// On init take damage
-        /// </summary>
-        /// <param name="hasEnterDamage"></param>
-        private void OnInitTakeDamage(bool hasEnterDamage)
-        {
-            if (View.Side == BattleArena.ActiveSide || BattleArena.AttackUnit == null)
-                return;
-            View.AttackBtnView.HasEnterOponentUnit = hasEnterDamage;
+            View.AttackBtnView.OnClickBattleItem += () =>
+            {
+                if (BattleArena.AttackUnit == null)
+                {
+                    OnInitAttack();
+                }
+                else
+                {
+                    OnTakeDamage();
+                }
+            };
         }
 
         /// <summary>
@@ -85,13 +83,10 @@ namespace Mediators.GameItems
         /// </summary>
         private void OnTakeDamage()
         {
-            if (BattleArena.AttackUnit == null ||
-                View.Card.Status == BattleStatus.Wait ||
+            if (View.Card.Status == BattleStatus.Wait ||
                 BattleArena.AttackUnit.Side != BattleArena.ActiveSide ||
                 BattleArena.AttackUnit.Card.Status != BattleStatus.Active)
                 return;
-            // Refresh attack status
-            View.AttackBtnView.HasEnterOponentUnit = false;
             // Call tack damage signal
             TakeDamageToCardSignal.Dispatch(new DamageStruct
             {
