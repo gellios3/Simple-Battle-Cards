@@ -1,4 +1,5 @@
 ﻿using System;
+using Models;
 using Models.Arena;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -6,14 +7,21 @@ using View.AbstractViews;
 
 namespace View.GameItems
 {
-    public class TrateView : DraggableView
+    public class TrateView : HandItemView, IPointerDownHandler
     {
         [SerializeField] private BattleTrate _trate;
+
+        public bool HasApplyed;
 
         /// <summary>
         /// On add trate to card
         /// </summary>
-        public event Action<TrateView> OnStartDrag;
+        public event Action OnInitApply;
+
+        /// <summary>
+        /// On add trate to card
+        /// </summary>
+        public event Action<PositionStruct> OnDrawAttackLine;
 
         public BattleTrate Trate
         {
@@ -21,6 +29,24 @@ namespace View.GameItems
             private set { _trate = value; }
         }
 
+        /// <summary>
+        /// On update
+        /// </summary>
+        private void Update()
+        {
+            if (!HasApplyed || !HasMouseMoved())
+                return;
+            OnDrawAttackLine?.Invoke(new PositionStruct
+            {
+                StartPos = transform.position,
+                EndPos = Camera.main.ScreenToWorldPoint(Input.mousePosition)
+            });
+        }
+
+        /// <summary>
+        /// Init
+        /// </summary>
+        /// <param name="trate"></param>
         public void Init(BattleTrate trate)
         {
             Trate = trate;
@@ -33,15 +59,24 @@ namespace View.GameItems
             DefenceText.text = Trate.Defence.ToString();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private bool HasMouseMoved()
+        {
+            return Math.Abs(Input.GetAxis("Mouse X")) > 0 || Math.Abs(Input.GetAxis("Mouse Y")) > 0;
+        }
+
         /// <inheritdoc />
         /// <summary>
-        /// On begin drag
+        /// On poiter down
         /// </summary>
         /// <param name="eventData"></param>
-        public override void OnBeginDrag(PointerEventData eventData)
+        public void OnPointerDown(PointerEventData eventData)
         {
-            OnStartDrag?.Invoke(this);
-            base.OnBeginDrag(eventData);
+            OnInitApply?.Invoke();
+            ZoomOutAnimation();
         }
     }
 }

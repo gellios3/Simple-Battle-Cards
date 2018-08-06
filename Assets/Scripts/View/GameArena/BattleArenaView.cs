@@ -59,7 +59,7 @@ namespace View.GameArena
             if (eventData.pointerDrag == null)
                 return;
             var draggableCard = eventData.pointerDrag.GetComponent<DraggableView>();
-            if (draggableCard.CanDroppable)
+            if (draggableCard != null && draggableCard.CanDroppable)
             {
                 base.OnPointerEnter(eventData);
             }

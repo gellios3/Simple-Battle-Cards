@@ -23,8 +23,7 @@ namespace View.AbstractViews
         {
             if (eventData.pointerDrag == null)
                 return;
-            var draggableCard = eventData.pointerDrag.GetComponent<DraggableView>();
-
+            var draggableCard = eventData.pointerDrag.GetComponent<HandItemView>();
             if (draggableCard == null || draggableCard.Side != Side)
                 return;
             draggableCard.CreatePlaceholder();
@@ -41,7 +40,7 @@ namespace View.AbstractViews
             if (eventData.pointerDrag == null)
                 return;
 
-            var draggableCard = eventData.pointerDrag.GetComponent<DraggableView>();
+            var draggableCard = eventData.pointerDrag.GetComponent<HandItemView>();
 
             if (draggableCard == null || draggableCard.PlaceholderParent != transform)
                 return;

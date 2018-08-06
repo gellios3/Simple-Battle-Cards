@@ -3,6 +3,7 @@ using Models.Arena;
 using Signals.GameArena;
 using Signals.GameArena.CardSignals;
 using Signals.GameArena.TrateSignals;
+using UnityEngine;
 using View.GameItems;
 
 namespace Mediators.GameItems
@@ -46,24 +47,40 @@ namespace Mediators.GameItems
         /// </summary>
         public override void OnRegister()
         {
-            View.OnAddTrateToCard += view => { AddTrateToCardSignal.Dispatch(View, view); };
-
             View.OnDrawAttackLine += posStruct => { SetAttackLinePosSignal.Dispatch(posStruct); };
 
-            View.AttackBtnView.OnInitTakeDamage += OnInitTakeDamage;
-            View.AttackBtnView.OnTakeDamage += OnTakeDamage;
-            View.AttackBtnView.OnInitAttack += OnInitAttack;
+            View.AttackBtnView.OnClickBattleItem += () =>
+            {
+                if (BattleArena.AttackUnit == null)
+                {
+                    if (BattleArena.ApplyTrate == null)
+                    {
+                        OnInitAttack();
+                    }
+                    else
+                    {
+                        OnApplyTrate();
+                    }
+                }
+                else
+                {
+                    OnTakeDamage();
+                }
+            };
         }
 
         /// <summary>
-        /// On init take damage
+        /// On apply trate
         /// </summary>
-        /// <param name="hasEnterDamage"></param>
-        private void OnInitTakeDamage(bool hasEnterDamage)
+        private void OnApplyTrate()
         {
-            if (View.Side == BattleArena.ActiveSide || BattleArena.AttackUnit == null)
+            if (View.Card.Status != BattleStatus.Sleep && View.Card.Status != BattleStatus.Active)
+            {
+                BattleArena.ApplyTrate = null;
                 return;
-            View.AttackBtnView.HasEnterOponentUnit = hasEnterDamage;
+            }
+
+            AddTrateToCardSignal.Dispatch(View, BattleArena.ApplyTrate);
         }
 
         /// <summary>
@@ -71,8 +88,11 @@ namespace Mediators.GameItems
         /// </summary>
         private void OnInitAttack()
         {
-            if (View.Side != BattleArena.ActiveSide)
+            if (View.Side != BattleArena.ActiveSide || !View.AttackBtnView.HasActive)
+            {
+                BattleArena.AttackUnit = null;
                 return;
+            }
 
             var tempHasAttack = !View.HasAttack;
             View.HasAttack = tempHasAttack;
@@ -85,13 +105,16 @@ namespace Mediators.GameItems
         /// </summary>
         private void OnTakeDamage()
         {
-            if (BattleArena.AttackUnit == null ||
-                View.Card.Status == BattleStatus.Wait ||
+            if (View.Card.Status == BattleStatus.Wait ||
+                View.Side == BattleArena.ActiveSide ||
                 BattleArena.AttackUnit.Side != BattleArena.ActiveSide ||
                 BattleArena.AttackUnit.Card.Status != BattleStatus.Active)
+            {
+                BattleArena.AttackUnit = null;
                 return;
-            // Refresh attack status
-            View.AttackBtnView.HasEnterOponentUnit = false;
+            }
+
+
             // Call tack damage signal
             TakeDamageToCardSignal.Dispatch(new DamageStruct
             {

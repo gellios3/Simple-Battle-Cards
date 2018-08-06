@@ -6,31 +6,22 @@ using UnityEngine.UI;
 
 namespace View.GameItems
 {
-    public class AttackButtonView : EventView, IPointerEnterHandler, IPointerExitHandler
+    public class AttackButtonView : EventView
     {
         [SerializeField] private Button _attackBtn;
-        [SerializeField] private bool _hasEnterOponentUnit;
 
-        public bool HasEnterOponentUnit
+        [SerializeField] private bool _hasActive;
+
+        /// <summary>
+        /// On add trate to card
+        /// </summary>
+        public event Action OnClickBattleItem;
+
+        public bool HasActive
         {
-            get { return _hasEnterOponentUnit; }
-            set { _hasEnterOponentUnit = value; }
+            get { return _hasActive; }
+            set { _hasActive = value; }
         }
-
-        /// <summary>
-        /// On add trate to card
-        /// </summary>
-        public event Action<bool> OnInitTakeDamage;
-
-        /// <summary>
-        /// On add trate to card
-        /// </summary>
-        public event Action OnInitAttack;
-
-        /// <summary>
-        /// On add trate to card
-        /// </summary>
-        public event Action OnTakeDamage;
 
         /// <inheritdoc />
         /// <summary>
@@ -38,36 +29,7 @@ namespace View.GameItems
         /// </summary>
         protected override void Start()
         {
-            _attackBtn.onClick.AddListener(() =>
-            {
-                Debug.Log("_attackBtn.onClick " + HasEnterOponentUnit);
-                if (HasEnterOponentUnit)
-                {
-                    OnTakeDamage?.Invoke();
-                }
-                else
-                {
-                    OnInitAttack?.Invoke();
-                }
-            });
-        }
-
-        /// <summary>
-        /// On pointer enter
-        /// </summary>
-        /// <param name="eventData"></param>
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            OnInitTakeDamage?.Invoke(true);
-        }
-
-        /// <summary>
-        /// On poiter enter
-        /// </summary>
-        /// <param name="eventData"></param>
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            OnInitTakeDamage?.Invoke(false);
+            _attackBtn.onClick.AddListener(() => { OnClickBattleItem?.Invoke(); });
         }
 
         /// <summary>
@@ -75,7 +37,7 @@ namespace View.GameItems
         /// </summary>
         public void DeactivateAttack()
         {
-            _attackBtn.interactable = false;
+            HasActive = false;
         }
 
         /// <summary>
@@ -83,7 +45,7 @@ namespace View.GameItems
         /// </summary>
         public void ActivateAttack()
         {
-            _attackBtn.interactable = true;
+            HasActive = true;
         }
     }
 }

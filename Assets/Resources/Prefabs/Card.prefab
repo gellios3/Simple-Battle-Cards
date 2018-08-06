@@ -97,16 +97,11 @@ MonoBehaviour:
   AttackText: {fileID: 114026447546869896}
   HealthText: {fileID: 114334281866477962}
   DefenceText: {fileID: 114425755076021738}
-  _placeholder: {fileID: 0}
-  _mainParenTransform: {fileID: 0}
+  _battleSide: 0
   _parentToReturnTo: {fileID: 0}
   _placeholderParent: {fileID: 0}
-  _battleSide: 0
-  IsDragable: 1
-  HasDragable: 0
-  HasZoom: 0
-  IsDroppable: 1
-  StubImage: {fileID: 0}
+  _placeholder: {fileID: 0}
+  _mainParenTransform: {fileID: 0}
 --- !u!1 &1236713875485556
 GameObject:
   m_ObjectHideFlags: 0

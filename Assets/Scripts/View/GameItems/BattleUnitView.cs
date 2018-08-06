@@ -11,7 +11,7 @@ using View.GameArena;
 
 namespace View.GameItems
 {
-    public class BattleUnitView : EventView, IDropHandler
+    public class BattleUnitView : EventView
     {
         [SerializeField] private BattleCard _card;
 
@@ -50,11 +50,6 @@ namespace View.GameItems
         /// <summary>
         /// On add trate to card
         /// </summary>
-        public event Action<TrateView> OnAddTrateToCard;
-
-        /// <summary>
-        /// On add trate to card
-        /// </summary>
         public event Action<PositionStruct> OnDrawAttackLine;
 
         /// <summary>
@@ -88,26 +83,6 @@ namespace View.GameItems
             _defenceText.text = Card.Defence.ToString();
         }
 
-        /// <inheritdoc />
-        /// <summary>
-        /// On drop on card trate or Enemy Card
-        /// </summary>
-        /// <param name="eventData"></param>
-        public void OnDrop(PointerEventData eventData)
-        {
-            if (Card.Status == BattleStatus.Sleep || Card.Status == BattleStatus.Active)
-            {
-                var trateView = eventData.pointerDrag.GetComponent<TrateView>();
-                if (trateView != null)
-                {
-                    if (trateView.Side == Side)
-                    {
-                        OnAddTrateToCard?.Invoke(trateView);
-                    }
-                }
-            }
-        }
-
         /// <summary>
         /// Add trate to battle card
         /// </summary>
@@ -133,6 +108,10 @@ namespace View.GameItems
             Destroy(gameObject);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         private bool HasMouseMoved()
         {
             //I feel dirty even doing this 

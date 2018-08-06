@@ -13,6 +13,8 @@ namespace View.GameArena
 
         [Inject] public EndTurnSignal EndTurnSignal { get; set; }
 
+        private const float AnimationDelay = 0.5f;
+
         protected override void Start()
         {
             HideEndTurnButton();
@@ -27,14 +29,14 @@ namespace View.GameArena
 
         public void ShowEndTurnButton()
         {
-            transform.DOLocalMoveX(185, 1, true);
-            _expandButton.transform.parent.transform.DOLocalMoveX(-37.5f, 1, true);
+            transform.DOLocalMoveX(185, AnimationDelay, true);
+            _expandButton.transform.parent.transform.DOLocalMoveX(-37.5f, AnimationDelay, true);
         }
 
         private Tweener HideEndTurnButton()
         {
-            _expandButton.transform.parent.transform.DOLocalMoveX(-85, 1, true);
-            return transform.DOLocalMoveX(310, 1, true);
+            _expandButton.transform.parent.transform.DOLocalMoveX(-85, AnimationDelay, true);
+            return transform.DOLocalMoveX(310, AnimationDelay, true);
         }
     }
 }

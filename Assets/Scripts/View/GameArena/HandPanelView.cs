@@ -5,8 +5,7 @@ using View.GameItems;
 namespace View.GameArena
 {
     public class HandPanelView : DroppableView
-    {        
-
+    {
         /// <summary>
         /// On Drop dragable View
         /// </summary>
@@ -29,17 +28,16 @@ namespace View.GameArena
         {
             if (eventData.pointerDrag == null)
                 return;
-            var draggableCard = eventData.pointerDrag.GetComponent<DraggableView>();
+            var draggableCard = eventData.pointerDrag.GetComponent<CardView>();
 
-            if (draggableCard as CardView)
-            {
-                if (!draggableCard.CanDroppable) return;
-                base.OnPointerEnter(eventData);
-            }
-            else if (draggableCard as TrateView)
-            {
-                base.OnPointerEnter(eventData);
-            }
+            if (draggableCard == null || !draggableCard.CanDroppable)
+                return;
+            base.OnPointerEnter(eventData);
+
+//            else if (draggableCard as TrateView)
+//            {
+//                base.OnPointerEnter(eventData);
+//            }
         }
     }
 }

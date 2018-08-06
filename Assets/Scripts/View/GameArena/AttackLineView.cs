@@ -45,8 +45,10 @@ namespace View.GameArena
                 // rotate cursor
                 _headImage.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
                 // check attack line area
-                if (!(angle < 0) || !BattleArena.AttackUnit.HasAttack)
+                if (!(angle < 0) || BattleArena.AttackUnit == null || !BattleArena.AttackUnit.HasAttack)
                     return;
+                BattleArena.AttackUnit.HasAttack = false;
+                BattleArena.AttackUnit = null;
                 InitAttackLineSignal.Dispatch(false);
             }
             else
@@ -56,8 +58,10 @@ namespace View.GameArena
                 // rotate cursor
                 _headImage.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
                 // check attack line area
-                if (!(angle > 0) || !BattleArena.AttackUnit.HasAttack)
+                if (!(angle > 0) || BattleArena.AttackUnit == null || !BattleArena.AttackUnit.HasAttack)
                     return;
+                BattleArena.AttackUnit.HasAttack = false;
+                BattleArena.AttackUnit = null;
                 InitAttackLineSignal.Dispatch(false);
             }
         }
@@ -91,11 +95,6 @@ namespace View.GameArena
             // toogle line and head image active
             _line.gameObject.SetActive(isActive);
             _headImage.gameObject.SetActive(isActive);
-            // set has attack status
-            if (BattleArena.AttackUnit != null)
-            {
-                BattleArena.AttackUnit.HasAttack = isActive;
-            }
         }
     }
 }

@@ -2,13 +2,15 @@
 using Models.Arena;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using View.AbstractViews;
 
 namespace View.GameItems
 {
-    public class CardView : DraggableView
+    public class CardView : DraggableView, IPointerClickHandler
     {
         [SerializeField] private BattleCard _card;
+ 
 
         public BattleCard Card
         {
@@ -47,6 +49,10 @@ namespace View.GameItems
             OnStartDrag?.Invoke(this);
             base.OnBeginDrag(eventData);
         }
-    
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            ZoomOutAnimation();
+        }
     }
 }

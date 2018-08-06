@@ -37,9 +37,9 @@ namespace Mediators
 
             View.GetSingleGameBtn().onClick.AddListener(() =>
             {
-                var playerName = View.GetPlayerName().text;
-                if (playerName.Length <= 0) return;
-                GameStateService.InitPlayerName(playerName);
+//                var playerName = View.GetPlayerName().text;
+//                if (playerName.Length <= 0) return;
+                GameStateService.InitPlayerName("Player 1");
                 GameStateService.InitSingleGame();
                 SceneManager.LoadScene("GameArena");
             });

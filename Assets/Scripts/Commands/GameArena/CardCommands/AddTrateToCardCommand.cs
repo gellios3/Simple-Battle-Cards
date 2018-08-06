@@ -21,7 +21,7 @@ namespace Commands.GameArena.CardCommands
         public InitManaSignal InitManaSignal { get; set; }
 
         /// <summary>
-        /// Battle
+        /// Battle arena
         /// </summary>
         [Inject]
         public BattleArena BattleArena { get; set; }
@@ -31,6 +31,12 @@ namespace Commands.GameArena.CardCommands
         /// </summary>
         [Inject]
         public AddHistoryLogSignal AddHistoryLogSignal { get; set; }
+
+        /// <summary>
+        /// Init attack line signal
+        /// </summary>
+        [Inject]
+        public InitAttackLineSignal InitAttackLineSignal { get; set; }
 
         public override void Execute()
         {
@@ -46,6 +52,8 @@ namespace Commands.GameArena.CardCommands
                     trate.SourceTrate.name,
                     "' to battle card '", card.SourceCard.name, "' 'not enough mana!'"
                 }, LogType.Hand);
+                BattleArena.ApplyTrate = null;
+                InitAttackLineSignal.Dispatch(false);
                 return;
             }
 
@@ -56,6 +64,8 @@ namespace Commands.GameArena.CardCommands
                     "PLAYER '", activePlayer.Name, "' has ERROR! Add Trate '",
                     trate.SourceTrate.name, "' to cart 'not enough space'"
                 }, LogType.Hand);
+                BattleArena.ApplyTrate = null;
+                InitAttackLineSignal.Dispatch(false);
                 return;
             }
 
@@ -77,9 +87,13 @@ namespace Commands.GameArena.CardCommands
                     trate.SourceTrate.name,
                     "' to battle card '", card.SourceCard.name, "' 'not enough mana!'"
                 }, LogType.Hand);
+                BattleArena.ApplyTrate = null;
+                InitAttackLineSignal.Dispatch(false);
                 return;
             }
 
+            BattleArena.ApplyTrate = null;
+            InitAttackLineSignal.Dispatch(false);
             // Init mana view
             InitManaSignal.Dispatch();
         }
