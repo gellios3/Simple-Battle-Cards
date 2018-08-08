@@ -105,7 +105,7 @@ namespace Commands.GameArena.CardCommands
             }
 
             DamageStruct.DamageCardView.HasAttack = false;
-            BattleArena.AttackUnit.AttackBtnView.DeactivateAttack();
+            BattleArena.AttackUnit.HasActive = false;
             BattleArena.AttackUnit = null;
             InitAttackLineSignal.Dispatch(false);
             RefreshArenaSignal.Dispatch();

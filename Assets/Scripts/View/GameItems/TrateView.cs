@@ -76,7 +76,6 @@ namespace View.GameItems
         public void OnPointerDown(PointerEventData eventData)
         {
             OnInitApply?.Invoke();
-            ZoomOutAnimation();
         }
     }
 }
