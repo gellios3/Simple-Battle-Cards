@@ -11,7 +11,7 @@ using View.GameArena;
 
 namespace View.GameItems
 {
-    public class BattleUnitView : EventView
+    public class BattleUnitView : EventView, IPointerDownHandler
     {
         [SerializeField] private BattleCard _card;
 
@@ -32,12 +32,15 @@ namespace View.GameItems
         [SerializeField] private TextMeshProUGUI _attackText;
         [SerializeField] private TextMeshProUGUI _healthText;
         [SerializeField] private TextMeshProUGUI _defenceText;
-        [SerializeField] private AttackButtonView _attackBtnView;
-
-        public AttackButtonView AttackBtnView => _attackBtnView;
-
         [SerializeField] private Image _artworkImage;
 
+        [SerializeField] private bool _hasActive;
+
+        public bool HasActive
+        {
+            get { return _hasActive; }
+            set { _hasActive = value; }
+        }
 
         [SerializeField] private bool _hasAttack;
 
@@ -53,9 +56,24 @@ namespace View.GameItems
         public event Action<PositionStruct> OnDrawAttackLine;
 
         /// <summary>
+        /// On add trate to card
+        /// </summary>
+        public event Action OnClickBattleItem;
+
+        /// <summary>
         /// Battle tarates
         /// </summary>
         public List<TrateView> TrateViews { get; } = new List<TrateView>();
+        
+        /// <inheritdoc />
+        /// <summary>
+        /// On poiter down
+        /// </summary>
+        /// <param name="eventData"></param>
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            OnClickBattleItem?.Invoke();
+        }
 
         /// <summary>
         /// On update

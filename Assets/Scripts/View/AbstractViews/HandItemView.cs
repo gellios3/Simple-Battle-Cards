@@ -62,7 +62,6 @@ namespace View.AbstractViews
         }
 
         protected bool HasDraggable;
-        protected bool _hasZoom;
 
         private const float AnimationDelay = 0.2f;
         private const float MoveoOffset = 0.4f;
@@ -143,9 +142,6 @@ namespace View.AbstractViews
         /// <param name="eventData"></param>
         public virtual void OnPointerExit(PointerEventData eventData)
         {
-            if (HasDraggable || !_hasZoom)
-                return;
-
             ZoomOutAnimation();
         }
 
@@ -166,7 +162,7 @@ namespace View.AbstractViews
         /// </summary>
         protected void ZoomOutAnimation()
         {
-            if (!_hasZoom)
+            if (HasDraggable)
                 return;
             if (Side == BattleSide.Player)
             {
@@ -179,7 +175,6 @@ namespace View.AbstractViews
 
             transform.DOScale(1, AnimationDelay).onComplete += () =>
             {
-                _hasZoom = false;
                 transform.SetParent(ParentToReturnTo);
                 if (Placeholder == null) return;
                 transform.SetSiblingIndex(Placeholder.GetSiblingIndex());
@@ -192,19 +187,16 @@ namespace View.AbstractViews
         /// </summary>
         private void ZoomInAnimation()
         {
-            transform.DOScale(1.5f, AnimationDelay).onComplete += () =>
+            if (Side == BattleSide.Player)
             {
-                if (Side == BattleSide.Player)
-                {
-                    transform.DOMoveY(transform.position.y + MoveoOffset, AnimationDelay);
-                }
-                else
-                {
-                    transform.DOMoveY(transform.position.y - MoveoOffset, AnimationDelay);
-                }
+                transform.DOMoveY(transform.position.y + MoveoOffset, AnimationDelay);
+            }
+            else
+            {
+                transform.DOMoveY(transform.position.y - MoveoOffset, AnimationDelay);
+            }
 
-                _hasZoom = true;
-            };
+            transform.DOScale(1.5f, AnimationDelay);
         }
     }
 }

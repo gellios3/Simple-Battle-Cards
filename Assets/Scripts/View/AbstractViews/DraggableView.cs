@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 namespace View.AbstractViews
 {
-    public abstract class DraggableView : HandItemView, IBeginDragHandler, IDragHandler, IEndDragHandler        
+    public abstract class DraggableView : HandItemView, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
         public bool CanDraggable { private get; set; } = true;
 
@@ -41,7 +41,7 @@ namespace View.AbstractViews
                 return;
             var pos = Camera.main.ScreenToWorldPoint(eventData.position);
             transform.position = new Vector3(pos.x, pos.y, 1);
-            if (Placeholder == null)
+            if (Placeholder == null || PlaceholderParent == null)
                 return;
             var newSiblingIndex = PlaceholderParent.childCount;
             for (var i = 0; i < PlaceholderParent.childCount; i++)
@@ -53,6 +53,7 @@ namespace View.AbstractViews
                 {
                     newSiblingIndex--;
                 }
+
                 break;
             }
 
@@ -75,8 +76,8 @@ namespace View.AbstractViews
                 Destroy(Placeholder.gameObject);
             }
 
+            HasDraggable = false;
             GetComponent<CanvasGroup>().blocksRaycasts = true;
         }
-
     }
 }

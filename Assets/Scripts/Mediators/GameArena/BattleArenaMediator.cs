@@ -98,7 +98,7 @@ namespace Mediators.GameArena
             _cardUnitViews = _cardUnitViews.FindAll(
                 view => view.Card.Status == BattleStatus.Active
             );
-            _cardUnitViews.ForEach(view => view.AttackBtnView.ActivateAttack());
+            _cardUnitViews.ForEach(view => view.HasActive = true);
         }
 
         /// <summary>

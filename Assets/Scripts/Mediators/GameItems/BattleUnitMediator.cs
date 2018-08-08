@@ -49,7 +49,7 @@ namespace Mediators.GameItems
         {
             View.OnDrawAttackLine += posStruct => { SetAttackLinePosSignal.Dispatch(posStruct); };
 
-            View.AttackBtnView.OnClickBattleItem += () =>
+            View.OnClickBattleItem += () =>
             {
                 if (BattleArena.AttackUnit == null)
                 {
@@ -74,9 +74,12 @@ namespace Mediators.GameItems
         /// </summary>
         private void OnApplyTrate()
         {
-            if (View.Card.Status != BattleStatus.Sleep && View.Card.Status != BattleStatus.Active)
+            if (View.Side != BattleArena.ActiveSide ||
+                View.Card.Status != BattleStatus.Sleep && View.Card.Status != BattleStatus.Active)
             {
+                BattleArena.ApplyTrate.HasApplyed = false;
                 BattleArena.ApplyTrate = null;
+                InitAttackLineSignal.Dispatch(false);
                 return;
             }
 
@@ -88,7 +91,7 @@ namespace Mediators.GameItems
         /// </summary>
         private void OnInitAttack()
         {
-            if (View.Side != BattleArena.ActiveSide || !View.AttackBtnView.HasActive)
+            if (View.Side != BattleArena.ActiveSide || !View.HasActive)
             {
                 BattleArena.AttackUnit = null;
                 return;
