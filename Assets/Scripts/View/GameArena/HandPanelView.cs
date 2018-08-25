@@ -12,11 +12,11 @@ namespace View.GameArena
         /// <param name="eventData"></param>
         public override void OnDrop(PointerEventData eventData)
         {
-            var draggableCard = eventData.pointerDrag.GetComponent<DraggableView>();
-            if (draggableCard != null && draggableCard.CanDroppable && draggableCard.PlaceholderParent == transform)
-            {
-                draggableCard.ParentToReturnTo = transform;
-            }
+//            var draggableCard = eventData.pointerDrag.GetComponent<DraggableView>();
+//            if (draggableCard != null && draggableCard.CanDroppable && draggableCard.PlaceholderParent == transform)
+//            {
+//                draggableCard.ParentToReturnTo = transform;
+//            }
         }
 
         /// <inheritdoc />
@@ -33,11 +33,6 @@ namespace View.GameArena
             if (draggableCard == null || !draggableCard.CanDroppable)
                 return;
             base.OnPointerEnter(eventData);
-
-//            else if (draggableCard as TrateView)
-//            {
-//                base.OnPointerEnter(eventData);
-//            }
         }
     }
 }

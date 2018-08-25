@@ -50,6 +50,7 @@ namespace View.GameArena
             return cardUnitView;
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// On pointer enter
         /// </summary>

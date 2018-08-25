@@ -26,8 +26,8 @@ namespace View.AbstractViews
             var draggableCard = eventData.pointerDrag.GetComponent<HandItemView>();
             if (draggableCard == null || draggableCard.Side != Side)
                 return;
-            draggableCard.CreatePlaceholder();
             draggableCard.PlaceholderParent = transform;
+            draggableCard.CreatePlaceholder();          
         }
 
         /// <inheritdoc />

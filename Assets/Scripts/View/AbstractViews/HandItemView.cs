@@ -66,6 +66,34 @@ namespace View.AbstractViews
         private const float AnimationDelay = 0.2f;
         private const float MoveoOffset = 0.4f;
 
+        /// <inheritdoc />
+        /// <summary>
+        /// On pointer enter
+        /// </summary>
+        /// <param name="eventData"></param>
+        public virtual void OnPointerEnter(PointerEventData eventData)
+        {
+            var draggableView = eventData.pointerDrag;
+            if (Placeholder != null || draggableView != null || HasDraggable)
+                return;
+            ParentToReturnTo = transform.parent;
+            CreatePlaceholder();
+            transform.SetParent(MainParenTransform);
+            ZoomInAnimation();
+        }
+
+        /// <inheritdoc />
+        /// <summary>
+        /// On pointer exit
+        /// </summary>
+        /// <param name="eventData"></param>
+        public virtual void OnPointerExit(PointerEventData eventData)
+        {
+            if (Placeholder == null)
+                return;
+            ZoomOutAnimation();
+        }
+
         /// <summary>
         /// Create Stub
         /// </summary>
@@ -115,34 +143,6 @@ namespace View.AbstractViews
                 HasDraggable = false;
                 Destroy(Placeholder.gameObject);
             };
-        }
-
-        /// <inheritdoc />
-        /// <summary>
-        /// On pointer enter
-        /// </summary>
-        /// <param name="eventData"></param>
-        public virtual void OnPointerEnter(PointerEventData eventData)
-        {
-            var draggableView = eventData.pointerDrag;
-            if (Placeholder != null || draggableView != null || HasDraggable)
-                return;
-
-            ParentToReturnTo = transform.parent;
-
-            CreatePlaceholder();
-            transform.SetParent(MainParenTransform);
-            ZoomInAnimation();
-        }
-
-        /// <inheritdoc />
-        /// <summary>
-        /// On pointer exit
-        /// </summary>
-        /// <param name="eventData"></param>
-        public virtual void OnPointerExit(PointerEventData eventData)
-        {
-            ZoomOutAnimation();
         }
 
         /// <summary>
