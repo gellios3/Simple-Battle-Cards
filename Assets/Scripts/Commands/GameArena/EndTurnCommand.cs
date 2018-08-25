@@ -35,13 +35,13 @@ namespace Commands.GameArena
         public InitBattleTurnSignal InitBattleTurnSignal { get; set; }
 
         /// <summary>
-        /// Battle
+        /// Activate battle cards signal
         /// </summary>
         [Inject]
         public ActivateBattleCardsSignal ActivateBattleCardsSignal { get; set; }
 
         /// <summary>
-        /// Battle
+        /// End game signal
         /// </summary>
         [Inject]
         public EndGameSignal EndGameSignal { get; set; }
@@ -68,7 +68,11 @@ namespace Commands.GameArena
                 BattleArena.ActiveSide == BattleSide.Player ? BattleSide.Opponent : BattleSide.Player;
 
             RefreshHistoryLog.Dispatch();
-
+            // refresh opponent views
+            RefreshHandSignal.Dispatch();
+            RefreshArenaSignal.Dispatch();
+            
+            // Check is game over
             if (BattleArena.IsGameOver())
             {
                 EndGameSignal.Dispatch();

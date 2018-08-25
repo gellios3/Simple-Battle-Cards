@@ -1,4 +1,6 @@
-﻿using Models.Arena;
+﻿using Models;
+using Models.Arena;
+using Signals;
 using Signals.GameArena;
 using Signals.GameArena.CardSignals;
 using View.GameArena;
@@ -13,25 +15,74 @@ namespace Mediators.GameArena
         [Inject]
         public InitCardDeckSignal InitCardDeckSignal { get; set; }
 
+
         /// <summary>
-        /// Arena
+        /// Init mana signal
         /// </summary>
         [Inject]
-        public Arena Arena { get; set; }
+        public BattleArena BattleArena { get; set; }
+
+        /// <summary>
+        /// Init card deck signal
+        /// </summary>
+        [Inject]
+        public AddCardToHandDeckSignal AddCardToHandDeckSignal { get; set; }
+
+        /// <summary>
+        /// Add history log
+        /// </summary>
+        [Inject]
+        public AddHistoryLogSignal AddHistoryLogSignal { get; set; }
+
+        /// <summary>
+        /// Init hand signal
+        /// </summary>
+        [Inject]
+        public InitCardHandSignal InitCardHandSignal { get; set; }
 
         public override void OnRegister()
-        {
-            InitCardDeckSignal.AddListener(() =>
+        {            
+            InitCardDeckSignal.AddListener(() => { View.InitDeckCount(); });
+
+            AddCardToHandDeckSignal.AddListener(() =>
             {
-                if (View.GetCurrentSide() == BattleSide.Player)
-                {
-                    View.SetCardDeckCount(Arena.Player.CardBattlePull.Count);
-                }
-                else if (View.GetCurrentSide() == BattleSide.Opponent)
-                {
-                    View.SetCardDeckCount(Arena.Opponent.CardBattlePull.Count);
-                }
+                if (BattleArena.ActiveSide != View.Side) return;
+                AddCardToHand();
             });
+
+            InitCardHandSignal.AddListener(() => { View.AddPullCardsToHand(); });
+        }
+
+        /// <summary>
+        /// Add card to hand
+        /// </summary>
+        private void AddCardToHand()
+        {
+            if (BattleArena.HandCount < Arena.HandLimitCount)
+            {
+                var card = BattleArena.GetActivePlayer().CardBattlePull[0];
+                if (card != null)
+                {
+                    // add card to battle hand
+                    View.AddCardToDeck(card, BattleArena.ActiveSide);
+
+                    AddHistoryLogSignal.Dispatch(new[]
+                    {
+                        "PLAYER '", BattleArena.GetActivePlayer().Name, "' Add '", card.SourceCard.name,
+                        "' Card to Deck Hand"
+                    }, LogType.Hand);
+                }
+            }
+            else
+            {
+                AddHistoryLogSignal.Dispatch(new[]
+                {
+                    "PLAYER '", BattleArena.GetActivePlayer().Name, "' has add Card to Hand ERROR! "
+                }, LogType.Error);
+            }
+
+            // Remove card from pull
+            BattleArena.GetActivePlayer().CardBattlePull.RemoveAt(0);
         }
     }
 }

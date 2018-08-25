@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using Models.Arena;
+﻿using Models.Arena;
 using Signals;
 using Signals.GameArena;
-using Signals.GameArena.CardSignals;
 using Signals.GameArena.TrateSignals;
 using UnityEngine;
-using View.DeckItems;
+using View.AbstractViews;
 using View.GameArena;
+using View.GameItems;
 using LogType = Models.LogType;
 
 namespace Mediators.GameArena
@@ -17,25 +16,20 @@ namespace Mediators.GameArena
         /// Init card deck signal
         /// </summary>
         [Inject]
-        public AddTrateFromDeckToHandSignal AddTrateFromDeckToHandSignal { get; set; }
-
-        /// <summary>
-        /// Init card deck signal
-        /// </summary>
-        [Inject]
         public RefreshHandSignal RefreshHandSignal { get; set; }
 
         /// <summary>
-        /// Init card deck signal
+        /// Show mana signal
         /// </summary>
         [Inject]
-        public AddCardFromDeckToHandSignal AddCardFromDeckToHandSignal { get; set; }
+        public ShowManaSignal ShowManaSignal { get; set; }
 
         /// <summary>
-        /// Init card deck signal
+        /// Show mana signal
         /// </summary>
         [Inject]
-        public InitCardDeckSignal InitCardDeckSignal { get; set; }
+        public ShowEndTurnButtonSignal ShowEndTurnButtonSignal { get; set; }
+
 
         /// <summary>
         /// Init mana signal
@@ -43,128 +37,56 @@ namespace Mediators.GameArena
         [Inject]
         public BattleArena BattleArena { get; set; }
 
-        /// <summary>
-        /// Init trate deck signal
-        /// </summary>
-        [Inject]
-        public InitTrateDeckSignal InitTrateDeckSignal { get; set; }
-
-        /// <summary>
-        /// Add history log
-        /// </summary>
-        [Inject]
-        public AddHistoryLogSignal AddHistoryLogSignal { get; set; }
-
-        /// <summary>
-        /// Battle player hand
-        /// </summary>
-        public List<DraggableView> BattleHand { get; set; } = new List<DraggableView>();
 
         /// <summary>
         /// On register mediator
         /// </summary>
         public override void OnRegister()
         {
-            View.OnAddViewToHand += view =>
+            ShowManaSignal.AddListener(manaCount =>
             {
-                BattleHand.Add(view);
-            };
+                if (BattleArena.ActiveSide != View.Side)
+                    return;
+                if (View.transform.childCount > 0)
+                {
+                    var hasCard = false;
+                    foreach (Transform child in View.transform)
+                    {
+                        var view = child.GetComponent<HandItemView>();
+                        if (view != null && manaCount >= view.Mana)
+                        {
+                            hasCard = true;
+                        }
+                    }
+
+                    if (!hasCard)
+                    {
+                        ShowEndTurnButtonSignal.Dispatch();
+                    }
+                }
+                else if (manaCount < Arena.ManaPullCount)
+                {
+                    ShowEndTurnButtonSignal.Dispatch();
+                }
+            });
 
             RefreshHandSignal.AddListener(() =>
             {
-                if (BattleArena.ActiveSide != View.Side) return;
-                BattleHand.Clear();
+                if (BattleArena.ActiveSide != View.Side)
+                    return;
+                var count = 0;
                 foreach (Transform child in View.transform)
                 {
-                    var view = child.GetComponent<DraggableView>();
-                    BattleHand.Add(view);
-                }
-
-                BattleArena.HandCardsCount = BattleHand.FindAll(item =>
-                {
-                    var card = item as CardView;
-                    return card != null;
-                }).Count;
-            });
-
-            AddTrateFromDeckToHandSignal.AddListener(() =>
-            {
-                if (BattleArena.ActiveSide != View.Side) return;
-                AddTrateToHand();
-                // Init trate deck signal
-                InitTrateDeckSignal.Dispatch();
-            });
-
-            AddCardFromDeckToHandSignal.AddListener(() =>
-            {
-                if (BattleArena.ActiveSide != View.Side) return;
-                AddCardToHand();
-                // Init card desk
-                InitCardDeckSignal.Dispatch();
-            });
-        }
-
-        /// <summary>
-        /// Add trate to hand
-        /// </summary>
-        private void AddCardToHand()
-        {
-            if (BattleHand.Count < Arena.HandLimitCount)
-            {
-                var card = BattleArena.GetActivePlayer().CardBattlePull[0];
-                if (card != null)
-                {
-                    // add card to battle hand
-                    View.AddCardToHand(card, BattleArena.ActiveSide);
-
-                    AddHistoryLogSignal.Dispatch(new[]
+                    var view = child.GetComponent<CardView>();
+                    if (view != null)
                     {
-                        "PLAYER '", BattleArena.GetActivePlayer().Name, "' Add '", card.SourceCard.name,
-                        "' Card to Hand"
-                    }, LogType.Hand);
+                        count++;
+                    }
                 }
-            }
-            else
-            {
-                AddHistoryLogSignal.Dispatch(new[]
-                {
-                    "PLAYER '", BattleArena.GetActivePlayer().Name, "' has add Card to Hand ERROR! "
-                }, LogType.Error);
-            }
 
-            // Decreace Card pull
-            BattleArena.GetActivePlayer().CardBattlePull.RemoveAt(0);
-        }
-
-        /// <summary>
-        /// Add trate to hand
-        /// </summary>
-        private void AddTrateToHand()
-        {
-            if (BattleHand.Count < Arena.HandLimitCount)
-            {
-                var trate = BattleArena.GetActivePlayer().TrateBattlePull[0];
-                if (trate != null)
-                {
-                    // add trate to battle hand                
-                    View.AddTrateToHand(trate, BattleArena.ActiveSide);
-
-                    AddHistoryLogSignal.Dispatch(new[]
-                    {
-                        "PLAYER '", BattleArena.GetActivePlayer().Name, "' Add '", trate.SourceTrate.name,
-                        "' Trate To Hand"
-                    }, LogType.Hand);
-                }
-            }
-            else
-            {
-                AddHistoryLogSignal.Dispatch(new[]
-                {
-                    "PLAYER '", BattleArena.GetActivePlayer().Name, "' has add Trate to Hand ERROR! "
-                }, LogType.Error);
-            }
-
-            BattleArena.GetActivePlayer().TrateBattlePull.RemoveAt(0);
+                BattleArena.HandCount = View.transform.childCount;
+                BattleArena.HandCardsCount = count;
+            });
         }
     }
 }

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f01dd68855b8844995431cb110f2f02, type: 3}
+  m_Name: CartDeckReg
+  m_EditorClassIdentifier: 
+  Cards:
+  - {fileID: 11400000, guid: 26ad966809ba0fc43afde7224d59c7ce, type: 2}
+  - {fileID: 11400000, guid: 26ad966809ba0fc43afde7224d59c7ce, type: 2}
+  - {fileID: 11400000, guid: 26ad966809ba0fc43afde7224d59c7ce, type: 2}
+  - {fileID: 11400000, guid: 26ad966809ba0fc43afde7224d59c7ce, type: 2}
+  - {fileID: 11400000, guid: 26ad966809ba0fc43afde7224d59c7ce, type: 2}
+  - {fileID: 11400000, guid: 868bb4cfb2ebdaf478ecf9165d0f5002, type: 2}
+  - {fileID: 11400000, guid: 868bb4cfb2ebdaf478ecf9165d0f5002, type: 2}
+  - {fileID: 11400000, guid: 868bb4cfb2ebdaf478ecf9165d0f5002, type: 2}
+  - {fileID: 11400000, guid: 08873d5d89d7b764c882b8150436c19d, type: 2}
+  - {fileID: 11400000, guid: 08873d5d89d7b764c882b8150436c19d, type: 2}
+  - {fileID: 11400000, guid: 637e7fbd05090674ba45a8e060bc3434, type: 2}
+  - {fileID: 11400000, guid: 637e7fbd05090674ba45a8e060bc3434, type: 2}
+  - {fileID: 11400000, guid: 868bb4cfb2ebdaf478ecf9165d0f5002, type: 2}

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Services;
 using Signals;
+using View.GameItems;
 using Random = UnityEngine.Random;
 
 namespace Models.Arena
@@ -27,6 +28,16 @@ namespace Models.Arena
         public BattleSide ActiveSide { get; set; }
 
         /// <summary>
+        /// Attack card
+        /// </summary>
+        public BattleUnitView AttackUnit { get; set; }
+        
+        /// <summary>
+        /// Attack card
+        /// </summary>
+        public TrateView ApplyTrate { get; set; }
+
+        /// <summary>
         /// Battle history
         /// </summary>
         public readonly List<HistoryTurn> History = new List<HistoryTurn>();
@@ -36,6 +47,7 @@ namespace Models.Arena
         /// </summary>
         public int CountOfCardsAddingToHand { get; set; }
 
+        public int HandCount;
         public int HandCardsCount;
         public int ArenaCardsCount;
 

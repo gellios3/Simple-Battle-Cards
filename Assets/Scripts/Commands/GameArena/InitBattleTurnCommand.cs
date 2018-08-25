@@ -37,7 +37,7 @@ namespace Commands.GameArena
         /// Init battle arena signal
         /// </summary>
         [Inject]
-        public InitHandPanelSignal InitHandPanelSignal { get; set; }
+        public InitHandPullSignal InitHandPullSignal { get; set; }
 
         /// <summary>
         /// Battle
@@ -50,6 +50,12 @@ namespace Commands.GameArena
         /// </summary>
         [Inject]
         public StateService StateService { get; set; }
+
+        /// <summary>
+        /// Show turn popup signal
+        /// </summary>
+        [Inject]
+        public ShowTurnPopupSignal ShowTurnPopupSignal { get; set; }
 
         /// <summary>
         /// Arena
@@ -94,10 +100,13 @@ namespace Commands.GameArena
             InitManaSignal.Dispatch();
 
             // Init hand panel
-            InitHandPanelSignal.Dispatch();
+            InitHandPullSignal.Dispatch();
 
             //Init battle arena
             InitBattleArenaSignal.Dispatch();
+
+            // show new turn popup
+            ShowTurnPopupSignal.Dispatch();
         }
     }
 }

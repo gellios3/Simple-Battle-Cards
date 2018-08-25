@@ -5,11 +5,15 @@ namespace Mediators.GameArena
 {
     public class EndTurnMediator : TargetMediator<EndTurnView>
     {
-        [Inject] public EndTurnSignal EndTurnSignal { get; set; }
+        /// <summary>
+        /// Show mana signal
+        /// </summary>
+        [Inject]
+        public ShowEndTurnButtonSignal ShowEndTurnButtonSignal { get; set; }
 
         public override void OnRegister()
         {
-            View.EndTurnButton.onClick.AddListener(() => { EndTurnSignal.Dispatch(); });
+            ShowEndTurnButtonSignal.AddListener(() => { View.ShowEndTurnButton(); });
         }
     }
 }

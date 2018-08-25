@@ -12,11 +12,6 @@ namespace Models
         /// </summary>
         public string Name { get; set; }
 
-//        /// <summary>
-//        /// Active atack cards
-//        /// </summary>
-//        public List<BattleCard> ArenaCards { get; set; } = new List<BattleCard>();
-
         /// <summary>
         /// Random battle pul with cartd 
         /// </summary>
@@ -80,7 +75,7 @@ namespace Models
             var cardCount = 0;
             var trateCount = 0;
             // fill card battle pull
-            foreach (var card in cartDeck.Cards)
+            foreach (var unused in cartDeck.Cards)
             {
                 if (cardCount >= cartDeck.Cards.Count) continue;
                 CardBattlePull.Add(new BattleCard(cartDeck.Cards[_cardPositions[cardCount]]));
@@ -88,7 +83,7 @@ namespace Models
             }
 
             // fill trate battle pull
-            foreach (var card in trateDeck.Trates)
+            foreach (var unused in trateDeck.Trates)
             {
                 if (trateCount >= trateDeck.Trates.Count) continue;
                 TrateBattlePull.Add(new BattleTrate(trateDeck.Trates[_tratePositions[trateCount]]));
