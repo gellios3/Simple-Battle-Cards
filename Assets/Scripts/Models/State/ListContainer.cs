@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Models.State
+﻿namespace Models.State
 {
     /// <summary>
     /// Container struct for the List

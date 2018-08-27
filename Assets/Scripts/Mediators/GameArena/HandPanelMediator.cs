@@ -1,12 +1,9 @@
 ﻿using Models.Arena;
-using Signals;
 using Signals.GameArena;
-using Signals.GameArena.TrateSignals;
 using UnityEngine;
 using View.AbstractViews;
 using View.GameArena;
 using View.GameItems;
-using LogType = Models.LogType;
 
 namespace Mediators.GameArena
 {
@@ -47,46 +44,63 @@ namespace Mediators.GameArena
             {
                 if (BattleArena.ActiveSide != View.Side)
                     return;
-                if (View.transform.childCount > 0)
-                {
-                    var hasCard = false;
-                    foreach (Transform child in View.transform)
-                    {
-                        var view = child.GetComponent<HandItemView>();
-                        if (view != null && manaCount >= view.Mana)
-                        {
-                            hasCard = true;
-                        }
-                    }
-
-                    if (!hasCard)
-                    {
-                        ShowEndTurnButtonSignal.Dispatch();
-                    }
-                }
-                else if (manaCount < Arena.ManaPullCount)
-                {
-                    ShowEndTurnButtonSignal.Dispatch();
-                }
+                OnShowMana(manaCount);
             });
 
             RefreshHandSignal.AddListener(() =>
             {
                 if (BattleArena.ActiveSide != View.Side)
                     return;
-                var count = 0;
+                OnRefreshHand();
+            });
+        }
+
+        /// <summary>
+        /// On Refresh hand
+        /// </summary>
+        private void OnRefreshHand()
+        {
+            var count = 0;
+            foreach (Transform child in View.transform)
+            {
+                var view = child.GetComponent<CardView>();
+                if (view != null)
+                {
+                    count++;
+                }
+            }
+
+            BattleArena.HandCount = View.transform.childCount;
+            BattleArena.HandCardsCount = count;
+        }
+
+        /// <summary>
+        /// On show mana
+        /// </summary>
+        /// <param name="manaCount"></param>
+        private void OnShowMana(int manaCount)
+        {
+            if (View.transform.childCount > 0)
+            {
+                var hasCard = false;
                 foreach (Transform child in View.transform)
                 {
-                    var view = child.GetComponent<CardView>();
-                    if (view != null)
+                    var view = child.GetComponent<HandItemView>();
+                    if (view != null && manaCount >= view.Mana)
                     {
-                        count++;
+                        hasCard = true;
                     }
                 }
 
-                BattleArena.HandCount = View.transform.childCount;
-                BattleArena.HandCardsCount = count;
-            });
+                if (!hasCard)
+                {
+                    ShowEndTurnButtonSignal.Dispatch();
+                }
+            }
+            else if (manaCount < Arena.ManaPullCount)
+            {
+                ShowEndTurnButtonSignal.Dispatch();
+            }
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Commands.Multiplayer
         public ServerConnectorService ServerConnectorService { get; set; }
 
         /// <summary>
-        /// Execute conect to server
+        /// Execute connect to server
         /// </summary>
         public override void Execute()
         {

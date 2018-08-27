@@ -1,70 +1,19 @@
-﻿using System;
-using DG.Tweening;
+﻿using DG.Tweening;
 using Models.Arena;
-using strange.extensions.mediation.impl;
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace View.AbstractViews
 {
-    public abstract class HandItemView : EventView, IPointerEnterHandler, IPointerExitHandler
+    public abstract class HandItemView : BaseItem, IPointerEnterHandler, IPointerExitHandler
     {
-        [SerializeField] protected TextMeshProUGUI NameText;
-        [SerializeField] protected TextMeshProUGUI DescriptionText;
-        [SerializeField] protected Image ArtworkImage;
-        [SerializeField] protected TextMeshProUGUI ManaText;
-        [SerializeField] protected TextMeshProUGUI AttackText;
-        [SerializeField] protected TextMeshProUGUI HealthText;
-        [SerializeField] protected TextMeshProUGUI DefenceText;
 
-        public int Mana => Convert.ToInt32(ManaText.text);
-
-        [SerializeField] private BattleSide _battleSide;
-
-        [SerializeField] private Transform _parentToReturnTo;
-
-        public Transform ParentToReturnTo
-        {
-            get { return _parentToReturnTo; }
-            set { _parentToReturnTo = value; }
-        }
-
-        [SerializeField] private Transform _placeholderParent;
-
-        public Transform PlaceholderParent
-        {
-            get { return _placeholderParent; }
-            set { _placeholderParent = value; }
-        }
-
-        public BattleSide Side
-        {
-            get { return _battleSide; }
-            set { _battleSide = value; }
-        }
-
-        [SerializeField] private Transform _placeholder;
-
-        public Transform Placeholder
-        {
-            get { return _placeholder; }
-            private set { _placeholder = value; }
-        }
-
-        [SerializeField] private Transform _mainParenTransform;
-
-        public Transform MainParenTransform
-        {
-            private get { return _mainParenTransform; }
-            set { _mainParenTransform = value; }
-        }
-
-        protected bool HasDraggable;
-
+        /// <summary>
+        /// Const
+        /// </summary>
         private const float AnimationDelay = 0.2f;
-        private const float MoveoOffset = 0.4f;
+        private const float MoveOffset = 0.4f;
 
         /// <inheritdoc />
         /// <summary>
@@ -127,8 +76,8 @@ namespace View.AbstractViews
         /// </summary>
         public void StartPathAnimation()
         {
-            var waypoints = new[] {PlaceholderParent.position, Placeholder.position};
-            var path = transform.DOPath(waypoints, 1, PathType.CatmullRom, PathMode.TopDown2D)
+            var wayPoints = new[] {PlaceholderParent.position, Placeholder.position};
+            var path = transform.DOPath(wayPoints, 1, PathType.CatmullRom, PathMode.TopDown2D)
                 .SetOptions(false, AxisConstraint.Z);
             path.onPlay += () =>
             {
@@ -146,7 +95,7 @@ namespace View.AbstractViews
         }
 
         /// <summary>
-        /// Destroy мiew
+        /// Destroy view
         /// </summary>
         public void DestroyView()
         {
@@ -166,11 +115,11 @@ namespace View.AbstractViews
                 return;
             if (Side == BattleSide.Player)
             {
-                transform.DOMoveY(transform.position.y - MoveoOffset, AnimationDelay);
+                transform.DOMoveY(transform.position.y - MoveOffset, AnimationDelay);
             }
             else
             {
-                transform.DOMoveY(transform.position.y + MoveoOffset, AnimationDelay);
+                transform.DOMoveY(transform.position.y + MoveOffset, AnimationDelay);
             }
 
             transform.DOScale(1, AnimationDelay).onComplete += () =>
@@ -189,11 +138,11 @@ namespace View.AbstractViews
         {
             if (Side == BattleSide.Player)
             {
-                transform.DOMoveY(transform.position.y + MoveoOffset, AnimationDelay);
+                transform.DOMoveY(transform.position.y + MoveOffset, AnimationDelay);
             }
             else
             {
-                transform.DOMoveY(transform.position.y - MoveoOffset, AnimationDelay);
+                transform.DOMoveY(transform.position.y - MoveOffset, AnimationDelay);
             }
 
             transform.DOScale(1.5f, AnimationDelay);

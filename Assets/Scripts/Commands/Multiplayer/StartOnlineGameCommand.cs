@@ -1,4 +1,4 @@
-﻿using Models.Miltiplayer;
+﻿using Models.Multiplayer;
 using strange.extensions.command.impl;
 using Services.Multiplayer;
 using Signals.multiplayer;

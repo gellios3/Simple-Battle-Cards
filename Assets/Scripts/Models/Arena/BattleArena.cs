@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Services;
 using Signals;
+using Signals.GameArena;
 using View.GameItems;
 using Random = UnityEngine.Random;
 
@@ -40,7 +41,7 @@ namespace Models.Arena
         /// <summary>
         /// Battle history
         /// </summary>
-        public readonly List<HistoryTurn> History = new List<HistoryTurn>();
+        private readonly List<HistoryTurn> _history = new List<HistoryTurn>();
 
         /// <summary>
         /// Count of cards adding to hand
@@ -57,7 +58,7 @@ namespace Models.Arena
         public void InitHistory()
         {
             StateService.InitActiveHistoryTurn();
-            History.Add(StateService.ActiveHistotyTurn);
+            _history.Add(StateService.ActiveHistotyTurn);
             AddHistoryLogSignal.Dispatch(new[] {"INIT '", StateService.TurnCount.ToString(), "' TURN!"},
                 LogType.General);
         }

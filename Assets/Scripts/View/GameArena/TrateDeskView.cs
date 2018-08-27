@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Models.Arena;
 using strange.extensions.mediation.impl;
 using TMPro;
@@ -33,13 +34,16 @@ namespace View.GameArena
         /// </summary>
         public void InitDeckCount()
         {
-            if (Side == BattleSide.Player)
+            switch (Side)
             {
-                _trateDeckCountText.text = Arena.Player.TrateBattlePull.Count.ToString();
-            }
-            else if (Side == BattleSide.Opponent)
-            {
-                _trateDeckCountText.text = Arena.Opponent.TrateBattlePull.Count.ToString();
+                case BattleSide.Player:
+                    _trateDeckCountText.text = Arena.Player.TrateBattlePull.Count.ToString();
+                    break;
+                case BattleSide.Opponent:
+                    _trateDeckCountText.text = Arena.Opponent.TrateBattlePull.Count.ToString();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 

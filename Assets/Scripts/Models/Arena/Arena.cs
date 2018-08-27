@@ -25,7 +25,7 @@ namespace Models.Arena
         public const int CartToAddCount = 2;
 
         /// <summary>
-        /// Arena rart count
+        /// Arena cart count
         /// </summary>
         public const int ArenaCartCount = 6;
 

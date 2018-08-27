@@ -13,7 +13,7 @@ namespace Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Random battle pul with cartd 
+        /// Random battle pul with cart 
         /// </summary>
         public List<BattleCard> CardBattlePull { get; } = new List<BattleCard>();
 

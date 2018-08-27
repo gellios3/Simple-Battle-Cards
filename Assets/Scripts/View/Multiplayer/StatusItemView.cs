@@ -1,4 +1,4 @@
-﻿using Models.Miltiplayer;
+﻿using Models.Multiplayer;
 using strange.extensions.mediation.impl;
 using UnityEngine;
 using UnityEngine.UI;

@@ -34,13 +34,13 @@ namespace Commands.GameArena
         public InitBattleArenaSignal InitBattleArenaSignal { get; set; }
 
         /// <summary>
-        /// Init battle arena signal
+        /// Init hand pull signal
         /// </summary>
         [Inject]
         public InitHandPullSignal InitHandPullSignal { get; set; }
 
         /// <summary>
-        /// Battle
+        /// Battle Arena
         /// </summary>
         [Inject]
         public BattleArena BattleArena { get; set; }
@@ -64,7 +64,7 @@ namespace Commands.GameArena
         public Arena Arena { get; set; }
 
         /// <summary>
-        /// Execute event init areana
+        /// Execute event init arena
         /// </summary>
         public override void Execute()
         {

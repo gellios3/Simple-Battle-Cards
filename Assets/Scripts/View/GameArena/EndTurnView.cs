@@ -27,12 +27,19 @@ namespace View.GameArena
             _expandButton.onClick.AddListener(ShowEndTurnButton);
         }
 
+        /// <summary>
+        /// Show end turn button
+        /// </summary>
         public void ShowEndTurnButton()
         {
             transform.DOLocalMoveX(185, AnimationDelay, true);
             _expandButton.transform.parent.transform.DOLocalMoveX(-37.5f, AnimationDelay, true);
         }
 
+        /// <summary>
+        /// Hide end turn button
+        /// </summary>
+        /// <returns></returns>
         private Tweener HideEndTurnButton()
         {
             _expandButton.transform.parent.transform.DOLocalMoveX(-85, AnimationDelay, true);

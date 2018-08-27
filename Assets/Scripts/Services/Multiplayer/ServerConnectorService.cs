@@ -64,9 +64,9 @@ namespace Services.Multiplayer
         }
 
         /// <summary>
-        /// Disconect fom server
+        /// Disconnect fom server
         /// </summary>
-        public void DisconectFromServer()
+        public void DisconnectFromServer()
         {
             if (_client != null)
             {

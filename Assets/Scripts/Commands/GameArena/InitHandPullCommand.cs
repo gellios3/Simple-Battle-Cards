@@ -10,7 +10,7 @@ namespace Commands.GameArena
     public class InitHandPullCommand : Command
     {
         /// <summary>
-        /// Battle
+        /// Battle arena
         /// </summary>
         [Inject]
         public BattleArena BattleArena { get; set; }

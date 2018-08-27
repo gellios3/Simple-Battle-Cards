@@ -29,13 +29,13 @@ namespace Commands.GameArena
         public GameStateService GameStateService { get; set; }
 
         /// <summary>
-        /// Areana initialed signal
+        /// Init battle turn signal
         /// </summary>
         [Inject]
         public InitBattleTurnSignal InitBattleTurnSignal { get; set; }
 
         /// <summary>
-        /// Execute event init areana
+        /// Execute event init arena
         /// </summary>
         public override void Execute()
         {

@@ -11,6 +11,9 @@ namespace Mediators.GameArena
         [Inject]
         public ShowEndTurnButtonSignal ShowEndTurnButtonSignal { get; set; }
 
+        /// <summary>
+        /// On register mediator
+        /// </summary>
         public override void OnRegister()
         {
             ShowEndTurnButtonSignal.AddListener(() => { View.ShowEndTurnButton(); });

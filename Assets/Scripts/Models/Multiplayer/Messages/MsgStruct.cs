@@ -1,4 +1,4 @@
-namespace Models.Miltiplayer.Messages
+namespace Models.Multiplayer.Messages
 {
     public struct MsgStruct
     {

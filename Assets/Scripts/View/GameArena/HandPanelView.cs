@@ -7,7 +7,7 @@ namespace View.GameArena
     public class HandPanelView : DroppableView
     {
         /// <summary>
-        /// On Drop dragable View
+        /// On Drop draggable View
         /// </summary>
         /// <param name="eventData"></param>
         public override void OnDrop(PointerEventData eventData)
@@ -21,7 +21,7 @@ namespace View.GameArena
 
         /// <inheritdoc />
         /// <summary>
-        /// On poiter enter
+        /// On pointer enter
         /// </summary>
         /// <param name="eventData"></param>
         public override void OnPointerEnter(PointerEventData eventData)

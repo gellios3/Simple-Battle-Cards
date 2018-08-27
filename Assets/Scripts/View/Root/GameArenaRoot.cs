@@ -13,7 +13,7 @@ namespace View.Root
 
         private void Start()
         {
-            // gestroy all DontDestroyOnLoad objects
+            // Destroy all Don't DestroyOnLoad objects
             var go = new GameObject("Sacrificial Lamb");
             DontDestroyOnLoad(go);
 

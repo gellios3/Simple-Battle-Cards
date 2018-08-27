@@ -1,5 +1,4 @@
 ﻿using Signals.GameArena;
-using UnityEngine;
 using View.GameArena;
 
 namespace Mediators.GameArena
@@ -18,6 +17,9 @@ namespace Mediators.GameArena
         [Inject]
         public SetAttackLinePosSignal SetAttackLinePosSignal { get; set; }
 
+        /// <summary>
+        /// On register mediator
+        /// </summary>
         public override void OnRegister()
         {
             InitAttackLineSignal.AddListener(isActive =>
@@ -27,7 +29,7 @@ namespace Mediators.GameArena
 
             SetAttackLinePosSignal.AddListener(posStruct =>
             {
-                View.SetLineposition(posStruct.StartPos, posStruct.EndPos);
+                View.SetLinePosition(posStruct.StartPos, posStruct.EndPos);
             });
         }
     }

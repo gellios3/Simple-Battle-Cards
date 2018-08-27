@@ -41,10 +41,13 @@ namespace Models.Arena
         /// </summary>
         public Card SourceCard { get; }
 
-        public int CritDamage;
+        /// <summary>
+        /// Critical damage
+        /// </summary>
+        public int CriticalDamage;
 
         /// <summary>
-        /// Max tates count
+        /// Max trates count
         /// </summary>
         public const int MaxTratesCount = 3;
 
@@ -55,7 +58,7 @@ namespace Models.Arena
         /// <param name="card"></param>
         public BattleCard(Card card = null)
         {
-            // init scriptable card to battle card
+            // init scribble card to battle card
             if (card != null)
             {
                 SourceCard = card;
@@ -71,7 +74,7 @@ namespace Models.Arena
         }
 
         /// <summary>
-        /// Card take damage and return is critial or not
+        /// Card take damage and return is critical or not
         /// </summary>
         /// <param name="hitCart"></param>
         /// <param name="enableCriticalDamage"></param>
@@ -82,11 +85,11 @@ namespace Models.Arena
             var isCriticalDamage = true;
             if (enableCriticalDamage)
             {
-                isCriticalDamage = IsCritDamage();
+                isCriticalDamage = IsCriticalDamage();
                 if (isCriticalDamage)
                 {
                     damage = (int) Mathf.Round(damage * hitCart.CriticalHit);
-                    CritDamage = damage;
+                    CriticalDamage = damage;
                 }
             }
 
@@ -121,13 +124,13 @@ namespace Models.Arena
         }
 
         /// <summary>
-        /// Is crit damage
+        /// Is critical damage
         /// </summary>
         /// <returns></returns>
-        private bool IsCritDamage()
+        private bool IsCriticalDamage()
         {
-            var crit = Random.Range(0, 100);
-            return crit <= CriticalChance;
+            var range = Random.Range(0, 100);
+            return range <= CriticalChance;
         }
     }
 }

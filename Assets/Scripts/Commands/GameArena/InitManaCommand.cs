@@ -8,7 +8,7 @@ namespace Commands.GameArena
     public class InitManaCommand : Command
     {
         /// <summary>
-        /// Battle
+        /// Battle arena
         /// </summary>
         [Inject]
         public BattleArena BattleArena { get; set; }

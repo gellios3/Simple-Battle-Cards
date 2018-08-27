@@ -11,7 +11,11 @@ namespace View.AbstractViews
 
         public BattleSide Side => _battleSide;
 
-
+        /// <inheritdoc />
+        /// <summary>
+        /// On drop 
+        /// </summary>
+        /// <param name="eventData"></param>
         public abstract void OnDrop(PointerEventData eventData);
 
         /// <inheritdoc />

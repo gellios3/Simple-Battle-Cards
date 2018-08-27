@@ -2,7 +2,6 @@
 using Models.Arena;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 using View.AbstractViews;
 
 namespace View.GameItems

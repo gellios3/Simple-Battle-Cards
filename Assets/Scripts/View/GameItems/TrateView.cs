@@ -4,6 +4,7 @@ using Models.Arena;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using View.AbstractViews;
+using Debug = System.Diagnostics.Debug;
 
 namespace View.GameItems
 {
@@ -11,7 +12,7 @@ namespace View.GameItems
     {
         [SerializeField] private BattleTrate _trate;
 
-        public bool HasApplyed;
+        public bool HasApplied;
 
         /// <summary>
         /// On add trate to card
@@ -34,13 +35,17 @@ namespace View.GameItems
         /// </summary>
         private void Update()
         {
-            if (!HasApplyed || !HasMouseMoved())
+            if (!HasApplied || !HasMouseMoved())
                 return;
-            OnDrawAttackLine?.Invoke(new PositionStruct
+
+            if (Camera.main != null)
             {
-                StartPos = transform.position,
-                EndPos = Camera.main.ScreenToWorldPoint(Input.mousePosition)
-            });
+                OnDrawAttackLine?.Invoke(new PositionStruct
+                {
+                    StartPos = transform.position,
+                    EndPos = Camera.main.ScreenToWorldPoint(Input.mousePosition)
+                });
+            }
         }
 
         /// <summary>

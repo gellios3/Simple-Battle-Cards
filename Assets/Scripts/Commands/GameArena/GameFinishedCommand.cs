@@ -1,11 +1,11 @@
 ﻿using Models.Arena;
 using strange.extensions.command.impl;
 using Signals;
-using UnityEngine;
+using Signals.GameArena;
 using UnityEngine.SceneManagement;
 using LogType = Models.LogType;
 
-namespace Commands
+namespace Commands.GameArena
 {
     public class GameFinishedCommand : Command
     {

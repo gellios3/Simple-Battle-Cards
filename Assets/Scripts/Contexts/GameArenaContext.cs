@@ -65,7 +65,7 @@ namespace Contexts
 
         /// <inheritdoc />
         /// <summary>
-        /// Ovverade Bindings map
+        /// Override Bindings map
         /// </summary>
         protected override void mapBindings()
         {
@@ -87,7 +87,7 @@ namespace Contexts
             injectionBinder.Bind<ShowTurnPopupSignal>().ToSingleton();
             injectionBinder.Bind<ShowEndTurnButtonSignal>().ToSingleton();
 
-            // Init comands
+            // Init commands
             commandBinder.Bind<InitNewGameSignal>().To<InitNewGameCommand>();
             commandBinder.Bind<InitBattleTurnSignal>().To<InitBattleTurnCommand>();
             commandBinder.Bind<AddHistoryLogSignal>().To<AddHistoryLogCommand>();
@@ -103,7 +103,7 @@ namespace Contexts
             injectionBinder.Bind<Arena>().ToSingleton();
             injectionBinder.Bind<BattleArena>().ToSingleton();
 
-            // Init sevises
+            // Init services
             injectionBinder.Bind<StateService>().ToSingleton();
 
             // Init mediators
