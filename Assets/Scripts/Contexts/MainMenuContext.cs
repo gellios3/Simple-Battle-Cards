@@ -45,7 +45,7 @@ namespace Contexts
 
         /// <inheritdoc />
         /// <summary>
-        /// Ovverade Bindings map
+        /// Override Bindings map
         /// </summary>
         protected override void mapBindings()
         {
@@ -54,11 +54,11 @@ namespace Contexts
 
             // init models          
 
-            // Init sevises
+            // Init services
             injectionBinder.Bind<NetworkPlayerService>().ToSingleton().CrossContext();
             injectionBinder.Bind<GameStateService>().ToSingleton().CrossContext();
 
-            // Init comands
+            // Init commands
             commandBinder.Bind<StartOnlineGameSignal>().To<StartOnlineGameCommand>().Once();
 
             // Init mediators

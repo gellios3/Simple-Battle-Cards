@@ -16,7 +16,7 @@ namespace Commands.GameArena
         public StateService StateService { get; set; }
 
         /// <summary>
-        /// State service
+        /// Add history log to view signal
         /// </summary>
         [Inject]
         public AddHistoryLogToViewSignal AddHistoryLogToViewSignal { get; set; }
@@ -28,7 +28,7 @@ namespace Commands.GameArena
         public LogType LogType { get; set; }
 
         /// <summary>
-        /// Log type
+        /// Current log
         /// </summary>
         [Inject]
         public string[] CurrentLog { get; set; }

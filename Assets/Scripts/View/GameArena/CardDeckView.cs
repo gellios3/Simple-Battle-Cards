@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Models.Arena;
 using strange.extensions.mediation.impl;
 using Signals.GameArena;
@@ -97,13 +98,16 @@ namespace View.GameArena
         /// </summary>
         public void InitDeckCount()
         {
-            if (Side == BattleSide.Player)
+            switch (Side)
             {
-                _cardDeckCountText.text = Arena.Player.CardBattlePull.Count.ToString();
-            }
-            else if (Side == BattleSide.Opponent)
-            {
-                _cardDeckCountText.text = Arena.Opponent.CardBattlePull.Count.ToString();
+                case BattleSide.Player:
+                    _cardDeckCountText.text = Arena.Player.CardBattlePull.Count.ToString();
+                    break;
+                case BattleSide.Opponent:
+                    _cardDeckCountText.text = Arena.Opponent.CardBattlePull.Count.ToString();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
     }

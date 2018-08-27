@@ -1,6 +1,7 @@
 ﻿using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Debug = System.Diagnostics.Debug;
 
 namespace View.AbstractViews
 {
@@ -12,7 +13,7 @@ namespace View.AbstractViews
 
         /// <inheritdoc />
         /// <summary>
-        /// On bigin drag
+        /// On begin drag
         /// </summary>
         /// <param name="eventData"></param>
         public virtual void OnBeginDrag(PointerEventData eventData)
@@ -39,8 +40,13 @@ namespace View.AbstractViews
         {
             if (!CanDraggable)
                 return;
-            var pos = Camera.main.ScreenToWorldPoint(eventData.position);
-            transform.position = new Vector3(pos.x, pos.y, 1);
+
+            if (Camera.main != null)
+            {
+                var pos = Camera.main.ScreenToWorldPoint(eventData.position);
+                transform.position = new Vector3(pos.x, pos.y, 1);
+            }
+
             if (Placeholder == null || PlaceholderParent == null)
                 return;
             var newSiblingIndex = PlaceholderParent.childCount;

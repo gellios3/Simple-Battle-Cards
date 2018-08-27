@@ -1,8 +1,8 @@
 ﻿using UnityEngine.Networking;
 
-namespace Models.Miltiplayer.Messages
+namespace Models.Multiplayer.Messages
 {
-    public class RegisterPlayerMessage : MessageBase
+    public class LobbyPlayerMessage : MessageBase
     {
         public int Id;
         public string Name;

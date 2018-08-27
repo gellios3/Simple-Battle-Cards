@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Models.Arena;
 using Signals;
 using Signals.GameArena;
@@ -49,11 +48,11 @@ namespace Mediators.GameArena
         private List<BattleUnitView> _cardUnitViews = new List<BattleUnitView>();
 
         /// <summary>
-        /// On regisre mediator
+        /// On register mediator
         /// </summary>
         public override void OnRegister()
         {
-            View.OnAddCatdToBattleArena += AddCardToBattleArena;
+            View.OnAddCartToBattleArena += AddCardToBattleArena;
 
             RefreshArenaSignal.AddListener(() =>
             {

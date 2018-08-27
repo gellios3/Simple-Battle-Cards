@@ -77,7 +77,7 @@ namespace Mediators.GameItems
             if (View.Side != BattleArena.ActiveSide ||
                 View.Card.Status != BattleStatus.Sleep && View.Card.Status != BattleStatus.Active)
             {
-                BattleArena.ApplyTrate.HasApplyed = false;
+                BattleArena.ApplyTrate.HasApplied = false;
                 BattleArena.ApplyTrate = null;
                 InitAttackLineSignal.Dispatch(false);
                 return;

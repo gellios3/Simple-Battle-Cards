@@ -7,21 +7,21 @@ namespace View.GameArena
     public class HandPanelView : DroppableView
     {
         /// <summary>
-        /// On Drop dragable View
+        /// On Drop draggable View
         /// </summary>
         /// <param name="eventData"></param>
         public override void OnDrop(PointerEventData eventData)
         {
-            var draggableCard = eventData.pointerDrag.GetComponent<DraggableView>();
-            if (draggableCard != null && draggableCard.CanDroppable && draggableCard.PlaceholderParent == transform)
-            {
-                draggableCard.ParentToReturnTo = transform;
-            }
+//            var draggableCard = eventData.pointerDrag.GetComponent<DraggableView>();
+//            if (draggableCard != null && draggableCard.CanDroppable && draggableCard.PlaceholderParent == transform)
+//            {
+//                draggableCard.ParentToReturnTo = transform;
+//            }
         }
 
         /// <inheritdoc />
         /// <summary>
-        /// On poiter enter
+        /// On pointer enter
         /// </summary>
         /// <param name="eventData"></param>
         public override void OnPointerEnter(PointerEventData eventData)
@@ -33,11 +33,6 @@ namespace View.GameArena
             if (draggableCard == null || !draggableCard.CanDroppable)
                 return;
             base.OnPointerEnter(eventData);
-
-//            else if (draggableCard as TrateView)
-//            {
-//                base.OnPointerEnter(eventData);
-//            }
         }
     }
 }

@@ -17,6 +17,9 @@ namespace Mediators.GameArena
         [Inject]
         public BattleArena BattleArena { get; set; }
 
+        /// <summary>
+        /// On register mediator
+        /// </summary>
         public override void OnRegister()
         {
             ShowTurnPopupSignal.AddListener(() =>

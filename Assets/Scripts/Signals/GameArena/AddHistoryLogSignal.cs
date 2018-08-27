@@ -1,7 +1,7 @@
 ﻿using Models;
 using strange.extensions.signal.impl;
 
-namespace Signals
+namespace Signals.GameArena
 {
     public class AddHistoryLogSignal : Signal<string[], LogType>
     {

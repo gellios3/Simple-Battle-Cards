@@ -29,7 +29,7 @@ namespace View.GameArena
         /// </summary>
         /// <param name="startPos"></param>
         /// <param name="endPos"></param>
-        public void SetLineposition(Vector3 startPos, Vector3 endPos)
+        public void SetLinePosition(Vector3 startPos, Vector3 endPos)
         {
             endPos = new Vector3(endPos.x, endPos.y, 0);
             _line.SetPosition(0, startPos);
@@ -74,9 +74,9 @@ namespace View.GameArena
         /// <returns></returns>
         private float AngleBetweenVector2(Vector2 vec1, Vector2 vec2)
         {
-            var diference = vec2 - vec1;
+            var difference = vec2 - vec1;
             var sign = vec2.y < vec1.y ? -1.0f : 1.0f;
-            return Vector2.Angle(Vector2.right, diference) * sign;
+            return Vector2.Angle(Vector2.right, difference) * sign;
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace View.GameArena
             _line.SetPosition(0, resetPos);
             _line.SetPosition(1, resetPos);
             _headImage.transform.position = resetPos;
-            // toogle line and head image active
+            // toggle line and head image active
             _line.gameObject.SetActive(isActive);
             _headImage.gameObject.SetActive(isActive);
         }

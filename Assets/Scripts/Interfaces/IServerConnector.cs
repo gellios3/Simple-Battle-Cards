@@ -6,7 +6,7 @@ namespace Interfaces
     public interface IServerConnector
     {
         void Connect(string url, int port);
-        void DisconectFromServer();
+        void DisconnectFromServer();
 
         void Send(short msgId, MessageBase msg);
         void RegisterHandlers(IEnumerable<IServerMessageHandler> handlers);

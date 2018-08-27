@@ -8,7 +8,7 @@ namespace View.GameArena
 {
     public class TurnPopupView : EventView
     {
-        [SerializeField] private TextMeshProUGUI _textMeshProUgui;
+        [SerializeField] private TextMeshProUGUI _textMeshProUGui;
 
         // Use this for initialization
         public void ShowPopup(string text)
@@ -20,15 +20,15 @@ namespace View.GameArena
         private IEnumerator StartShowPopup(string text)
         {
             yield return new WaitForSeconds(1);
-            _textMeshProUgui.gameObject.SetActive(true);
-            _textMeshProUgui.text = text;
-            _textMeshProUgui.transform.DOScale(Vector3.one, 1);
-            _textMeshProUgui.DOFade(1, 1).onComplete += () =>
+            _textMeshProUGui.gameObject.SetActive(true);
+            _textMeshProUGui.text = text;
+            _textMeshProUGui.transform.DOScale(Vector3.one, 1);
+            _textMeshProUGui.DOFade(1, 1).onComplete += () =>
             {
-                _textMeshProUgui.transform.DOScale(new Vector3(1.2f, 1.2f, 1.2f), 1).onComplete += () =>
+                _textMeshProUGui.transform.DOScale(new Vector3(1.2f, 1.2f, 1.2f), 1).onComplete += () =>
                 {
-                    _textMeshProUgui.transform.DOScale(new Vector3(2, 2, 2), 1);
-                    _textMeshProUgui.DOFade(0, 1).onComplete += () => { _textMeshProUgui.gameObject.SetActive(false); };
+                    _textMeshProUGui.transform.DOScale(new Vector3(2, 2, 2), 1);
+                    _textMeshProUGui.DOFade(0, 1).onComplete += () => { _textMeshProUGui.gameObject.SetActive(false); };
                 };
             };
         }

@@ -25,10 +25,7 @@ namespace Mediators.GameArena
         {
             ShowManaSignal.AddListener(count =>
             {
-//                if (BattleArena.ActiveSide == BattleSide.Player)
-//                {
                 View.InitManaView(count);
-//                }
             });
         }
     }

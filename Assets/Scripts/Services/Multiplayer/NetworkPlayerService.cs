@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Models.Miltiplayer;
+using Models.Multiplayer;
 
 namespace Services.Multiplayer
 {

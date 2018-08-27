@@ -1,5 +1,4 @@
-﻿using View.GameArena;
-using View.GameItems;
+﻿using View.GameItems;
 
 namespace Models
 {

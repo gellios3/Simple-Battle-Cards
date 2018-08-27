@@ -35,8 +35,8 @@ namespace Mediators.GameItems
         {
             if (View.Side != BattleArena.ActiveSide)
                 return;
-            var tempHasApplyed = !View.HasApplyed;
-            View.HasApplyed = tempHasApplyed;
+            var tempHasApplyed = !View.HasApplied;
+            View.HasApplied = tempHasApplyed;
             BattleArena.ApplyTrate = tempHasApplyed ? View : null;
             InitAttackLineSignal.Dispatch(tempHasApplyed);
         }

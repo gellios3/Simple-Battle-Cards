@@ -7,7 +7,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using View.GameArena;
 
 namespace View.GameItems
 {
@@ -64,7 +63,7 @@ namespace View.GameItems
         /// Battle tarates
         /// </summary>
         public List<TrateView> TrateViews { get; } = new List<TrateView>();
-        
+
         /// <inheritdoc />
         /// <summary>
         /// On poiter down
@@ -81,11 +80,14 @@ namespace View.GameItems
         private void Update()
         {
             if (!HasAttack || !HasMouseMoved()) return;
-            OnDrawAttackLine?.Invoke(new PositionStruct
+            if (Camera.main != null)
             {
-                StartPos = transform.position,
-                EndPos = Camera.main.ScreenToWorldPoint(Input.mousePosition)
-            });
+                OnDrawAttackLine?.Invoke(new PositionStruct
+                {
+                    StartPos = transform.position,
+                    EndPos = Camera.main.ScreenToWorldPoint(Input.mousePosition)
+                });
+            }
         }
 
         /// <summary>

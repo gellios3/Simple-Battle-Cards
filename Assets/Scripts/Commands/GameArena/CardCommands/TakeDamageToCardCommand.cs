@@ -14,7 +14,7 @@ namespace Commands.GameArena.CardCommands
         [Inject] public DamageStruct DamageStruct { get; set; }
 
         /// <summary>
-        /// Battle
+        /// Battle Arena
         /// </summary>
         [Inject]
         public BattleArena BattleArena { get; set; }
@@ -32,7 +32,7 @@ namespace Commands.GameArena.CardCommands
         public RefreshArenaSignal RefreshArenaSignal { get; set; }
 
         /// <summary>
-        /// Battle
+        /// Init attack line signal
         /// </summary>
         [Inject]
         public InitAttackLineSignal InitAttackLineSignal { get; set; }
@@ -48,7 +48,7 @@ namespace Commands.GameArena.CardCommands
                 AddHistoryLogSignal.Dispatch(new[]
                 {
                     "Player '", activePlayer.Name, "' Use Card '", damageCard.SourceCard.name,
-                    "' hit CRITICAL on '", sourceCard.CritDamage.ToString(), "' to ememy Card '",
+                    "' hit CRITICAL on '", sourceCard.CriticalDamage.ToString(), "' to enemy Card '",
                     sourceCard.SourceCard.name, "' "
                 }, LogType.Battle);
             }
@@ -57,12 +57,12 @@ namespace Commands.GameArena.CardCommands
                 AddHistoryLogSignal.Dispatch(new[]
                 {
                     "Player '", activePlayer.Name, "' Use Card '", damageCard.SourceCard.name,
-                    "' hit ememy Card '", sourceCard.SourceCard.name, "' take damage '", damageCard.Attack.ToString(),
+                    "' hit enemy Card '", sourceCard.SourceCard.name, "' take damage '", damageCard.Attack.ToString(),
                     "'"
                 }, LogType.Battle);
             }
 
-            // Emeny cart return attack
+            // Enemy cart return attack
             damageCard.TakeDamage(sourceCard, false);
             AddHistoryLogSignal.Dispatch(new[]
             {

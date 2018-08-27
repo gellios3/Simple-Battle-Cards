@@ -12,8 +12,9 @@ namespace View.GameArena
         /// <summary>
         /// On add trate to card
         /// </summary>
-        public event Action<CardView> OnAddCatdToBattleArena;
+        public event Action<CardView> OnAddCartToBattleArena;
 
+        /// <inheritdoc />
         /// <summary>
         /// On Drop draggable Item
         /// </summary>
@@ -24,7 +25,7 @@ namespace View.GameArena
             if (cardView == null || cardView.Card == null || cardView.PlaceholderParent != transform) return;
             if (cardView.Card.Status == BattleStatus.Wait)
             {
-                OnAddCatdToBattleArena?.Invoke(cardView);
+                OnAddCartToBattleArena?.Invoke(cardView);
             }
         }
 
@@ -50,6 +51,7 @@ namespace View.GameArena
             return cardUnitView;
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// On pointer enter
         /// </summary>

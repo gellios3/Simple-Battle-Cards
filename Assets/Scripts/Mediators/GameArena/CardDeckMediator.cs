@@ -40,14 +40,17 @@ namespace Mediators.GameArena
         [Inject]
         public InitCardHandSignal InitCardHandSignal { get; set; }
 
+        /// <summary>
+        /// On register mediator
+        /// </summary>
         public override void OnRegister()
-        {            
+        {
             InitCardDeckSignal.AddListener(() => { View.InitDeckCount(); });
 
             AddCardToHandDeckSignal.AddListener(() =>
             {
                 if (BattleArena.ActiveSide != View.Side) return;
-                AddCardToHand();
+                OnAddCardToHand();
             });
 
             InitCardHandSignal.AddListener(() => { View.AddPullCardsToHand(); });
@@ -56,7 +59,7 @@ namespace Mediators.GameArena
         /// <summary>
         /// Add card to hand
         /// </summary>
-        private void AddCardToHand()
+        private void OnAddCardToHand()
         {
             if (BattleArena.HandCount < Arena.HandLimitCount)
             {

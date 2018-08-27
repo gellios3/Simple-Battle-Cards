@@ -1,5 +1,4 @@
-﻿using Services;
-using Services.GameArena;
+﻿using Services.GameArena;
 using Signals.MainMenu;
 using UnityEngine.SceneManagement;
 using View;

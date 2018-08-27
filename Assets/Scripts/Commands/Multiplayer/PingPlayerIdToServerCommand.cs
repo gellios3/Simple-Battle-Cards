@@ -1,5 +1,4 @@
-﻿using Models.Miltiplayer;
-using Models.Miltiplayer.Messages;
+﻿using Models.Multiplayer.Messages;
 using strange.extensions.command.impl;
 using Services.Multiplayer;
 using UnityEngine;
@@ -21,7 +20,7 @@ namespace Commands.Multiplayer
         public NetworkPlayerService NetworkPlayerService { get; set; }
 
         /// <summary>
-        /// Execute conect to server
+        /// Execute connect to server
         /// </summary>
         public override void Execute()
         {

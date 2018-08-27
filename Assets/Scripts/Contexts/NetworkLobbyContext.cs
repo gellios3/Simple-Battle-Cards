@@ -44,6 +44,7 @@ namespace Contexts
             injectionBinder.Bind<ICommandBinder>().To<SignalCommandBinder>().ToSingleton();
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Override Start so that we can fire the StartSignal 
         /// </summary>
@@ -59,7 +60,7 @@ namespace Contexts
 
         /// <inheritdoc />
         /// <summary>
-        /// Ovverade Bindings map
+        /// Override Bindings map
         /// </summary>
         protected override void mapBindings()
         {
@@ -80,7 +81,7 @@ namespace Contexts
             injectionBinder.Bind<GetLobbyPlayerHandler>().ToSingleton().CrossContext();
             injectionBinder.Bind<RemoveLobbyPlayerHandler>().ToSingleton().CrossContext();
 
-            // Init comands
+            // Init commands
             commandBinder.Bind<ConnectToServerSignal>().To<ConectToServerCommand>();
             commandBinder.Bind<PingPlayerIdToServerSignal>().To<PingPlayerIdToServerCommand>();
             commandBinder.Bind<ServerConnectedSignal>().To<ServerConectedCommand>().Once();

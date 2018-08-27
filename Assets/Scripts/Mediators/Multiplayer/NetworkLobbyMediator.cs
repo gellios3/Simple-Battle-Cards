@@ -3,7 +3,7 @@ using Signals.multiplayer;
 using UnityEngine.SceneManagement;
 using View.Multiplayer;
 
-namespace Mediators.Multiplayer
+namespace Mediators.Multiplayer 
 {
     public class NetworkLobbyMediator : TargetMediator<NetwokLobbyView>
     {

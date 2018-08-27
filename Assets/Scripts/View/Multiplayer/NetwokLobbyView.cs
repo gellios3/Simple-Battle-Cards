@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Models.Miltiplayer;
+using Models.Multiplayer;
 using strange.extensions.mediation.impl;
 using Signals.multiplayer;
 using UnityEngine;

@@ -12,7 +12,7 @@ namespace Models.State
         public string Name;
 
         /// <summary>
-        /// Player Status
+        /// Is active
         /// </summary>
         public bool isActive;
 
