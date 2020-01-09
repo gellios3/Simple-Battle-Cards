@@ -74,17 +74,17 @@ namespace Contexts
             // init models
 
             //Bind Services
-            injectionBinder.Bind<ServerConnectorService>().ToSingleton().CrossContext();
+//            injectionBinder.Bind<ServerConnectorService>().ToSingleton().CrossContext();
 
-            // Bind Handlers
-            injectionBinder.Bind<GetEnemyTurnHandler>().ToSingleton().CrossContext();
-            injectionBinder.Bind<GetLobbyPlayerHandler>().ToSingleton().CrossContext();
-            injectionBinder.Bind<RemoveLobbyPlayerHandler>().ToSingleton().CrossContext();
+//            // Bind Handlers
+//            injectionBinder.Bind<GetEnemyTurnHandler>().ToSingleton().CrossContext();
+//            injectionBinder.Bind<GetLobbyPlayerHandler>().ToSingleton().CrossContext();
+//            injectionBinder.Bind<RemoveLobbyPlayerHandler>().ToSingleton().CrossContext();
 
             // Init commands
-            commandBinder.Bind<ConnectToServerSignal>().To<ConectToServerCommand>();
-            commandBinder.Bind<PingPlayerIdToServerSignal>().To<PingPlayerIdToServerCommand>();
-            commandBinder.Bind<ServerConnectedSignal>().To<ServerConectedCommand>().Once();
+//            commandBinder.Bind<ConnectToServerSignal>().To<ConectToServerCommand>();
+//            commandBinder.Bind<PingPlayerIdToServerSignal>().To<PingPlayerIdToServerCommand>();
+//            commandBinder.Bind<ServerConnectedSignal>().To<ServerConectedCommand>().Once();
 
             // Init mediators
             mediationBinder.Bind<NetwokLobbyView>().To<NetworkLobbyMediator>();

@@ -28,7 +28,7 @@ namespace Models
         private readonly List<int> _cardPositions = new List<int>();
 
         /// <summary>
-        /// Random trate positions 
+        /// Random trade positions 
         /// </summary>
         private readonly List<int> _tratePositions = new List<int>();
 

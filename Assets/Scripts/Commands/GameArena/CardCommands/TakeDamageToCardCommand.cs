@@ -1,10 +1,7 @@
 ﻿using Models;
 using Models.Arena;
 using strange.extensions.command.impl;
-using Signals;
 using Signals.GameArena;
-using UniRx.Triggers;
-using UnityEngine;
 using LogType = Models.LogType;
 
 namespace Commands.GameArena.CardCommands

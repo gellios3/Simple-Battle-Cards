@@ -2,8 +2,8 @@
 
 namespace Models.Multiplayer.Messages
 {
-    public class PingPlayerMessage : MessageBase
-    {
-        public int Id;
-    }
+//    public class PingPlayerMessage : MessageBase
+//    {
+//        public int Id;
+//    }
 }

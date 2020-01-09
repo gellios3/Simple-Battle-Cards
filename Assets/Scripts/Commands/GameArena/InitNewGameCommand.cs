@@ -41,7 +41,7 @@ namespace Commands.GameArena
         {
             // Load regular deck
             var cartDeck = Resources.Load<CartDeck>("Objects/Decks/CartDeck");
-            var trateDeck = Resources.Load<TrateDeck>("Objects/Decks/TrateDeck");
+            var trateDeck = Resources.Load<TrateDeck>("Objects/Decks/Trate deck");
             // Init batle in your turn
             BattleArena.ActiveSide = BattleSide.Player;
             // init arena

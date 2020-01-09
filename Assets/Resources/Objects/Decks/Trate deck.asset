@@ -4,16 +4,17 @@
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7038b24737154eee9f111e87a697a881, type: 3}
-  m_Name: TrateDeck
+  m_Script: {fileID: 11500000, guid: 07c730b21000000009d730b210000000, type: 3}
+  m_Name: Trate deck
   m_EditorClassIdentifier: 
   Trates:
-  - {fileID: 11400000, guid: 158597b79964ff84c8d18d0a2e232e55, type: 2}
-  - {fileID: 11400000, guid: 238c02eeab9f81d47ac84a6a81a717a2, type: 2}
   - {fileID: 11400000, guid: f2ce777e270d950428780cc8332f3138, type: 2}
   - {fileID: 11400000, guid: b29b96db06c41e743ac5a61d22ea2e57, type: 2}
   - {fileID: 11400000, guid: deb6a405c076fb54f802f5a25db3c4fb, type: 2}
+  - {fileID: 11400000, guid: 238c02eeab9f81d47ac84a6a81a717a2, type: 2}
+  - {fileID: 11400000, guid: 158597b79964ff84c8d18d0a2e232e55, type: 2}
